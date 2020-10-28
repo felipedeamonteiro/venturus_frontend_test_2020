@@ -29,21 +29,51 @@ const MyTeamsDashboard: React.FC = () => (
             <div className="pd-left-container">
               <h3>Highest avg age</h3>
               <div className="pd2-left-container">
-                <div />
-                <div />
-                <div />
-                <div />
-                <div />
+                <div className="team-info">
+                  <h5>Inter Milan</h5>
+                  <h5>31.9</h5>
+                </div>
+                <div className="team-info">
+                  <h5>APOEL Nicosia</h5>
+                  <h5>31.7</h5>
+                </div>
+                <div className="team-info">
+                  <h5>AC Milan</h5>
+                  <h5>31.6</h5>
+                </div>
+                <div className="team-info">
+                  <h5>Besiktas JK</h5>
+                  <h5>31.4</h5>
+                </div>
+                <div className="team-info">
+                  <h5>Olympiacos Piraeus</h5>
+                  <h5>31.3</h5>
+                </div>
               </div>
             </div>
             <div className="pd-right-container">
               <h3>Lowest avg age</h3>
               <div className="pd2-right-container">
-                <div />
-                <div />
-                <div />
-                <div />
-                <div />
+                <div className="team-info">
+                  <h5>Zalgiris Vinius</h5>
+                  <h5>21.1</h5>
+                </div>
+                <div className="team-info">
+                  <h5>Arsenal FC</h5>
+                  <h5>21.6</h5>
+                </div>
+                <div className="team-info">
+                  <h5>Ajax Amsterdam</h5>
+                  <h5>22.0</h5>
+                </div>
+                <div className="team-info">
+                  <h5>FC Nantes</h5>
+                  <h5>22.1</h5>
+                </div>
+                <div className="team-info">
+                  <h5>CSKA Moscow</h5>
+                  <h5>22.5</h5>
+                </div>
               </div>
             </div>
           </div>

@@ -129,12 +129,32 @@ export const MiddleContainer = styled.div`
           width: 50%;
           height: 100%;
 
+          h3 {
+            margin-top: 10px;
+          }
+
           .pd2-left-container {
-            margin: 20px 0 0 10px;
+            margin: 10px 0 0 10px;
             border-radius: 15px;
             background: #eddfe9;
             width: 90%;
             height: 90%;
+
+            .team-info {
+              width: 96%;
+              height: 40px;
+              padding: 8px;
+              margin: 6px 0 0 4px;
+              border-radius: 10px;
+              background: #fff;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+
+              &:hover {
+                border: 2px solid #de0039;
+              }
+            }
           }
         }
 
@@ -144,12 +164,35 @@ export const MiddleContainer = styled.div`
           width: 50%;
           height: 100%;
 
+          h3 {
+            margin-top: 10px;
+          }
+
           .pd2-right-container {
-            margin: 20px 0 0 10px;
+            margin: 10px 0 0 10px;
             border-radius: 15px;
             background: #eddfe9;
             width: 90%;
             height: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .team-info {
+              width: 96%;
+              height: 40px;
+              padding: 8px;
+              margin-top: 6px;
+              border-radius: 10px;
+              background: #fff;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+
+              &:hover {
+                border: 2px solid #de0039;
+              }
+            }
           }
         }
       }
@@ -171,7 +214,7 @@ export const MiddleContainer = styled.div`
         position: absolute;
         box-sizing: inherit;
         width: 1px;
-        height: 30%;
+        height: 290px;
         border-right: solid 1px ${shade(0.2, '#fff')};
       }
 
