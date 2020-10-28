@@ -16,29 +16,35 @@ const MyTeamsDashboard: React.FC = () => (
       </div>
     </Header>
     <MiddleContainer>
-      <div className="right-container">
+      <div className="left-container">
         <div>
           <h1>My teams</h1>
           <button type="button">+</button>
         </div>
       </div>
-      <div className="left-container">
+      <div className="right-container">
         <div className="top-container">
           <h1>Top 5</h1>
           <div className="player-data">
             <div className="pd-left-container">
-              <div />
-              <div />
-              <div />
-              <div />
-              <div />
+              <h3>Highest avg age</h3>
+              <div className="pd2-left-container">
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
             </div>
             <div className="pd-right-container">
-              <div />
-              <div />
-              <div />
-              <div />
-              <div />
+              <h3>Lowest avg age</h3>
+              <div className="pd2-right-container">
+                <div />
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
             </div>
           </div>
         </div>

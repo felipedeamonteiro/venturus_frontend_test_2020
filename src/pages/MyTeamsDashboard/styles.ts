@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { shade } from 'polished';
 
 export const Container = styled.div``;
 
@@ -61,7 +62,7 @@ export const MiddleContainer = styled.div`
   align-items: center;
   margin-top: 50px;
 
-  .right-container {
+  .left-container {
     background: #fff;
     border-radius: 15px;
     width: 45%;
@@ -78,7 +79,7 @@ export const MiddleContainer = styled.div`
       color: #fff;
       border-radius: 10px;
       border: 1px solid #de0039;
-      background: linear-gradient(to bottom, #de0039, #a6006a);
+      background: linear-gradient(to bottom, #de0039, #70008c);
       box-shadow: 0 4px 10px 1px #a6006a;
     }
 
@@ -96,8 +97,8 @@ export const MiddleContainer = styled.div`
     }
   }
 
-  .left-container {
-    width: 50%;
+  .right-container {
+    width: 55%;
 
     .top-container {
       background: #fff;
@@ -115,6 +116,43 @@ export const MiddleContainer = styled.div`
         padding-bottom: 25px;
         border-bottom: 1px solid lightgray;
       }
+
+      .player-data {
+        width: 100%;
+        height: 80%;
+        display: flex;
+        flex-direction: row;
+
+        .pd-left-container {
+          display: flex;
+          flex-direction: column;
+          width: 50%;
+          height: 100%;
+
+          .pd2-left-container {
+            margin: 20px 0 0 10px;
+            border-radius: 15px;
+            background: #eddfe9;
+            width: 90%;
+            height: 90%;
+          }
+        }
+
+        .pd-right-container {
+          display: flex;
+          flex-direction: column;
+          width: 50%;
+          height: 100%;
+
+          .pd2-right-container {
+            margin: 20px 0 0 10px;
+            border-radius: 15px;
+            background: #eddfe9;
+            width: 90%;
+            height: 90%;
+          }
+        }
+      }
     }
 
     .bottom-container {
@@ -123,7 +161,7 @@ export const MiddleContainer = styled.div`
       margin: 50px 40px 0;
       padding: 24px;
       text-decoration: none;
-      background: linear-gradient(to bottom, #de0039, #a6006a);
+      background: linear-gradient(to bottom, #de0039, #70008c);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -131,16 +169,17 @@ export const MiddleContainer = styled.div`
 
       .central-line {
         position: absolute;
+        box-sizing: inherit;
         width: 1px;
-        height: 50%;
-        border-right: solid 1px #fff;
+        height: 30%;
+        border-right: solid 1px ${shade(0.2, '#fff')};
       }
 
       .central-circle {
         position: absolute;
         width: 90px;
         height: 90px;
-        border: 1px solid #fff;
+        border: 1px solid ${shade(0.2, '#fff')};
         border-radius: 50%;
         display: flex;
         justify-content: center;
@@ -152,7 +191,7 @@ export const MiddleContainer = styled.div`
           height: 1px;
           background-color: #fff;
           content: '';
-          border: 1px solid #fff;
+          border: 1px solid ${shade(0.2, '#fff')};
           border-radius: 50%;
         }
       }
@@ -198,6 +237,7 @@ export const MiddleContainer = styled.div`
 
             .most-picked-player {
               background: #fff;
+              border: 1px solid #de0039;
               color: gray;
               width: 120px;
               height: 120px;
@@ -244,6 +284,7 @@ export const MiddleContainer = styled.div`
 
             .less-picked-player {
               background: #fff;
+              border: 1px solid #de0039;
               color: gray;
               width: 120px;
               height: 120px;
