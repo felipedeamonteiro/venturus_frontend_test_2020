@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useMemo } from 'react';
 import { useTable, Column, useSortBy } from 'react-table';
+import { FaSortUp, FaSortDown, FaSort, FaTrash } from 'react-icons/fa';
+import { MdModeEdit, MdShare } from 'react-icons/md';
 import { Container } from './styles';
 
 interface Example {
@@ -69,11 +71,15 @@ const Table: React.FC = () => {
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render('Header')}
                   <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? 'cima'
-                        : 'baixo'
-                      : 'cima/baixo'}
+                    {column.isSorted ? (
+                      column.isSortedDesc ? (
+                        <FaSortDown />
+                      ) : (
+                        <FaSortUp />
+                      )
+                    ) : (
+                      <FaSort />
+                    )}
                   </span>
                 </th>
               ))}
@@ -85,9 +91,20 @@ const Table: React.FC = () => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map(cell => {
+                {row.cells.map((cell, index) => {
                   return (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    <td {...cell.getCellProps()}>
+                      {cell.render('Cell')}
+                      {index === 1 ? (
+                        <span>
+                          <FaTrash title="Remove" />
+                          <MdShare title="Share" />
+                          <MdModeEdit title="Edit" />
+                        </span>
+                      ) : (
+                        ''
+                      )}
+                    </td>
                   );
                 })}
               </tr>

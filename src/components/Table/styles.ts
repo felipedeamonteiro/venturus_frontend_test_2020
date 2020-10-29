@@ -45,9 +45,22 @@ export const Container = styled.div`
       tr {
         border-bottom: 1px solid lightgray;
 
+        span {
+          float: right;
+          visibility: hidden;
+        }
+
         &:hover {
           background: #fce9f7;
           width: 100%;
+          span {
+            visibility: visible;
+            width: 75px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            cursor: pointer;
+          }
 
           td {
             color: #de0093;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { HiOutlinePlus } from 'react-icons/hi';
 import logoImg from '../../assets/logo_v_.png';
 import Table from '../../components/Table';
 
@@ -20,7 +21,9 @@ const MyTeamsDashboard: React.FC = () => (
       <div className="left-container">
         <div>
           <h1>My teams</h1>
-          <button type="button">+</button>
+          <button type="button">
+            <HiOutlinePlus size={17} color="#fff" />
+          </button>
         </div>
         <Table />
       </div>

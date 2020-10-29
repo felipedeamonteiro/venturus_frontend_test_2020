@@ -81,6 +81,9 @@ export const MiddleContainer = styled.div`
       border: 1px solid #de0039;
       background: linear-gradient(to bottom, #de0039, #70008c);
       box-shadow: 0 4px 10px 1px #a6006a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     h1 {
