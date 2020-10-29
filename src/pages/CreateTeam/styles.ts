@@ -65,12 +65,18 @@ export const MiddleContainer = styled.div`
     background: #fff;
     border-radius: 15px;
     width: 93%;
-    height: 730px;
-    margin: 90px 40px 0;
+    height: 1030px;
+    margin: 90px 40px 60px;
     padding: 24px;
     display: block;
     text-decoration: none;
     box-shadow: 0 4px 4px 0px lightgray;
+
+    .team-information-form {
+    }
+
+    .configure-squad-container {
+    }
   }
 `;
 
