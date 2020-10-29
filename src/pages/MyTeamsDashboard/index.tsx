@@ -1,5 +1,6 @@
 import React from 'react';
 import logoImg from '../../assets/logo_v_.png';
+import Table from '../../components/Table';
 
 import { Container, Header, MiddleContainer, Footer } from './styles';
 
@@ -21,6 +22,7 @@ const MyTeamsDashboard: React.FC = () => (
           <h1>My teams</h1>
           <button type="button">+</button>
         </div>
+        <Table />
       </div>
       <div className="right-container">
         <div className="top-container">
