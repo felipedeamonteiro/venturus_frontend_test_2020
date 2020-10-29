@@ -1,58 +1,16 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useMemo } from 'react';
-import { useTable, Column, useSortBy } from 'react-table';
+import React from 'react';
+import { useTable, useSortBy } from 'react-table';
 import { FaSortUp, FaSortDown, FaSort, FaTrash } from 'react-icons/fa';
 import { MdModeEdit, MdShare } from 'react-icons/md';
 import { Container } from './styles';
 
-interface Example {
-  col1: string;
-  col2: string;
+interface ITable {
+  columns: any[];
+  data: any[];
 }
 
-const Table: React.FC = () => {
-  const columns: Column<Example>[] = useMemo(
-    () => [
-      {
-        Header: 'Name',
-        accessor: 'col1' as keyof Example,
-        sortType: 'basic',
-      },
-      {
-        Header: 'Description',
-        accessor: 'col2' as keyof Example,
-        sortType: 'basic',
-      },
-    ],
-    [],
-  );
-
-  const data = useMemo(
-    () => [
-      {
-        col1: 'Real Madrid',
-        col2: 'Real Madrid Squad',
-      },
-      {
-        col1: 'Milan',
-        col2: 'Milan Squad',
-      },
-      {
-        col1: 'Liverpool',
-        col2: 'Liverpool Squad',
-      },
-      {
-        col1: 'Bayern Munich',
-        col2: 'Bayern Munich Squad',
-      },
-      {
-        col1: 'Lazio',
-        col2: 'Lazio Squad',
-      },
-    ],
-    [],
-  );
-
+const Table: React.FC<ITable> = ({ columns, data }: any) => {
   const {
     getTableProps,
     getTableBodyProps,
