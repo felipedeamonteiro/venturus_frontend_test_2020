@@ -18,7 +18,15 @@ const CreateTeam: React.FC = () => (
       </div>
     </Header>
     <MiddleContainer>
-      <div>Create Team</div>
+      <div className="main-container">
+        <h2>Create your team</h2>
+        <div className="team-information-form">
+          <h4>TEAM INFORMATION</h4>
+        </div>
+        <div className="configure-squad-container">
+          <h4>CONFIGURE SQUAD</h4>
+        </div>
+      </div>
     </MiddleContainer>
     <Footer>2020 - All Rights Reserved</Footer>
   </Container>

@@ -1,14 +1,14 @@
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import GlobalStyle from './styles/global';
 
-import MyTeamsDashboard from './pages/MyTeamsDashboard';
-import CreateTeam from './pages/CreateTeam';
+import Routes from './routes';
 
 const App: React.FC = () => (
-  <>
-    <CreateTeam />
+  <Router>
+    <Routes />
     <GlobalStyle />
-  </>
+  </Router>
 );
 
 export default App;

@@ -61,12 +61,12 @@ export const MiddleContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  div {
+  div.main-container {
     background: #fff;
     border-radius: 15px;
-    width: 45%;
-    height: 800px;
-    margin: 50px 40px 0;
+    width: 93%;
+    height: 730px;
+    margin: 90px 40px 0;
     padding: 24px;
     display: block;
     text-decoration: none;
