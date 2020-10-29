@@ -1,110 +1,68 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    font-family: 'Lato', sans-serif;
+  /* .loading {
+    animation-name: loading;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse;
+  } */
+  border-bottom: 0 !important;
+  table {
+    width: 100%;
+    margin-top: 50px;
+    border-collapse: collapse;
+    font-size: 15px;
 
-    .loading {
-      animation-name: loading;
-      animation-duration: 0.5s;
-      animation-iteration-count: infinite;
-      animation-direction: alternate-reverse;
+    th,
+    td {
+      color: #414449;
+      padding: 13px;
+      text-align: left;
+      line-height: 24px;
     }
 
-    .setAmount {
-      max-width: 200px;
-      padding: 5px;
-      align-self: flex-end;
-      margin-bottom: 10px;
-    }
-
-    .table {
-      width: 100%;
-      border-radius: 10px;
-      background-color: #fefefe;
-      box-shadow: 10px 6px 6px rgba(0, 0, 0, 0.1);
-      border-collapse: collapse;
-      font-size: 15px;
-
-      tr:nth-child(even) {
-        background-color: #f2f2f2;
-      }
-
-      thead {
-        background-color: #f2f2f2;
-        border-bottom: 2px solid #95989a;
-      }
-
-      th,
-      td {
-        color: #414449;
-        padding: 13px;
-        text-align: left;
-        line-height: 24px;
-
-        :last-child {
-          border-right: 0;
-        }
-      }
-
+    thead {
       th {
         color: #3c405f;
-        padding: 26px 13px 13px;
+        padding: 15px 13px 13px;
         border-top: 0;
-      }
+        height: 40px;
 
-      th > svg {
-        margin-left: 8px;
-      }
+        span {
+          float: right;
+          margin-left: 15px;
+        }
 
-      td {
-        input {
-          font-size: 1rem;
-          padding: 0;
-          margin: 0;
-          border: 0;
+        :first-child {
+          border-right: 1px solid lightgray;
+          width: 160px;
         }
       }
     }
 
-    .pagination {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      color: #414449;
-      padding: 20px 0;
-
-      & > button {
-        border: 0;
-        background-color: transparent;
-        margin-right: 5px;
-        cursor: pointer;
-        transition: opacity 0.3s;
+    tbody {
+      tr {
+        border-bottom: 1px solid lightgray;
 
         &:hover {
-          opacity: 0.8;
+          background: #fce9f7;
+          width: 100%;
+
+          td {
+            color: #de0093;
+          }
         }
       }
-
-      strong,
-      b {
-        color: #3c405f;
-      }
-    }
-
-    .amount {
-      margin-left: 10px;
     }
   }
 
-  @keyframes loading {
+  /* @keyframes loading {
     from {
       opacity: 1;
     }
     to {
       opacity: 0.3;
     }
-  }
+  } */
 `;

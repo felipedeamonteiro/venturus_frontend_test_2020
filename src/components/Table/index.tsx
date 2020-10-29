@@ -3,11 +3,6 @@ import React, { useMemo } from 'react';
 import { useTable, Column, useSortBy } from 'react-table';
 import { Container } from './styles';
 
-interface ITable {
-  columns: Array<Column>;
-  data: Array<any>;
-}
-
 interface Example {
   col1: string;
   col2: string;
@@ -17,12 +12,14 @@ const Table: React.FC = () => {
   const columns: Column<Example>[] = useMemo(
     () => [
       {
-        Header: 'Column 1',
+        Header: 'Name',
         accessor: 'col1' as keyof Example,
+        sortType: 'basic',
       },
       {
-        Header: 'Column 2',
+        Header: 'Description',
         accessor: 'col2' as keyof Example,
+        sortType: 'basic',
       },
     ],
     [],
@@ -31,16 +28,24 @@ const Table: React.FC = () => {
   const data = useMemo(
     () => [
       {
-        col1: 'Hello',
-        col2: 'World',
+        col1: 'Real Madrid',
+        col2: 'Real Madrid Squad',
       },
       {
-        col1: 'react-table',
-        col2: 'rocks',
+        col1: 'Milan',
+        col2: 'Milan Squad',
       },
       {
-        col1: 'whatever',
-        col2: 'you want',
+        col1: 'Liverpool',
+        col2: 'Liverpool Squad',
+      },
+      {
+        col1: 'Bayern Munich',
+        col2: 'Bayern Munich Squad',
+      },
+      {
+        col1: 'Lazio',
+        col2: 'Lazio Squad',
       },
     ],
     [],
@@ -52,25 +57,24 @@ const Table: React.FC = () => {
     headerGroups,
     rows,
     prepareRow,
-  } = useTable({ data, columns } as any, useSortBy);
+  } = useTable({ data, columns, manualSortBy: true } as any, useSortBy);
 
   return (
     <Container>
-      <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
+      <table {...getTableProps()}>
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
-                <th
-                  {...column.getHeaderProps()}
-                  style={{
-                    borderBottom: 'solid 3px red',
-                    background: 'aliceblue',
-                    color: 'black',
-                    fontWeight: 'bold',
-                  }}
-                >
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render('Header')}
+                  <span>
+                    {column.isSorted
+                      ? column.isSortedDesc
+                        ? 'cima'
+                        : 'baixo'
+                      : 'cima/baixo'}
+                  </span>
                 </th>
               ))}
             </tr>
@@ -83,16 +87,7 @@ const Table: React.FC = () => {
               <tr {...row.getRowProps()}>
                 {row.cells.map(cell => {
                   return (
-                    <td
-                      {...cell.getCellProps()}
-                      style={{
-                        padding: '10px',
-                        border: 'solid 1px gray',
-                        background: 'papayawhip',
-                      }}
-                    >
-                      {cell.render('Cell')}
-                    </td>
+                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                   );
                 })}
               </tr>
