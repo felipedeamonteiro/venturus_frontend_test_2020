@@ -5,6 +5,10 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column-reverse;
 
+  label {
+    font-weight: 500;
+  }
+
   textarea {
     resize: none;
     border: 1px solid grey;
