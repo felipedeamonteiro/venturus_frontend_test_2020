@@ -107,32 +107,6 @@ export const MiddleContainer = styled.div`
           display: flex;
           flex-direction: column;
 
-          .div-input {
-            display: flex;
-            flex-direction: column-reverse;
-
-            input {
-              width: 350px;
-              margin-bottom: 30px;
-              box-sizing: border-box;
-              border: 1px solid grey;
-              border-radius: 4px;
-              padding: 5px;
-
-              &::placeholder {
-                color: #b5bcc7;
-              }
-
-              &:focus {
-                border: 1px solid #de0039;
-              }
-            }
-
-            input:focus + label {
-              color: #de0039;
-            }
-          }
-
           .div-textarea {
             box-sizing: border-box;
             display: flex;
@@ -168,32 +142,6 @@ export const MiddleContainer = styled.div`
 
           label {
             margin-bottom: 10px;
-          }
-
-          .div-website {
-            display: flex;
-            flex-direction: column-reverse;
-
-            input {
-              width: 350px;
-              margin-bottom: 30px;
-              box-sizing: border-box;
-              border: 1px solid grey;
-              border-radius: 4px;
-              padding: 5px;
-
-              &::placeholder {
-                color: #b5bcc7;
-              }
-
-              &:focus {
-                border: 1px solid #de0039;
-              }
-            }
-
-            input:focus + label {
-              color: #de0039;
-            }
           }
 
           .radio-input {
@@ -365,47 +313,11 @@ export const MiddleContainer = styled.div`
               }
             }
           }
-
-          .save-buttom {
-            width: 300px;
-            height: 40px;
-            padding: 10px;
-            border: none;
-            font-weight: 500;
-            border-radius: 5px;
-            color: #fff;
-            background: linear-gradient(to bottom, #de0039, #70008c);
-          }
         }
 
         .bottom-right-div {
           label {
             margin-bottom: 10px;
-          }
-          .div-search {
-            display: flex;
-            flex-direction: column-reverse;
-
-            input {
-              width: 350px;
-              margin-bottom: 30px;
-              box-sizing: border-box;
-              border: 1px solid grey;
-              border-radius: 4px;
-              padding: 5px;
-
-              &::placeholder {
-                color: #b5bcc7;
-              }
-
-              &:focus {
-                border: 1px solid #de0039;
-              }
-            }
-
-            input:focus + label {
-              color: #de0039;
-            }
           }
 
           .players-container {

@@ -28,6 +28,7 @@
       "prettier/prettier": "error",
       "react-hooks/rules-of-hooks": "error",
       "react/jsx-props-no-spreading": "off",
+      "jsx-a11y/label-has-associated-control": "off",
       "react/prop-types": "off",
       "react-hooks/exhaustive-deps": "warn",
       "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],

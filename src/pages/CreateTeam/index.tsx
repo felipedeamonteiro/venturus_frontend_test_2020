@@ -1,10 +1,9 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useMemo } from 'react';
-import { HiOutlinePlus } from 'react-icons/hi';
 import logoImg from '../../assets/logo_v_.png';
-import Table from '../../components/Table';
 
 import { Container, Header, MiddleContainer, Footer } from './styles';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 const CreateTeam: React.FC = () => (
   <Container>
@@ -28,14 +27,11 @@ const CreateTeam: React.FC = () => (
           <div className="team-information-form">
             <div className="upper-info">
               <div className="left-div">
-                <div className="div-input">
-                  <input
-                    type="text"
-                    name="team-name"
-                    placeholder="Insert team name"
-                  />
-                  <label htmlFor="team-name">Team name</label>
-                </div>
+                <Input
+                  name="team-name"
+                  placeholder="Insert team name"
+                  label="Team name"
+                />
 
                 <div className="div-textarea">
                   <textarea
@@ -50,14 +46,11 @@ const CreateTeam: React.FC = () => (
                 </div>
               </div>
               <div className="right-div">
-                <div className="div-website">
-                  <input
-                    type="text"
-                    name="website"
-                    placeholder="http://myteam.com"
-                  />
-                  <label htmlFor="website">Team website</label>
-                </div>
+                <Input
+                  name="website"
+                  placeholder="http://myteam.com"
+                  label="Team website"
+                />
 
                 <div className="radio-input">
                   <p className="team-type">Team type</p>
@@ -121,20 +114,15 @@ const CreateTeam: React.FC = () => (
                   <div className="soccer-field-line" />
                   <div className="soccer-field-circle" />
                 </div>
-                <button className="save-buttom" type="submit">
-                  Save
-                </button>
+                <Button style={{ width: 300 }}>Save</Button>
               </div>
 
               <div className="bottom-right-div">
-                <div className="div-search">
-                  <input
-                    type="text"
-                    name="search-players"
-                    placeholder="Search"
-                  />
-                  <label htmlFor="search-players">Search players</label>
-                </div>
+                <Input
+                  name="search-players"
+                  placeholder="Search"
+                  label="Search players"
+                />
 
                 <div className="players-container">
                   <div className="pc-upper-info">

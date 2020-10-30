@@ -1,21 +1,21 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 
 import { Container } from './styles';
 import LogoColorido from '../../assets/logo_colorido.png';
+
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 const SignIn: React.FC = () => (
   <Container>
     <img src={LogoColorido} alt="Logo Venturus" />
     <h3>Venturus FrontEnd Developer Test</h3>
     <form id="signin-form">
-      <div className="div-signin">
-        <input type="text" name="signin" />
-        <label htmlFor="signin" form="signin-form">
-          Type your first and last names to sign in
-        </label>
-      </div>
-      <button type="button">Sign In</button>
+      <Input
+        placeholder="Type your first and last names to sign in"
+        name="signin"
+      />
+      <Button>Sign In</Button>
     </form>
   </Container>
 );
