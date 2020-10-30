@@ -69,7 +69,7 @@ const MyTeamsDashboard: React.FC = () => {
         <div className="left-container">
           <div>
             <h1>My teams</h1>
-            <button type="button">
+            <button type="button" title="Create a team">
               <HiOutlinePlus size={17} color="#fff" />
             </button>
           </div>
