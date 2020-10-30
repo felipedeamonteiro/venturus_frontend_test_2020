@@ -208,10 +208,10 @@ export const MiddleContainer = styled.div`
       padding: 24px;
       text-decoration: none;
       background: linear-gradient(to bottom, #de0039, #70008c);
+      box-shadow: 0 4px 4px 0px lightgray;
       display: flex;
       justify-content: center;
       align-items: center;
-      box-shadow: 0 4px 4px 0px lightgray;
 
       .central-line {
         position: absolute;
