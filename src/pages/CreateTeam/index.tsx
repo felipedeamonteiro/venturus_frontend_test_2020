@@ -4,6 +4,7 @@ import logoImg from '../../assets/logo_v_.png';
 import { Container, Header, MiddleContainer, Footer } from './styles';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import TextArea from '../../components/TextArea';
 
 const CreateTeam: React.FC = () => (
   <Container>
@@ -33,17 +34,12 @@ const CreateTeam: React.FC = () => (
                   label="Team name"
                 />
 
-                <div className="div-textarea">
-                  <textarea
-                    form="form"
-                    maxLength={300}
-                    className="description-input"
-                    name="description"
-                  />
-                  <label className="textarea-label" htmlFor="description">
-                    Description
-                  </label>
-                </div>
+                <TextArea
+                  label="Description"
+                  form="form"
+                  maxLength={300}
+                  name="description"
+                />
               </div>
               <div className="right-div">
                 <Input
