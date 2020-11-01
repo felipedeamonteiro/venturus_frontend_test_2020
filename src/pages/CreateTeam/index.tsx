@@ -1,28 +1,33 @@
-import React, { useMemo } from 'react';
-import logoImg from '../../assets/logo_v_.png';
+import React from 'react';
 
-import { Container, Header, MiddleContainer, Footer } from './styles';
+import { MiddleContainer } from './styles';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import TextArea from '../../components/TextArea';
 import RadioButton from '../../components/RadioButton';
 import SoccerField2 from '../../components/SoccerField2';
+import PlayersContainer from '../../components/PlayersContainer';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 const CreateTeam: React.FC = () => {
   const radioInputs: string[] = ['Real', 'Fantasy'];
+  const playersData = [
+    {
+      name: 'Cristiano Ronaldo',
+      age: 37,
+      nationality: 'Portugal',
+    },
+    {
+      name: 'Ronaldo Luiz de Alves',
+      age: 28,
+      nationality: 'Brazil',
+    },
+  ];
 
   return (
-    <Container>
-      <Header>
-        <div className="left-div">
-          <img src={logoImg} alt="logo-venturus" />
-          <h2>Squad Management Tool</h2>
-        </div>
-        <div className="right-div">
-          <h4>Felipe Monteiro</h4>
-          <div className="user-initials">FM</div>
-        </div>
-      </Header>
+    <>
+      <Header />
       <MiddleContainer>
         <div className="main-container">
           <h2>Create your team</h2>
@@ -84,48 +89,15 @@ const CreateTeam: React.FC = () => {
                     placeholder="Search"
                     label="Search players"
                   />
-
-                  <div className="players-container">
-                    <div className="pc-upper-info">
-                      <div className="player-name">
-                        <h4>Name: </h4>
-                        <p>Cristiano Ronaldo</p>
-                      </div>
-                      <div className="player-age">
-                        <h4>Age: </h4>
-                        <p>37</p>
-                      </div>
-                    </div>
-                    <div className="pc-bottom-info">
-                      <h4>Nationality: </h4>
-                      <p>Portugal</p>
-                    </div>
-                  </div>
-
-                  <div className="players-container">
-                    <div className="pc-upper-info">
-                      <div className="player-name">
-                        <h4>Name: </h4>
-                        <p>Ronaldo Luiz de Alves</p>
-                      </div>
-                      <div className="player-age">
-                        <h4>Age: </h4>
-                        <p>28</p>
-                      </div>
-                    </div>
-                    <div className="pc-bottom-info">
-                      <h4>Nationality: </h4>
-                      <p>Brazil</p>
-                    </div>
-                  </div>
+                  <PlayersContainer data={playersData} />
                 </div>
               </div>
             </div>
           </form>
         </div>
       </MiddleContainer>
-      <Footer>2020 - All Rights Reserved</Footer>
-    </Container>
+      <Footer />
+    </>
   );
 };
 

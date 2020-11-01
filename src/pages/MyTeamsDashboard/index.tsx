@@ -1,9 +1,13 @@
 import React, { useMemo } from 'react';
 import { HiOutlinePlus } from 'react-icons/hi';
 import logoImg from '../../assets/logo_v_.png';
-import Table from '../../components/Table';
 
-import { Container, Header, MiddleContainer, Footer } from './styles';
+import Table from '../../components/Table';
+import SoccerField1 from '../../components/SoccerField1';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+
+import { MiddleContainer } from './styles';
 
 interface Example {
   col1: string;
@@ -54,17 +58,9 @@ const MyTeamsDashboard: React.FC = () => {
   );
 
   return (
-    <Container>
-      <Header>
-        <div className="left-div">
-          <img src={logoImg} alt="logo-venturus" />
-          <h2>Squad Management Tool</h2>
-        </div>
-        <div className="right-div">
-          <h4>Felipe Monteiro</h4>
-          <div className="user-initials">FM</div>
-        </div>
-      </Header>
+    <>
+      <Header />
+
       <MiddleContainer>
         <div className="left-container">
           <div>
@@ -131,30 +127,12 @@ const MyTeamsDashboard: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="bottom-container">
-            <div className="central-line" />
-            <div className="central-circle" />
-            <div className="players-container">
-              <div className="player-mpp">
-                <h3 className="mpph3-letters">Most Picked Player</h3>
-                <h3 className="mpph3-numbers">75%</h3>
-                <div className="mpp-border">
-                  <div className="most-picked-player">MP</div>
-                </div>
-              </div>
-              <div className="player-lpp">
-                <h3 className="lpph3-letters">Less Picked Player</h3>
-                <h3 className="lpph3-numbers">25%</h3>
-                <div className="lpp-border">
-                  <div className="less-picked-player">LP</div>
-                </div>
-              </div>
-            </div>
-          </div>
+
+          <SoccerField1 />
         </div>
       </MiddleContainer>
-      <Footer>2020 - All Rights Reserved</Footer>
-    </Container>
+      <Footer />
+    </>
   );
 };
 
