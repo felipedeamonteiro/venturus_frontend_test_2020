@@ -1,11 +1,4 @@
-import React, {
-  InputHTMLAttributes,
-  LiHTMLAttributes,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useField } from '@unform/core';
 import { FiX } from 'react-icons/fi';
 
@@ -21,7 +14,7 @@ const Tags: React.FC<TagsProps> = ({ label, name, ...props }) => {
   const [inputTags, setInputTags] = useState<string>('');
   const [tags, setTags] = useState<string[]>([]);
   const inputRefs = useRef<string[]>([]);
-  const { fieldName, defaultValue = '', registerField } = useField(name);
+  const { fieldName, registerField } = useField(name);
 
   const removeTag = useCallback(
     tag => {
@@ -46,6 +39,14 @@ const Tags: React.FC<TagsProps> = ({ label, name, ...props }) => {
     },
     [tags, removeTag],
   );
+
+  const handleInputFocus = useCallback(() => {
+    setIsFocused(true);
+  }, []);
+
+  const handleInputBlur = useCallback(() => {
+    setIsFocused(false);
+  }, []);
 
   useEffect(() => {
     registerField({
@@ -77,12 +78,11 @@ const Tags: React.FC<TagsProps> = ({ label, name, ...props }) => {
           ))}
           <input
             name={name}
-            defaultValue={defaultValue}
             onKeyDown={e => inputKeyDown(e)}
             value={inputTags}
             onChange={e => setInputTags(e.target.value)}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
             onKeyPress={e => e.key === 'Enter' && e.preventDefault()}
             {...props}
           />

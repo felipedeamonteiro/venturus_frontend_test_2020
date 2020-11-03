@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { Form } from '@unform/web';
 import { Container } from './styles';
@@ -8,9 +8,9 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 
 const SignIn: React.FC = () => {
-  function handleSubmit(data: any): void {
+  const handleSubmit = useCallback((data: any): void => {
     console.log(data);
-  }
+  }, []);
 
   return (
     <Container>

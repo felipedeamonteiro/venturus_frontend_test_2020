@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Form } from '@unform/web';
 
 import { MiddleContainer } from './styles';
@@ -13,9 +13,9 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 const CreateTeam: React.FC = () => {
-  function handleSubmit(data: any): void {
+  const handleSubmit = useCallback((data: any): void => {
     console.log(data);
-  }
+  }, []);
 
   const radioOptions: RadioOption[] = [
     {
