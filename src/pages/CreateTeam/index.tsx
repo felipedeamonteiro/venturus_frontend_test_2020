@@ -1,17 +1,32 @@
 import React from 'react';
+import { Form } from '@unform/web';
 
 import { MiddleContainer } from './styles';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import TextArea from '../../components/TextArea';
-import RadioButton from '../../components/RadioButton';
+import RadioButton, { RadioOption } from '../../components/RadioButton';
+import Tags from '../../components/Tags';
 import SoccerField2 from '../../components/SoccerField2';
 import PlayersContainer from '../../components/PlayersContainer';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 const CreateTeam: React.FC = () => {
-  const radioInputs: string[] = ['Real', 'Fantasy'];
+  function handleSubmit(data: any): void {
+    console.log(data);
+  }
+
+  const radioOptions: RadioOption[] = [
+    {
+      value: 'real',
+      label: 'Real',
+    },
+    {
+      value: 'fantasy',
+      label: 'Fantasy',
+    },
+  ];
   const playersData = [
     {
       name: 'Cristiano Ronaldo',
@@ -31,7 +46,7 @@ const CreateTeam: React.FC = () => {
       <MiddleContainer>
         <div className="main-container">
           <h2>Create your team</h2>
-          <form id="form">
+          <Form onSubmit={handleSubmit} id="form">
             <div className="upper-title">
               <h4>TEAM INFORMATION</h4>
             </div>
@@ -58,17 +73,13 @@ const CreateTeam: React.FC = () => {
                     label="Team website"
                   />
 
-                  <RadioButton title="Team type" inputs={radioInputs} />
+                  <RadioButton
+                    name="radio-buttom"
+                    title="Team type"
+                    options={radioOptions}
+                  />
 
-                  <div className="tags-input">
-                    <textarea
-                      form="form"
-                      maxLength={150}
-                      className="tags-input"
-                      name="tags"
-                    />
-                    <label htmlFor="tags">Tags</label>
-                  </div>
+                  <Tags name="tags" label="Tags" />
                 </div>
               </div>
             </div>
@@ -80,7 +91,9 @@ const CreateTeam: React.FC = () => {
               <div className="bottom-info">
                 <div className="bottom-left-div">
                   <SoccerField2 />
-                  <Button style={{ width: 300 }}>Save</Button>
+                  <Button type="submit" style={{ width: 300 }}>
+                    Save
+                  </Button>
                 </div>
 
                 <div className="bottom-right-div">
@@ -93,7 +106,7 @@ const CreateTeam: React.FC = () => {
                 </div>
               </div>
             </div>
-          </form>
+          </Form>
         </div>
       </MiddleContainer>
       <Footer />

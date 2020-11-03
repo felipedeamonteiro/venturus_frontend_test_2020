@@ -1,4 +1,5 @@
-import React, { InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes, useEffect, useRef } from 'react';
+import { useField } from '@unform/core';
 
 import { Container } from './styles';
 
@@ -8,11 +9,31 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
 }
 
-const Input: React.FC<InputProps> = ({ label, name, placeholder }) => (
-  <Container>
-    <input type="text" name={name} placeholder={placeholder} />
-    {label ? <label htmlFor={name}>{label}</label> : ''}
-  </Container>
-);
+const Input: React.FC<InputProps> = ({ label, name, placeholder, ...rest }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { fieldName, defaultValue, error, registerField } = useField(name);
+
+  useEffect(() => {
+    registerField({
+      name: fieldName,
+      ref: inputRef.current,
+      path: 'value',
+    });
+  }, [fieldName, registerField]);
+
+  return (
+    <Container>
+      <input
+        ref={inputRef}
+        type="text"
+        name={name}
+        defaultValue={defaultValue}
+        placeholder={placeholder}
+        {...rest}
+      />
+      {label ? <label htmlFor={name}>{label}</label> : ''}
+    </Container>
+  );
+};
 
 export default Input;

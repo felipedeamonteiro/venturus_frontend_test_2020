@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { HiOutlinePlus } from 'react-icons/hi';
-import logoImg from '../../assets/logo_v_.png';
 
 import Table from '../../components/Table';
 import SoccerField1 from '../../components/SoccerField1';

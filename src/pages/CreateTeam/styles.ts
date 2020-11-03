@@ -57,35 +57,12 @@ export const MiddleContainer = styled.div`
         }
 
         .right-div {
+          height: 320px;
           display: flex;
           flex-direction: column;
 
           label {
             margin-bottom: 10px;
-          }
-
-          .tags-input {
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column-reverse;
-
-            .tags-input {
-              resize: none;
-              border: 1px solid grey;
-              border-radius: 4px;
-              padding: 5px;
-              font-size: 16px;
-              height: 100px;
-              font-family: 'Roboto Slab', serif;
-
-              &:focus {
-                border: 1px solid #de0039;
-              }
-            }
-
-            .tags-input:focus + label {
-              color: #de0039;
-            }
           }
         }
       }

@@ -1,29 +1,68 @@
-import React, { InputHTMLAttributes } from 'react';
+/* eslint-disable no-param-reassign */
+import React, { InputHTMLAttributes, useEffect, useRef } from 'react';
+import { useField } from '@unform/core';
 
 import { Container } from './styles';
 
-interface RadioProps extends InputHTMLAttributes<HTMLButtonElement> {
-  title: string;
-  inputs: string[];
+export interface RadioOption {
+  value: string;
+  label: string;
 }
 
-const RadioButton: React.FC<RadioProps> = ({ title, inputs }) => (
-  <Container>
-    <p>{title}</p>
-    {inputs.map(input => (
-      <label key={input}>
-        <input
-          className="bolin"
-          type="radio"
-          name="radiob"
-          id="radioal"
-          value={input}
-        />
-        <p>{input}</p>
-        <span />
-      </label>
-    ))}
-  </Container>
-);
+interface RadioProps
+  extends Omit<
+    InputHTMLAttributes<HTMLInputElement>,
+    'type' | 'defaultChecked' | 'value' | 'defaultValue'
+  > {
+  name: string;
+  title: string;
+  options: RadioOption[];
+}
+
+const RadioButton: React.FC<RadioProps> = ({ name, title, options }) => {
+  const inputRefs = useRef<HTMLInputElement[]>([]);
+  const { fieldName, defaultValue = '', registerField } = useField(name);
+
+  useEffect(() => {
+    registerField<string>({
+      name: fieldName,
+      ref: inputRefs.current,
+      getValue: (refs: HTMLInputElement[]) => {
+        return refs.find(ref => ref.checked)?.value || '';
+      },
+      setValue: (refs: HTMLInputElement[], value) => {
+        const inputRef = refs.find(ref => ref.value === value);
+        if (inputRef) inputRef.checked = true;
+      },
+      clearValue: (refs: HTMLInputElement[]) => {
+        const inputRef = refs.find(ref => ref.checked === true);
+        if (inputRef) inputRef.checked = false;
+      },
+    });
+  }, [defaultValue, fieldName, registerField]);
+
+  return (
+    <Container>
+      <p>{title}</p>
+      {options.map((option, index) => (
+        <label htmlFor={option.value} key={option.value}>
+          <input
+            ref={ref => {
+              inputRefs.current[index] = ref as HTMLInputElement;
+            }}
+            className="bolin"
+            defaultChecked={defaultValue.includes(option.value)}
+            type="radio"
+            name={name}
+            id={option.value}
+            value={option.value}
+          />
+          <p>{option.label}</p>
+          <span />
+        </label>
+      ))}
+    </Container>
+  );
+};
 
 export default RadioButton;

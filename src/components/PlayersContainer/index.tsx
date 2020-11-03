@@ -14,8 +14,8 @@ interface PlayerContainer {
 
 const PlayersContainer: React.FC<PlayerContainer> = ({ data }) => (
   <Container>
-    {data.map(playerInfo => (
-      <div className="players-container">
+    {data.map((playerInfo, index) => (
+      <div key={index} className="players-container">
         <div className="pc-upper-info">
           <div className="player-name">
             <h4>Name: </h4>
