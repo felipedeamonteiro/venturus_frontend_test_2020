@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useTable, useSortBy } from 'react-table';
 import { FaSortUp, FaSortDown, FaSort, FaTrash } from 'react-icons/fa';
 import { MdModeEdit, MdShare } from 'react-icons/md';
+import { useHistory } from 'react-router-dom';
 import { Container } from './styles';
 
 interface ITable {
@@ -11,6 +12,7 @@ interface ITable {
 }
 
 const Table: React.FC<ITable> = ({ columns, data }: any) => {
+  const history = useHistory();
   const {
     getTableProps,
     getTableBodyProps,
@@ -18,6 +20,14 @@ const Table: React.FC<ITable> = ({ columns, data }: any) => {
     rows,
     prepareRow,
   } = useTable({ data, columns, manualSortBy: true } as any, useSortBy);
+
+  const handleGoToEditTeam = useCallback(() => {
+    history.push('/edit_team');
+  }, [history]);
+
+  const handleDeleteTeam = useCallback(() => {
+    console.log('Team removed.');
+  }, []);
 
   return (
     <Container>
@@ -55,9 +65,12 @@ const Table: React.FC<ITable> = ({ columns, data }: any) => {
                       {cell.render('Cell')}
                       {index === 1 ? (
                         <span>
-                          <FaTrash title="Remove" />
+                          <FaTrash title="Remove" onClick={handleDeleteTeam} />
                           <MdShare title="Share" />
-                          <MdModeEdit title="Edit" />
+                          <MdModeEdit
+                            title="Edit"
+                            onClick={handleGoToEditTeam}
+                          />
                         </span>
                       ) : (
                         ''

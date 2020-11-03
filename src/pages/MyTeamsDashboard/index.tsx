@@ -1,5 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { HiOutlinePlus } from 'react-icons/hi';
+import { useHistory } from 'react-router-dom';
 
 import Table from '../../components/Table';
 import SoccerField1 from '../../components/SoccerField1';
@@ -14,6 +15,12 @@ interface Example {
 }
 
 const MyTeamsDashboard: React.FC = () => {
+  const history = useHistory();
+
+  const handleGoFoward = useCallback(() => {
+    history.push('/create_team');
+  }, [history]);
+
   const columns = useMemo(
     () => [
       {
@@ -64,7 +71,11 @@ const MyTeamsDashboard: React.FC = () => {
         <div className="left-container">
           <div>
             <h1>My teams</h1>
-            <button type="button" title="Create a team">
+            <button
+              type="button"
+              title="Create a team"
+              onClick={handleGoFoward}
+            >
               <HiOutlinePlus size={17} color="#fff" />
             </button>
           </div>

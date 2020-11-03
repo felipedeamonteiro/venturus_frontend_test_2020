@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const Container = styled.header`
   top: 0;
-  position: fixed;
   height: 60px;
   background: linear-gradient(to right, #de0039, #a6006a);
   width: 100%;
@@ -30,7 +29,18 @@ export const Container = styled.header`
   .right-div {
     display: flex;
     align-items: center;
-    padding-right: 60px;
+    padding-right: 40px;
+
+    .logout {
+      margin-left: 40px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      color: #fff;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
 
     h4 {
       color: #fff;

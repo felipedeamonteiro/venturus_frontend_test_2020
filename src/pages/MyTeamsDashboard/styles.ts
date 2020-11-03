@@ -4,14 +4,14 @@ export const MiddleContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 17px;
 
   .left-container {
     background: #fff;
     border-radius: 15px;
     width: 45%;
-    height: 800px;
-    margin: 50px 40px 0;
+    height: 750px;
+    margin: 30px 40px 20px;
     padding: 24px;
     display: block;
     text-decoration: none;

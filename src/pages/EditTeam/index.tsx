@@ -1,13 +1,9 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Form } from '@unform/web';
 
-import { BiArrowBack, BiSearchAlt2 } from 'react-icons/bi';
+import { BiArrowBack } from 'react-icons/bi';
 import { useHistory } from 'react-router-dom';
 import { MiddleContainer } from './styles';
-import { fetchPlayersService } from '../../services/searchPlayersService';
-import { fetchTeamsService } from '../../services/searchTeamsService';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -19,29 +15,12 @@ import PlayersContainer from '../../components/PlayersContainer';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
-const CreateTeam: React.FC = () => {
-  const [searchTeam, setSearchTeam] = useState<string>('');
-  const [searchPlayer, setSearchPlayer] = useState<string>('');
-  const [isComplete, setIsComplete] = useState<boolean>(false);
+const EditTeam: React.FC = () => {
   const history = useHistory();
 
   const handleSubmit = useCallback((data: any): void => {
     console.log(data);
   }, []);
-
-  const handleSearchTeams = useCallback(async () => {
-    try {
-      const getTeam = await fetchTeamsService({ name: searchTeam });
-      console.log('getTeam', getTeam);
-      setIsComplete(true);
-    } catch (error) {
-      console.log('error', error);
-    }
-  }, [searchTeam]);
-
-  const handleSearchPlayers = useCallback(async () => {
-    await fetchPlayersService({ search: searchPlayer });
-  }, [searchPlayer]);
 
   const handleGetBack = useCallback(() => {
     history.push('/dashboard');
@@ -75,7 +54,7 @@ const CreateTeam: React.FC = () => {
       <Header />
       <MiddleContainer>
         <div className="main-container">
-          <h2>Create your team</h2>
+          <h2>Edit your team</h2>
           <button type="button" className="arrow" onClick={handleGetBack}>
             <BiArrowBack size={20} />
             <p>Voltar</p>
@@ -131,31 +110,11 @@ const CreateTeam: React.FC = () => {
                 </div>
 
                 <div className="bottom-right-div">
-                  <div>
-                    <Input
-                      name="search-teams"
-                      placeholder="Search"
-                      label="Search teams"
-                      value={searchTeam}
-                      onChange={e => setSearchTeam(e.target.value)}
-                    />
-                    <button type="button" onClick={handleSearchTeams}>
-                      <BiSearchAlt2 size={20} />
-                    </button>
-                  </div>
-                  <div>
-                    <Input
-                      name="search-players"
-                      placeholder="Search players"
-                      label="Search players"
-                      disabled={!isComplete}
-                      value={searchPlayer}
-                      onChange={e => setSearchPlayer(e.target.value)}
-                    />
-                    <button type="button" onClick={handleSearchPlayers}>
-                      <BiSearchAlt2 size={20} />
-                    </button>
-                  </div>
+                  <Input
+                    name="search-players"
+                    placeholder="Search"
+                    label="Search players"
+                  />
                   <PlayersContainer data={playersData} />
                 </div>
               </div>
@@ -168,4 +127,4 @@ const CreateTeam: React.FC = () => {
   );
 };
 
-export default CreateTeam;
+export default EditTeam;
