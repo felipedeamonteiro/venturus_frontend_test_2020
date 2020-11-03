@@ -5,9 +5,8 @@ import { Form } from '@unform/web';
 
 import { BiArrowBack, BiSearchAlt2 } from 'react-icons/bi';
 import { useHistory } from 'react-router-dom';
+import api from '../../services/api';
 import { MiddleContainer } from './styles';
-import { fetchPlayersService } from '../../services/searchPlayersService';
-import { fetchTeamsService } from '../../services/searchTeamsService';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -21,6 +20,8 @@ import Footer from '../../components/Footer';
 
 const CreateTeam: React.FC = () => {
   const [searchTeam, setSearchTeam] = useState<string>('');
+  const [searchTeamCountry, setSearchTeamCountry] = useState<string>('');
+  const [teamId, setTeamId] = useState<string>('');
   const [searchPlayer, setSearchPlayer] = useState<string>('');
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const history = useHistory();
@@ -31,17 +32,32 @@ const CreateTeam: React.FC = () => {
 
   const handleSearchTeams = useCallback(async () => {
     try {
-      const getTeam = await fetchTeamsService({ name: searchTeam });
-      console.log('getTeam', getTeam);
+      const { data } = await api.get('teams', {
+        params: {
+          name: searchTeam,
+          country: searchTeamCountry,
+        },
+      });
+      setTeamId(data.response[0].team.id);
       setIsComplete(true);
+    } catch (error) {
+      console.error('error', error);
+    }
+  }, [searchTeam, searchTeamCountry]);
+
+  const handleSearchPlayers = useCallback(async () => {
+    try {
+      const { data } = await api.get('players', {
+        params: {
+          search: searchPlayer,
+          team: teamId,
+        },
+      });
+      console.log('Player data', data.response);
     } catch (error) {
       console.log('error', error);
     }
-  }, [searchTeam]);
-
-  const handleSearchPlayers = useCallback(async () => {
-    await fetchPlayersService({ search: searchPlayer });
-  }, [searchPlayer]);
+  }, [searchPlayer, teamId]);
 
   const handleGetBack = useCallback(() => {
     history.push('/dashboard');
@@ -139,14 +155,22 @@ const CreateTeam: React.FC = () => {
                       value={searchTeam}
                       onChange={e => setSearchTeam(e.target.value)}
                     />
+                    <Input
+                      name="search-team-country"
+                      placeholder="Search"
+                      label="Team country"
+                      value={searchTeamCountry}
+                      onChange={e => setSearchTeamCountry(e.target.value)}
+                    />
                     <button type="button" onClick={handleSearchTeams}>
                       <BiSearchAlt2 size={20} />
                     </button>
                   </div>
+
                   <div>
                     <Input
                       name="search-players"
-                      placeholder="Search players"
+                      placeholder="Search"
                       label="Search players"
                       disabled={!isComplete}
                       value={searchPlayer}
