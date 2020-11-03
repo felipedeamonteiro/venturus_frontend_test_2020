@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+interface ContainerProps {
+  isErrored: boolean;
+}
+
+export const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column-reverse;
 
@@ -11,6 +15,12 @@ export const Container = styled.div`
     border: 1px solid grey;
     border-radius: 4px;
     padding: 5px;
+
+    ${props =>
+      props.isErrored &&
+      css`
+        border-color: #c53030;
+      `}
 
     &::placeholder {
       color: #b5bcc7;
