@@ -105,13 +105,24 @@ export const MiddleContainer = styled.div`
             align-items: center;
           }
 
-          .button-loading-div {
+          .button-errors-loading-div {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
 
-            span {
+            .error-messages1 {
+              margin-top: -35px;
+              color: #ff0000;
+              font-size: 14px;
+
+              ul {
+                list-style: none;
+                max-width: 325px;
+              }
+            }
+
+            .animated-icon {
               margin: -25px 0 25px 0;
               display: flex;
               flex-direction: row;
@@ -152,6 +163,47 @@ export const MiddleContainer = styled.div`
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
+
+            .error-messages2 {
+              font-size: 14px;
+              margin-top: -45px;
+              max-height: 40px;
+              color: #ff0000;
+              max-width: 175px;
+              display: flex;
+              align-items: flex-start;
+              -webkit-box-orient: horizontal;
+              -webkit-line-clamp: 2;
+            }
+
+            .animated-icon2 {
+              margin: -25px 0 25px 0;
+              display: flex;
+              flex-direction: row;
+
+              svg {
+                margin-right: 3px;
+                -webkit-animation: spin 1.5s linear infinite;
+                -moz-animation: spin 1.5s linear infinite;
+                animation: spin 1.5s linear infinite;
+              }
+              @-moz-keyframes spin {
+                100% {
+                  -moz-transform: rotate(360deg);
+                }
+              }
+              @-webkit-keyframes spin {
+                100% {
+                  -webkit-transform: rotate(360deg);
+                }
+              }
+              @keyframes spin {
+                100% {
+                  -webkit-transform: rotate(360deg);
+                  transform: rotate(360deg);
+                }
+              }
+            }
           }
         }
       }

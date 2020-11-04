@@ -28,9 +28,16 @@ const CreateTeam: React.FC = () => {
   const [searchTeamCountry, setSearchTeamCountry] = useState<string>('');
   const [teamId, setTeamId] = useState<string>('');
   const [searchPlayer, setSearchPlayer] = useState<string>('');
-  const [isComplete, setIsComplete] = useState<boolean>(false);
+  const [firstSearchIsComplete, setFirstSearchIsComplete] = useState<boolean>(
+    false,
+  );
   const [playersData, setPlayersData] = useState<PlayersData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading2, setIsLoading2] = useState<boolean>(false);
+  const [gotError1, setGotError1] = useState<boolean>(false);
+  const [error1, setError1] = useState<string[]>([]);
+  const [error2, setError2] = useState<string[]>([]);
+  const [gotError2, setGotError2] = useState<boolean>(false);
   const history = useHistory();
 
   const handleSubmit = useCallback((data: any): void => {
@@ -42,12 +49,14 @@ const CreateTeam: React.FC = () => {
     setSearchTeamCountry('');
     setTeamId('');
     setSearchPlayer('');
-    setIsComplete(false);
+    setFirstSearchIsComplete(false);
     setPlayersData([]);
   }, []);
 
   const handleSearchTeams = useCallback(async () => {
     try {
+      setError1([]);
+      setGotError1(false);
       setIsLoading(true);
       const { data } = await api.get('teams', {
         params: {
@@ -55,22 +64,63 @@ const CreateTeam: React.FC = () => {
           country: searchTeamCountry,
         },
       });
+      console.log('data', data);
+
+      if (
+        typeof data.errors.name === typeof 'string' ||
+        typeof data.errors.country === typeof 'string'
+      ) {
+        setIsLoading(false);
+        setGotError1(true);
+        setError1([data.errors.name, data.errors.country]);
+        return;
+      }
+
+      if (data.results === 0) {
+        setIsLoading(false);
+        setGotError1(true);
+        setError1([
+          'It was not found any teams with this name in this country. Try again.',
+        ]);
+        return;
+      }
+
       setTeamId(data.response[0].team.id);
-      setIsComplete(true);
+      setFirstSearchIsComplete(true);
       setIsLoading(false);
     } catch (error) {
       console.error('error', error);
+      setGotError1(true);
+      setError1([error]);
+      setIsLoading(false);
     }
   }, [searchTeam, searchTeamCountry]);
 
   const handleSearchPlayers = useCallback(async () => {
     try {
+      setError2([]);
+      setGotError2(false);
+      setIsLoading2(true);
       const { data } = await api.get('players', {
         params: {
           search: searchPlayer,
           team: teamId,
         },
       });
+
+      if (typeof data.errors.search === typeof 'string') {
+        setIsLoading2(false);
+        setGotError2(true);
+        setError2([data.errors.search]);
+        return;
+      }
+
+      if (data.results === 0) {
+        setIsLoading2(false);
+        setGotError2(true);
+        setError2(['It was not found any players with this name. Try again.']);
+        return;
+      }
 
       const customPlayersData = data.response.map(
         (superData: any): PlayersData => {
@@ -82,8 +132,12 @@ const CreateTeam: React.FC = () => {
         },
       );
       setPlayersData(customPlayersData);
+      setIsLoading2(false);
     } catch (error) {
       console.error('error', error);
+      setGotError2(true);
+      setError2([error]);
+      setIsLoading2(false);
     }
   }, [searchPlayer, teamId]);
 
@@ -140,7 +194,7 @@ const CreateTeam: React.FC = () => {
                   />
 
                   <RadioButton
-                    name="radio-buttom"
+                    name="team-type"
                     title="Team type"
                     options={radioOptions}
                   />
@@ -165,9 +219,9 @@ const CreateTeam: React.FC = () => {
                 <div className="bottom-right-div">
                   <div className="search-team-div">
                     <Input
-                      name="search-teams"
+                      name="search-team"
                       placeholder="Search"
-                      label="Search teams"
+                      label="Search team name"
                       value={searchTeam}
                       onChange={e => setSearchTeam(e.target.value)}
                     />
@@ -178,7 +232,7 @@ const CreateTeam: React.FC = () => {
                       value={searchTeamCountry}
                       onChange={e => setSearchTeamCountry(e.target.value)}
                     />
-                    <div className="button-loading-div">
+                    <div className="button-errors-loading-div">
                       <button
                         title="Search for a team and its country to open player search"
                         type="button"
@@ -186,6 +240,16 @@ const CreateTeam: React.FC = () => {
                       >
                         <BiSearchAlt2 size={20} />
                       </button>
+                      {gotError1 ? (
+                        <span className="error-messages1">
+                          <ul>
+                            <li>{error1[0]}</li>
+                            <li>{error1[1]}</li>
+                          </ul>
+                        </span>
+                      ) : (
+                        ''
+                      )}
                       {isLoading ? (
                         <span className="animated-icon">
                           <VscLoading size={20} color="#a6006a" />
@@ -202,7 +266,7 @@ const CreateTeam: React.FC = () => {
                       name="search-players"
                       placeholder="Search"
                       label="Search players"
-                      disabled={!isComplete}
+                      disabled={!firstSearchIsComplete}
                       value={searchPlayer}
                       onChange={e => setSearchPlayer(e.target.value)}
                     />
@@ -214,6 +278,21 @@ const CreateTeam: React.FC = () => {
                       >
                         <BiSearchAlt2 size={20} />
                       </button>
+                      {gotError2 ? (
+                        <span className="error-messages2">
+                          <p>{error2}</p>
+                        </span>
+                      ) : (
+                        ''
+                      )}
+                      {isLoading2 ? (
+                        <span className="animated-icon2">
+                          <VscLoading size={20} color="#a6006a" />
+                          <p>Loading...</p>
+                        </span>
+                      ) : (
+                        ''
+                      )}
                       <button
                         type="button"
                         className="clear-button"
