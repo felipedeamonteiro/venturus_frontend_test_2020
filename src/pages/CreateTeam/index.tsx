@@ -18,16 +18,32 @@ import PlayersContainer from '../../components/PlayersContainer';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
+interface PlayersData {
+  name: string;
+  age: number;
+  nationality: string;
+}
+
 const CreateTeam: React.FC = () => {
   const [searchTeam, setSearchTeam] = useState<string>('');
   const [searchTeamCountry, setSearchTeamCountry] = useState<string>('');
   const [teamId, setTeamId] = useState<string>('');
   const [searchPlayer, setSearchPlayer] = useState<string>('');
   const [isComplete, setIsComplete] = useState<boolean>(false);
+  const [playersData, setPlayersData] = useState<PlayersData[]>([]);
   const history = useHistory();
 
   const handleSubmit = useCallback((data: any): void => {
     console.log(data);
+  }, []);
+
+  const handleClearPlayersInfo = useCallback(() => {
+    setSearchTeam('');
+    setSearchTeamCountry('');
+    setTeamId('');
+    setSearchPlayer('');
+    setIsComplete(false);
+    setPlayersData([]);
   }, []);
 
   const handleSearchTeams = useCallback(async () => {
@@ -53,9 +69,19 @@ const CreateTeam: React.FC = () => {
           team: teamId,
         },
       });
-      console.log('Player data', data.response);
+
+      const customPlayersData = data.response.map(
+        (superData: any): PlayersData => {
+          return {
+            name: superData.player.name,
+            age: superData.player.age,
+            nationality: superData.player.nationality,
+          };
+        },
+      );
+      setPlayersData(customPlayersData);
     } catch (error) {
-      console.log('error', error);
+      console.error('error', error);
     }
   }, [searchPlayer, teamId]);
 
@@ -71,18 +97,6 @@ const CreateTeam: React.FC = () => {
     {
       value: 'fantasy',
       label: 'Fantasy',
-    },
-  ];
-  const playersData = [
-    {
-      name: 'Cristiano Ronaldo',
-      age: 37,
-      nationality: 'Portugal',
-    },
-    {
-      name: 'Ronaldo Luiz de Alves',
-      age: 28,
-      nationality: 'Brazil',
     },
   ];
 
@@ -147,7 +161,7 @@ const CreateTeam: React.FC = () => {
                 </div>
 
                 <div className="bottom-right-div">
-                  <div>
+                  <div className="search-team-div">
                     <Input
                       name="search-teams"
                       placeholder="Search"
@@ -162,7 +176,11 @@ const CreateTeam: React.FC = () => {
                       value={searchTeamCountry}
                       onChange={e => setSearchTeamCountry(e.target.value)}
                     />
-                    <button type="button" onClick={handleSearchTeams}>
+                    <button
+                      title="Search for a team and its country to open player search"
+                      type="button"
+                      onClick={handleSearchTeams}
+                    >
                       <BiSearchAlt2 size={20} />
                     </button>
                   </div>
@@ -176,9 +194,22 @@ const CreateTeam: React.FC = () => {
                       value={searchPlayer}
                       onChange={e => setSearchPlayer(e.target.value)}
                     />
-                    <button type="button" onClick={handleSearchPlayers}>
-                      <BiSearchAlt2 size={20} />
-                    </button>
+                    <div className="bottom-buttons">
+                      <button
+                        title="Search for players"
+                        type="button"
+                        onClick={handleSearchPlayers}
+                      >
+                        <BiSearchAlt2 size={20} />
+                      </button>
+                      <button
+                        type="button"
+                        className="clear-button"
+                        onClick={handleClearPlayersInfo}
+                      >
+                        <p>Clear players data</p>
+                      </button>
+                    </div>
                   </div>
                   <PlayersContainer data={playersData} />
                 </div>

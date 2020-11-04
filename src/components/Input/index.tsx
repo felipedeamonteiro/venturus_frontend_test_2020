@@ -7,9 +7,16 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label?: string;
   placeholder?: string;
+  disabled?: boolean;
 }
 
-const Input: React.FC<InputProps> = ({ label, name, placeholder, ...rest }) => {
+const Input: React.FC<InputProps> = ({
+  disabled = false,
+  label,
+  name,
+  placeholder,
+  ...rest
+}) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { fieldName, defaultValue, error, registerField } = useField(name);
 
@@ -22,13 +29,14 @@ const Input: React.FC<InputProps> = ({ label, name, placeholder, ...rest }) => {
   }, [fieldName, registerField]);
 
   return (
-    <Container isErrored={!!error}>
+    <Container isErrored={!!error} isDisabled={disabled}>
       <input
         ref={inputRef}
         type="text"
         name={name}
         defaultValue={defaultValue}
         placeholder={placeholder}
+        disabled={disabled}
         {...rest}
       />
 

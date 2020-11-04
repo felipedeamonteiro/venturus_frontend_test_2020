@@ -91,8 +91,31 @@ export const MiddleContainer = styled.div`
         margin: 0 160px;
 
         .bottom-right-div {
-          label {
-            margin-bottom: 10px;
+          button {
+            margin: -25px 0 25px 0;
+            width: 30px;
+            height: 30px;
+            color: #fff;
+            border-radius: 10px;
+            border: 1px solid #de0039;
+            background: linear-gradient(to bottom, #de0039, #70008c);
+            box-shadow: 0 0px 7px 0px #a6006a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+
+          .clear-button {
+            width: fit-content;
+            font-weight: 500;
+            padding: 5px;
+          }
+
+          div .bottom-buttons {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
           }
         }
       }

@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 interface ContainerProps {
   isErrored: boolean;
+  isDisabled: boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -20,6 +21,12 @@ export const Container = styled.div<ContainerProps>`
       props.isErrored &&
       css`
         border-color: #c53030;
+      `}
+
+    ${props =>
+      props.isDisabled &&
+      css`
+        background: lightgray;
       `}
 
     &::placeholder {

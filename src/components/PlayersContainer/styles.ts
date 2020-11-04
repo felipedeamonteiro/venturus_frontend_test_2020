@@ -16,6 +16,7 @@ export const Container = styled.div`
 
     p {
       color: #de0039;
+      font-size: 14px;
     }
 
     .pc-upper-info {
