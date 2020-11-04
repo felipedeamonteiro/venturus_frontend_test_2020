@@ -51,6 +51,10 @@ const CreateTeam: React.FC = () => {
     setSearchPlayer('');
     setFirstSearchIsComplete(false);
     setPlayersData([]);
+    setError1([]);
+    setError2([]);
+    setGotError1(false);
+    setGotError2(false);
   }, []);
 
   const handleSearchTeams = useCallback(async () => {
@@ -64,7 +68,6 @@ const CreateTeam: React.FC = () => {
           country: searchTeamCountry,
         },
       });
-      console.log('data', data);
 
       if (
         typeof data.errors.name === typeof 'string' ||
@@ -72,7 +75,16 @@ const CreateTeam: React.FC = () => {
       ) {
         setIsLoading(false);
         setGotError1(true);
-        setError1([data.errors.name, data.errors.country]);
+        if (
+          typeof data.errors.name === typeof 'string' &&
+          typeof data.errors.country === typeof 'string'
+        ) {
+          setError1([data.errors.name, data.errors.country]);
+        } else if (typeof data.errors.name === typeof 'string') {
+          setError1([data.errors.name]);
+        } else {
+          setError1([data.errors.country]);
+        }
         return;
       }
 
@@ -98,6 +110,7 @@ const CreateTeam: React.FC = () => {
 
   const handleSearchPlayers = useCallback(async () => {
     try {
+      setPlayersData([]);
       setError2([]);
       setGotError2(false);
       setIsLoading2(true);
