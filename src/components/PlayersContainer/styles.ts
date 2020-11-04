@@ -1,6 +1,25 @@
 import styled from 'styled-components';
+import { shade } from 'polished';
 
 export const Container = styled.div`
+  width: 370px;
+  height: 218px;
+  max-height: 218px;
+  overflow-y: auto;
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #ff99b3;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: ${shade(0.1, '#ff99b3')};
+  }
+
   .players-container {
     width: 350px;
     height: 65px;
@@ -16,10 +35,12 @@ export const Container = styled.div`
 
     p {
       color: #de0039;
-      font-size: 14px;
+      font-size: 15px;
     }
 
     .pc-upper-info {
+      max-width: 90%;
+      max-height: 40px;
       width: 90%;
       display: flex;
       align-items: center;
@@ -30,6 +51,15 @@ export const Container = styled.div`
         align-items: center;
         flex-direction: row;
         margin: 8px 0;
+
+        p {
+          max-width: 200px;
+          -webkit-box-orient: horizontal;
+          -webkit-line-clamp: 1;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
       }
     }
 

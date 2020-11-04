@@ -29,7 +29,7 @@ export const Container = styled.div<ContainerProps>`
     list-style: none;
     overflow-y: auto;
     flex-flow: row wrap;
-    max-width: 350;
+    max-width: 350px;
 
     ${props =>
       props.isFocused &&

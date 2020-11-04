@@ -10,7 +10,7 @@ export const Container = styled.div<ContainerProps>`
   flex-direction: column-reverse;
 
   input {
-    width: 350px;
+    width: 370px;
     margin-bottom: 30px;
     box-sizing: border-box;
     border: 1px solid grey;

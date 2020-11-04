@@ -13,26 +13,33 @@ interface PlayerContainer {
 }
 
 const PlayersContainer: React.FC<PlayerContainer> = ({ data }) => (
-  <Container>
-    {data.map((playerInfo, index) => (
-      <div key={index} className="players-container">
-        <div className="pc-upper-info">
-          <div className="player-name">
-            <h4>Name: </h4>
-            <p>{playerInfo.name}</p>
+  <>
+    <Container>
+      {data.map((playerInfo, index) => (
+        <div key={index} className="players-container">
+          <div className="pc-upper-info">
+            <div className="player-name">
+              <h4>Name: </h4>
+              <p title={playerInfo.name}>{playerInfo.name}</p>
+            </div>
+            <div className="player-age">
+              <h4>Age: </h4>
+              <p>{playerInfo.age}</p>
+            </div>
           </div>
-          <div className="player-age">
-            <h4>Age: </h4>
-            <p>{playerInfo.age}</p>
+          <div className="pc-bottom-info">
+            <h4>Nationality: </h4>
+            <p>{playerInfo.nationality}</p>
           </div>
         </div>
-        <div className="pc-bottom-info">
-          <h4>Nationality: </h4>
-          <p>{playerInfo.nationality}</p>
-        </div>
-      </div>
-    ))}
-  </Container>
+      ))}
+    </Container>
+    <p style={{ marginTop: 6 }}>
+      {data.length}
+      -player
+      {data.length > 1 || data.length === 0 ? 's' : ''}
+    </p>
+  </>
 );
 
 export default PlayersContainer;
