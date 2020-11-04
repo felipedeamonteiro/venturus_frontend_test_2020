@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { Form } from '@unform/web';
 
 import { BiArrowBack, BiSearchAlt2 } from 'react-icons/bi';
+import { VscLoading } from 'react-icons/vsc';
 import { useHistory } from 'react-router-dom';
 import api from '../../services/api';
 import { MiddleContainer } from './styles';
@@ -29,6 +30,7 @@ const CreateTeam: React.FC = () => {
   const [searchPlayer, setSearchPlayer] = useState<string>('');
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [playersData, setPlayersData] = useState<PlayersData[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const history = useHistory();
 
   const handleSubmit = useCallback((data: any): void => {
@@ -46,6 +48,7 @@ const CreateTeam: React.FC = () => {
 
   const handleSearchTeams = useCallback(async () => {
     try {
+      setIsLoading(true);
       const { data } = await api.get('teams', {
         params: {
           name: searchTeam,
@@ -54,6 +57,7 @@ const CreateTeam: React.FC = () => {
       });
       setTeamId(data.response[0].team.id);
       setIsComplete(true);
+      setIsLoading(false);
     } catch (error) {
       console.error('error', error);
     }
@@ -174,13 +178,23 @@ const CreateTeam: React.FC = () => {
                       value={searchTeamCountry}
                       onChange={e => setSearchTeamCountry(e.target.value)}
                     />
-                    <button
-                      title="Search for a team and its country to open player search"
-                      type="button"
-                      onClick={handleSearchTeams}
-                    >
-                      <BiSearchAlt2 size={20} />
-                    </button>
+                    <div className="button-loading-div">
+                      <button
+                        title="Search for a team and its country to open player search"
+                        type="button"
+                        onClick={handleSearchTeams}
+                      >
+                        <BiSearchAlt2 size={20} />
+                      </button>
+                      {isLoading ? (
+                        <span className="animated-icon">
+                          <VscLoading size={20} color="#a6006a" />
+                          <p>Loading...</p>
+                        </span>
+                      ) : (
+                        ''
+                      )}
+                    </div>
                   </div>
 
                   <div>

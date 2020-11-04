@@ -105,6 +105,42 @@ export const MiddleContainer = styled.div`
             align-items: center;
           }
 
+          .button-loading-div {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            span {
+              margin: -25px 0 25px 0;
+              display: flex;
+              flex-direction: row;
+
+              svg {
+                margin-right: 3px;
+                -webkit-animation: spin 1.5s linear infinite;
+                -moz-animation: spin 1.5s linear infinite;
+                animation: spin 1.5s linear infinite;
+              }
+              @-moz-keyframes spin {
+                100% {
+                  -moz-transform: rotate(360deg);
+                }
+              }
+              @-webkit-keyframes spin {
+                100% {
+                  -webkit-transform: rotate(360deg);
+                }
+              }
+              @keyframes spin {
+                100% {
+                  -webkit-transform: rotate(360deg);
+                  transform: rotate(360deg);
+                }
+              }
+            }
+          }
+
           .clear-button {
             width: fit-content;
             font-weight: 500;

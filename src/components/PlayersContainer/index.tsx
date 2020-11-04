@@ -34,7 +34,7 @@ const PlayersContainer: React.FC<PlayerContainer> = ({ data }) => (
         </div>
       ))}
     </Container>
-    <p style={{ marginTop: 6 }}>
+    <p style={{ marginTop: 6, color: '#70008c', fontWeight: 600 }}>
       {data.length}
       -player
       {data.length > 1 || data.length === 0 ? 's' : ''}
