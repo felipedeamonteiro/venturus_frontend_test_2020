@@ -71,6 +71,11 @@ export const Container = styled.div<ContainerProps>`
         justify-content: flex-start;
         flex-direction: row;
 
+        p {
+          color: #fff;
+          font-weight: 500;
+        }
+
         button {
           background: none;
           border: none;
