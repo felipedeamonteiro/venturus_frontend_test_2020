@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { shade } from 'polished';
+import { transparentize } from 'polished';
 
 export const Container = styled.div`
   border-radius: 15px;
@@ -18,14 +18,14 @@ export const Container = styled.div`
     box-sizing: inherit;
     width: 1px;
     height: 290px;
-    border-right: solid 1px ${shade(0.2, '#fff')};
+    border-right: solid 1px ${transparentize(0.6, '#fff')};
   }
 
   .central-circle {
     position: absolute;
     width: 90px;
     height: 90px;
-    border: 1px solid ${shade(0.2, '#fff')};
+    border: 1px solid ${transparentize(0.6, '#fff')};
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -35,9 +35,9 @@ export const Container = styled.div`
       position: absolute;
       width: 1px;
       height: 1px;
-      background-color: #fff;
+      background-color: ${transparentize(0.6, '#fff')};
       content: '';
-      border: 1px solid ${shade(0.2, '#fff')};
+      border: 1px solid ${transparentize(0.6, '#fff')};
       border-radius: 50%;
     }
   }
@@ -117,7 +117,7 @@ export const Container = styled.div`
       }
 
       .lpp-border {
-        border: 3px dashed lightgray;
+        border: 2px dashed lightgray;
         width: 135px;
         height: 135px;
         line-height: 145px;

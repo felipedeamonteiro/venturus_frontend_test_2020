@@ -6,17 +6,12 @@ import { Container } from './styles';
 
 const SoccerField2: React.FC = () => {
   const [formationValue, setformationValue] = useState<string>('-');
-  const handleChangeFormation = useCallback(e => {
-    const { value } = e.target;
-    console.log('Formation value', value);
-    setformationValue(value);
-  }, []);
 
   return (
     <Container formationValue={formationValue}>
       <label htmlFor="formation-box">Formation</label>
       <select
-        onChange={handleChangeFormation}
+        onChange={e => setformationValue(e.target.value)}
         name="formation-box"
         id="formation-box"
         defaultValue="-"

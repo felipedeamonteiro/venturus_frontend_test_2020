@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { shade } from 'polished';
+import { transparentize } from 'polished';
 
 interface SoccerFieldData {
   formationValue: string;
@@ -35,14 +35,14 @@ export const Container = styled.div<SoccerFieldData>`
       box-sizing: inherit;
       width: 290px;
       height: 1px;
-      border-top: solid 1px ${shade(0.4, '#fff')};
+      border-top: solid 1px ${transparentize(0.6, '#fff')};
     }
 
     .soccer-field-circle {
       position: absolute;
       width: 90px;
       height: 90px;
-      border: 1px solid ${shade(0.4, '#fff')};
+      border: 1px solid ${transparentize(0.6, '#fff')};
       border-radius: 50%;
       display: flex;
       justify-content: center;
@@ -52,9 +52,9 @@ export const Container = styled.div<SoccerFieldData>`
         position: absolute;
         width: 1px;
         height: 1px;
-        background-color: #fff;
+        background-color: ${transparentize(0.6, '#fff')};
         content: '';
-        border: 1px solid ${shade(0.4, '#fff')};
+        border: 1px solid ${transparentize(0.6, '#fff')};
         border-radius: 50%;
       }
     }
