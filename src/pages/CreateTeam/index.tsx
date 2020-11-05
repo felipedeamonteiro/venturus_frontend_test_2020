@@ -18,6 +18,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 interface PlayersData {
+  id: number;
   name: string;
   age: number;
   nationality: string;
@@ -48,11 +49,6 @@ const CreateTeam: React.FC = () => {
 
   const handleSubmit = useCallback((data): void => {
     console.log(data);
-  }, []);
-
-  const handleDragStart = useCallback((e, playerName) => {
-    console.log('dragstart', playerName);
-    e.dataTransfer.setData('playerName', playerName);
   }, []);
 
   const handleClearPlayersInfo = useCallback(() => {
@@ -153,6 +149,7 @@ const CreateTeam: React.FC = () => {
       const customPlayersData = data.response.map(
         (superData: any): PlayersData => {
           return {
+            id: superData.player.id,
             name: superData.player.name,
             age: superData.player.age,
             nationality: superData.player.nationality,

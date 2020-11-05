@@ -1,17 +1,23 @@
 import React, { createContext, useContext, useCallback, useState } from 'react';
 
 interface Player {
+  id: number;
   name: string;
   age: number;
   nationality: string;
   position: string;
 }
 
+interface TeamPlayersPosition {
+  position: number;
+  player: Player;
+}
+
 interface PlayersContextData {
   player: Player[];
-  handleDragStart(e: any, playername: string): void;
-  handleDragOver(): void;
-  handleDrop(): void;
+  handleDragStart(e: any, playerInfo: Player): void;
+  handleDragOver(e: any, positionNumber: number): void;
+  handleDrop(e: any, category: any): void;
 }
 
 const PlayerContext = createContext<PlayersContextData>(
@@ -20,30 +26,26 @@ const PlayerContext = createContext<PlayersContextData>(
 
 export const PlayerProvider: React.FC = ({ children }) => {
   const [playersInfo, setPlayersInfo] = useState<Player[]>([]);
+  const [teamPlayersPosition, setTeamPlayersPosition] = useState<
+    TeamPlayersPosition[]
+  >([]);
 
-  const handleDragStart = useCallback((e, playername) => {
+  const handleDragOver = useCallback((e, positionNumber) => {
+    e.preventDefault();
+    console.log('onDragOver position', positionNumber);
+  }, []);
+
+  const handleDrop = useCallback((e, category) => {
+    console.log('category drop', category);
+    const playerName = e.dataTransfer.getData('playerName');
+    console.log('drop playerName', playerName);
+  }, []);
+
+  const handleDragStart = useCallback((e, playerInfo) => {
     console.log('onDragStart');
-  }, []);
-
-  const handleDragOver = useCallback(() => {
-    console.log('onDragOver');
-  }, []);
-
-  // const handleDragOver = useCallback(e => {
-  //   e.preventDefault();
-  // }, []);
-
-  // const handleDrop = useCallback((e, category) => {
-  //   const playerName = e.dataTransfer.getData('playerName');
-  // }, []);
-
-  // const handleDragStart = useCallback((e, playerName) => {
-  //   console.log('dragstart', playerName);
-  //   e.dataTransfer.setData('playerName', playerName);
-  // }, []);
-
-  const handleDrop = useCallback(() => {
-    console.log('onDrop');
+    console.log('dragstart', playerInfo);
+    const playerInfoData = e.dataTransfer.setData('playerInfo', playerInfo);
+    console.log('DragStart playerInfoData', playerInfoData);
   }, []);
 
   return (

@@ -18,8 +18,8 @@ const PlayerDropablePosition: React.FC<PositionProps> = ({
     <Container positionNumber={positionNumber}>
       <div
         className="player-position"
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
+        onDragOver={e => handleDragOver(e, positionNumber)}
+        onDrop={e => handleDrop(e, 'dropou')}
       >
         <div className="player-position-center">
           <GoPlus size={20} />

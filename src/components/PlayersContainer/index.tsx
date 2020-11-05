@@ -4,6 +4,7 @@ import { usePlayer } from '../../hooks/players';
 import { Container } from './styles';
 
 interface PlayerInfo {
+  id: number;
   name: string;
   age: number;
   nationality: string;
@@ -25,7 +26,7 @@ const PlayersContainer: React.FC<PlayerContainer> = ({ data }) => {
             key={index}
             className="players-container"
             draggable
-            onDragStart={e => handleDragStart(e, playerInfo.name)}
+            onDragStart={e => handleDragStart(e, playerInfo)}
           >
             <div className="pc-upper-info">
               <div className="player-name">
