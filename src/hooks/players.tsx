@@ -22,6 +22,7 @@ interface PlayersContextData {
   handleDragOver(e: any): void;
   handleDrop(e: any, positionNumber: number): void;
   setPlayerWasPutInField(a: boolean): void;
+  handleClearFieldInfo(): void;
 }
 
 const PlayerContext = createContext<PlayersContextData>(
@@ -64,6 +65,10 @@ export const PlayerProvider: React.FC = ({ children }) => {
     [teamPlayersPosition, playersInfo],
   );
 
+  const handleClearFieldInfo = useCallback(() => {
+    setTeamPlayersPosition([]);
+  }, []);
+
   return (
     <PlayerContext.Provider
       value={{
@@ -75,6 +80,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
         playerInfoPutInField,
         playerWasPutInField,
         setPlayerWasPutInField,
+        handleClearFieldInfo,
       }}
     >
       {children}

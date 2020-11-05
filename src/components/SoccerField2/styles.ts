@@ -6,17 +6,42 @@ interface SoccerFieldData {
 }
 
 export const Container = styled.div<SoccerFieldData>`
-  > label {
-    margin-right: 20px;
-    font-weight: 500;
-  }
-  select {
-    width: 100px;
-    height: 30px;
-    padding: 5px;
-    border-radius: 4px;
-    background: #fff;
-    box-shadow: 0 2px 2px lightgray;
+  .select-div {
+    margin-right: 45px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+
+    > label {
+      margin-right: 10px;
+      font-weight: 500;
+    }
+    select {
+      width: 100px;
+      height: 30px;
+      padding: 5px;
+      border-radius: 4px;
+      background: #fff;
+      box-shadow: 0 2px 2px lightgray;
+    }
+
+    button {
+      margin: 0;
+      width: 30px;
+      height: 30px;
+      color: #fff;
+      border-radius: 10px;
+      border: 1px solid #de0039;
+      background: linear-gradient(to bottom, #de0039, #70008c);
+      box-shadow: 0 0px 7px 0px #a6006a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: fit-content;
+      font-weight: 500;
+      padding: 5px;
+    }
   }
 
   .soccer-field {

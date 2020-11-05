@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import PlayerDropablePosition from '../PlayerDropablePosition';
 import Input from '../Input';
@@ -7,31 +7,46 @@ import { usePlayer } from '../../hooks/players';
 
 const SoccerField2: React.FC = () => {
   const [formationValue, setformationValue] = useState<string>('-');
-  const { teamPlayersPosition } = usePlayer();
+  const { teamPlayersPosition, handleClearFieldInfo } = usePlayer();
+  const [teamPlayersPositionState, setTeamPlayersPositionState] = useState<
+    string
+  >('');
 
-  const stringfiedTeamInfo = JSON.stringify(teamPlayersPosition);
+  useEffect(() => {
+    const stringfiedTeamInfo = JSON.stringify(teamPlayersPosition);
+    setTeamPlayersPositionState(stringfiedTeamInfo);
+  }, [teamPlayersPosition]);
 
   return (
     <Container formationValue={formationValue}>
-      <label htmlFor="formation-box">Formation</label>
-      <select
-        onChange={e => setformationValue(e.target.value)}
-        name="formation-box"
-        id="formation-box"
-        defaultValue="-"
-      >
-        <option value="-">-</option>
-        <option value="3 - 2 - 2 - 3">3 - 2 - 2 - 3</option>
-        <option value="3 - 2 - 3 - 2">3 - 2 - 3 - 2</option>
-        <option value="3 - 4 - 3">3 - 4 - 3</option>
-        <option value="3 - 5 - 2">3 - 5 - 2</option>
-        <option value="4 - 2 - 3 - 1">4 - 2 - 3 - 1</option>
-        <option value="4 - 3 - 1 - 2">4 - 3 - 1 - 2</option>
-        <option value="4 - 3 - 3">4 - 3 - 3</option>
-        <option value="4 - 4 - 2">4 - 4 - 2</option>
-        <option value="4 - 5 - 1">4 - 5 - 1</option>
-        <option value="5 - 4 - 1">5 - 4 - 1</option>
-      </select>
+      <div className="select-div">
+        <label htmlFor="formation-box">Formation</label>
+        <select
+          onChange={e => setformationValue(e.target.value)}
+          name="formation-box"
+          id="formation-box"
+          defaultValue="-"
+        >
+          <option value="-">-</option>
+          <option value="3 - 2 - 2 - 3">3 - 2 - 2 - 3</option>
+          <option value="3 - 2 - 3 - 2">3 - 2 - 3 - 2</option>
+          <option value="3 - 4 - 3">3 - 4 - 3</option>
+          <option value="3 - 5 - 2">3 - 5 - 2</option>
+          <option value="4 - 2 - 3 - 1">4 - 2 - 3 - 1</option>
+          <option value="4 - 3 - 1 - 2">4 - 3 - 1 - 2</option>
+          <option value="4 - 3 - 3">4 - 3 - 3</option>
+          <option value="4 - 4 - 2">4 - 4 - 2</option>
+          <option value="4 - 5 - 1">4 - 5 - 1</option>
+          <option value="5 - 4 - 1">5 - 4 - 1</option>
+        </select>
+        <button
+          type="button"
+          className="clear-button"
+          onClick={handleClearFieldInfo}
+        >
+          <p>Clear Field</p>
+        </button>
+      </div>
       <span>
         <Input
           value={formationValue}
@@ -42,7 +57,7 @@ const SoccerField2: React.FC = () => {
       </span>
       <span>
         <Input
-          value={stringfiedTeamInfo}
+          value={teamPlayersPositionState}
           onChange={() => ''}
           name="team-players-formation"
           style={{ visibility: 'hidden', marginBottom: -30 }}

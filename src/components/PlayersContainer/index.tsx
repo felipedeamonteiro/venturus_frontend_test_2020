@@ -28,17 +28,16 @@ const PlayersContainer: React.FC<PlayerContainer> = ({
 
   useEffect(() => {
     setPlayersData(playersDataOutsideField);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [playersDataOutsideField]);
 
   useEffect(() => {
     if (playerWasPutInField) {
-      const filteredPlayers = playersDataOutsideField.filter(
-        playerData => playerData.id !== playerInfoPutInField.id,
-      );
+      const filteredPlayers = playersData.filter(playerData => {
+        return playerData.id !== playerInfoPutInField.id;
+      });
       setPlayersData(filteredPlayers);
+      setPlayerWasPutInField(false);
     }
-    setPlayerWasPutInField(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playerWasPutInField]);
 

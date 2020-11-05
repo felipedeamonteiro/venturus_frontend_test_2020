@@ -19,8 +19,11 @@ const PlayerDropablePosition: React.FC<PositionProps> = ({
   useEffect(() => {
     teamPlayersPosition.forEach(player => {
       if (player.position === positionNumber) {
-        const [firstName, secondName] = player.player.name.split(' ');
-        setNameInitials(firstName[0] + secondName[0].toUpperCase());
+        const firstName = player.player.name.split(' ')[0];
+        const lastName = player.player.name.split(' ').splice(-1)[0];
+        console.log('firstName:', firstName);
+        console.log('lastName:', lastName);
+        setNameInitials(firstName[0] + lastName[0]);
         setHasPlayer(true);
       }
     });
