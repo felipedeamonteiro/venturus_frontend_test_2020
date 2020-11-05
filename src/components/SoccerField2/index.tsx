@@ -7,10 +7,11 @@ import { usePlayer } from '../../hooks/players';
 
 const SoccerField2: React.FC = () => {
   const [formationValue, setformationValue] = useState<string>('-');
-  const { teamPlayersPosition, handleClearFieldInfo } = usePlayer();
   const [teamPlayersPositionState, setTeamPlayersPositionState] = useState<
     string
   >('');
+
+  const { teamPlayersPosition, handleClearFieldInfo } = usePlayer();
 
   useEffect(() => {
     const stringfiedTeamInfo = JSON.stringify(teamPlayersPosition);

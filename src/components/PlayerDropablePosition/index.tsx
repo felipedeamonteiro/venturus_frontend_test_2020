@@ -14,7 +14,12 @@ const PlayerDropablePosition: React.FC<PositionProps> = ({
 }) => {
   const [hasPlayer, setHasPlayer] = useState<boolean>(false);
   const [nameInitials, setNameInitials] = useState<string>('');
-  const { handleDragOver, handleDrop, teamPlayersPosition } = usePlayer();
+  const {
+    handleDragOver,
+    handleDrop,
+    teamPlayersPosition,
+    clearStates,
+  } = usePlayer();
 
   useEffect(() => {
     teamPlayersPosition.forEach(player => {
@@ -28,6 +33,12 @@ const PlayerDropablePosition: React.FC<PositionProps> = ({
       }
     });
   }, [positionNumber, teamPlayersPosition]);
+
+  useEffect(() => {
+    if (clearStates) {
+      setHasPlayer(false);
+    }
+  }, [clearStates]);
 
   // [x] - Pegar as iniciais do nome do jogador;
   // [] - Montar a caixinha com o hover e informações dele;

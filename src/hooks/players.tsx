@@ -16,6 +16,7 @@ interface TeamPlayersPosition {
 interface PlayersContextData {
   player: Player[];
   playerWasPutInField: boolean;
+  clearStates: boolean;
   playerInfoPutInField: Player;
   teamPlayersPosition: TeamPlayersPosition[];
   handleDragStart(e: any, playerInfo: Player): void;
@@ -40,6 +41,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
   const [playerInfoPutInField, setPlayerInfoPutInField] = useState<Player>(
     {} as Player,
   );
+  const [clearStates, setClearStates] = useState<boolean>(false);
 
   const handleDragStart = useCallback((e, playerInfo) => {
     e.dataTransfer.setData('playerInfo', JSON.stringify(playerInfo));
@@ -67,6 +69,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
 
   const handleClearFieldInfo = useCallback(() => {
     setTeamPlayersPosition([]);
+    setClearStates(true);
   }, []);
 
   return (
@@ -79,6 +82,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
         teamPlayersPosition,
         playerInfoPutInField,
         playerWasPutInField,
+        clearStates,
         setPlayerWasPutInField,
         handleClearFieldInfo,
       }}
