@@ -15,9 +15,10 @@ interface TeamPlayersPosition {
 
 interface PlayersContextData {
   player: Player[];
+  teamPlayersPosition: TeamPlayersPosition[];
   handleDragStart(e: any, playerInfo: Player): void;
   handleDragOver(e: any, positionNumber: number): void;
-  handleDrop(e: any, category: any): void;
+  handleDrop(e: any, positionNumber: number, category: any): void;
 }
 
 const PlayerContext = createContext<PlayersContextData>(
@@ -30,23 +31,37 @@ export const PlayerProvider: React.FC = ({ children }) => {
     TeamPlayersPosition[]
   >([]);
 
+  const handleDragStart = useCallback((e, playerInfo) => {
+    console.log('onDragStart');
+    console.log('dragstart', playerInfo);
+    const playerInfoData = e.dataTransfer.setData(
+      'playerInfo',
+      JSON.stringify(playerInfo),
+    );
+    console.log('DragStart playerInfoData', playerInfoData);
+  }, []);
+
   const handleDragOver = useCallback((e, positionNumber) => {
     e.preventDefault();
     console.log('onDragOver position', positionNumber);
   }, []);
 
-  const handleDrop = useCallback((e, category) => {
-    console.log('category drop', category);
-    const playerName = e.dataTransfer.getData('playerName');
-    console.log('drop playerName', playerName);
-  }, []);
-
-  const handleDragStart = useCallback((e, playerInfo) => {
-    console.log('onDragStart');
-    console.log('dragstart', playerInfo);
-    const playerInfoData = e.dataTransfer.setData('playerInfo', playerInfo);
-    console.log('DragStart playerInfoData', playerInfoData);
-  }, []);
+  const handleDrop = useCallback(
+    (e, positionNumber, category) => {
+      console.log('category drop', category);
+      const playerInfoMonster = e.dataTransfer.getData('playerInfo');
+      const parsedPlayerInfo = JSON.parse(playerInfoMonster);
+      setPlayersInfo([...playersInfo, parsedPlayerInfo]);
+      console.log('no drop playerInfo', playerInfoMonster);
+      const playerCompleteInfo: TeamPlayersPosition = {
+        position: positionNumber,
+        player: JSON.parse(playerInfoMonster),
+      };
+      console.log('drop playerCompleteInfo', playerCompleteInfo);
+      setTeamPlayersPosition([...teamPlayersPosition, playerCompleteInfo]);
+    },
+    [teamPlayersPosition, playersInfo],
+  );
 
   return (
     <PlayerContext.Provider
@@ -55,6 +70,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
         handleDragStart,
         handleDragOver,
         handleDrop,
+        teamPlayersPosition,
       }}
     >
       {children}
