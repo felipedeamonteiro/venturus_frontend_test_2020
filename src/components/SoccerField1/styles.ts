@@ -70,7 +70,7 @@ export const Container = styled.div`
       }
 
       .mpp-border {
-        border: 3px dashed lightgray;
+        border: 2px dashed lightgray;
         width: 135px;
         height: 135px;
         line-height: 145px;

@@ -50,7 +50,7 @@ export const Container = styled.div`
         display: flex;
         align-items: center;
         flex-direction: row;
-        margin: 8px 0;
+        margin: 4px 0 4px 0;
 
         p {
           max-width: 200px;
@@ -67,6 +67,23 @@ export const Container = styled.div`
       width: 90%;
       display: flex;
       align-items: center;
+      justify-content: space-between;
+
+      > div {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        margin: 6px 0 2px 0;
+
+        p {
+          max-width: 200px;
+          -webkit-box-orient: horizontal;
+          -webkit-line-clamp: 1;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+      }
     }
   }
 `;

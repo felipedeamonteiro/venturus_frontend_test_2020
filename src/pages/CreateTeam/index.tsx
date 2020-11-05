@@ -21,6 +21,7 @@ interface PlayersData {
   name: string;
   age: number;
   nationality: string;
+  position: string;
 }
 
 const CreateTeam: React.FC = () => {
@@ -59,6 +60,9 @@ const CreateTeam: React.FC = () => {
 
   const handleSearchTeams = useCallback(async () => {
     try {
+      setSearchPlayer('');
+      setFirstSearchIsComplete(false);
+      setPlayersData([]);
       setError1([]);
       setGotError1(false);
       setIsLoading(true);
@@ -120,6 +124,7 @@ const CreateTeam: React.FC = () => {
           team: teamId,
         },
       });
+      console.log('data', data);
 
       if (typeof data.errors.search === typeof 'string') {
         setIsLoading2(false);
@@ -141,6 +146,7 @@ const CreateTeam: React.FC = () => {
             name: superData.player.name,
             age: superData.player.age,
             nationality: superData.player.nationality,
+            position: superData.statistics[0]?.games.position,
           };
         },
       );
@@ -311,7 +317,7 @@ const CreateTeam: React.FC = () => {
                         className="clear-button"
                         onClick={handleClearPlayersInfo}
                       >
-                        <p>Clear players data</p>
+                        <p>Clear data</p>
                       </button>
                     </div>
                   </div>

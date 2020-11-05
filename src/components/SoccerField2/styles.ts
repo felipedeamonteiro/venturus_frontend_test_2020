@@ -1,7 +1,11 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { shade } from 'polished';
 
-export const Container = styled.div`
+interface SoccerFieldData {
+  formationValue: string;
+}
+
+export const Container = styled.div<SoccerFieldData>`
   > label {
     margin-right: 20px;
     font-weight: 500;
@@ -19,6 +23,7 @@ export const Container = styled.div`
     margin: 20px 0;
     width: 300px;
     height: 420px;
+    overflow-y: auto;
     border-radius: 5px;
     background: linear-gradient(to bottom, #de0039, #70008c);
     display: flex;
@@ -53,5 +58,13 @@ export const Container = styled.div`
         border-radius: 50%;
       }
     }
+
+    /* If the formation is  (5 - 4 - 1)*/
+    ${props =>
+      props.formationValue === '5 - 4 - 1' &&
+      css`
+        .player-formation {
+        }
+      `}
   }
 `;

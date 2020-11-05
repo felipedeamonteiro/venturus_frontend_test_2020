@@ -6,6 +6,7 @@ interface PlayerInfo {
   name: string;
   age: number;
   nationality: string;
+  position: string;
 }
 
 interface PlayerContainer {
@@ -28,8 +29,14 @@ const PlayersContainer: React.FC<PlayerContainer> = ({ data }) => (
             </div>
           </div>
           <div className="pc-bottom-info">
-            <h4>Nationality: </h4>
-            <p>{playerInfo.nationality}</p>
+            <div className="player-nationality">
+              <h4>Nationality: </h4>
+              <p>{playerInfo.nationality}</p>
+            </div>
+            <div className="player-position">
+              <h4>Position: </h4>
+              <p>{playerInfo.position}</p>
+            </div>
           </div>
         </div>
       ))}
