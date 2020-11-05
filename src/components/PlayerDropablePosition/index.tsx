@@ -3,20 +3,30 @@ import React from 'react';
 import { GoPlus } from 'react-icons/go';
 import { Container } from './styles';
 
+import { usePlayer } from '../../hooks/players';
+
 interface PositionProps {
   positionNumber: number;
 }
 
 const PlayerDropablePosition: React.FC<PositionProps> = ({
   positionNumber,
-}) => (
-  <Container positionNumber={positionNumber}>
-    <div className="player-position">
-      <div className="player-position-center">
-        <GoPlus size={20} />
+}) => {
+  const { handleDragOver, handleDrop } = usePlayer();
+
+  return (
+    <Container positionNumber={positionNumber}>
+      <div
+        className="player-position"
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+      >
+        <div className="player-position-center">
+          <GoPlus size={20} />
+        </div>
       </div>
-    </div>
-  </Container>
-);
+    </Container>
+  );
+};
 
 export default PlayerDropablePosition;

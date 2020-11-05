@@ -317,7 +317,6 @@ const CreateTeam: React.FC = () => {
                       </button>
                     </div>
                   </div>
-                  <PlayersContainer data={playersData} />
                 </div>
               </div>
             </div>

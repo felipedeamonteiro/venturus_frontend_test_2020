@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 
 import PlayerDropablePosition from '../PlayerDropablePosition';
 import Input from '../Input';
@@ -31,6 +31,7 @@ const SoccerField2: React.FC = () => {
       <span>
         <Input
           value={formationValue}
+          onChange={e => setformationValue(e.target.value)}
           name="formation-box"
           style={{ visibility: 'hidden', marginBottom: -30 }}
         />
