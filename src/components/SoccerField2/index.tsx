@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 
 import PlayerDropablePosition from '../PlayerDropablePosition';
+import Input from '../Input';
 import { Container } from './styles';
 
 const SoccerField2: React.FC = () => {
@@ -32,6 +33,13 @@ const SoccerField2: React.FC = () => {
         <option value="4 - 5 - 1">4 - 5 - 1</option>
         <option value="5 - 4 - 1">5 - 4 - 1</option>
       </select>
+      <span>
+        <Input
+          value={formationValue}
+          name="formation-box"
+          style={{ visibility: 'hidden', marginBottom: -30 }}
+        />
+      </span>
       <div className="soccer-field">
         <div className="soccer-field-line" />
         <div className="soccer-field-circle" />

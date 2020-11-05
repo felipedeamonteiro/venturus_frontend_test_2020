@@ -8,6 +8,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   placeholder?: string;
   disabled?: boolean;
+  value?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -15,6 +16,7 @@ const Input: React.FC<InputProps> = ({
   label,
   name,
   placeholder,
+  value,
   ...rest
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -37,6 +39,7 @@ const Input: React.FC<InputProps> = ({
         defaultValue={defaultValue}
         placeholder={placeholder}
         disabled={disabled}
+        value={value}
         {...rest}
       />
 
