@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { shade } from 'polished';
 
 interface SoccerFieldData {
@@ -21,8 +21,8 @@ export const Container = styled.div<SoccerFieldData>`
 
   .soccer-field {
     margin: 20px 0;
-    width: 300px;
-    height: 420px;
+    width: 320px;
+    height: 450px;
     overflow-y: auto;
     border-radius: 5px;
     background: linear-gradient(to bottom, #de0039, #70008c);
@@ -59,12 +59,23 @@ export const Container = styled.div<SoccerFieldData>`
       }
     }
 
-    /* If the formation is  (5 - 4 - 1)*/
-    ${props =>
-      props.formationValue === '5 - 4 - 1' &&
-      css`
-        .player-formation {
-        }
-      `}
+    .players-formation {
+      width: inherit;
+      height: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      .goalKeeper,
+      .defenders,
+      .midFields1,
+      .midFields2,
+      .attackers {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+      }
+    }
   }
 `;

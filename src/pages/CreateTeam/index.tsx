@@ -230,7 +230,7 @@ const CreateTeam: React.FC = () => {
               <div className="bottom-info">
                 <div className="bottom-left-div">
                   <SoccerField2 />
-                  <Button type="submit" style={{ width: 300 }}>
+                  <Button type="submit" style={{ width: 320 }}>
                     Save
                   </Button>
                 </div>

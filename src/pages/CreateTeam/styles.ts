@@ -18,7 +18,7 @@ export const MiddleContainer = styled.div`
     background: #fff;
     border-radius: 15px;
     width: 93%;
-    height: 1230px;
+    height: 1330px;
     margin: 50px 40px 40px;
     padding: 24px;
     text-decoration: none;
@@ -78,6 +78,8 @@ export const MiddleContainer = styled.div`
     }
 
     .configure-squad-container {
+      height: 700px;
+
       .bottom-title {
         display: flex;
         align-items: center;
@@ -86,11 +88,18 @@ export const MiddleContainer = styled.div`
       }
 
       .bottom-info {
+        height: inherit;
         display: flex;
         justify-content: space-between;
         margin: 0 160px;
 
+        .bottom-left-div {
+          height: inherit;
+        }
+
         .bottom-right-div {
+          height: inherit;
+
           button {
             margin: -25px 0 25px 0;
             width: 30px;

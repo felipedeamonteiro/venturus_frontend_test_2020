@@ -3,8 +3,8 @@ import { shade } from 'polished';
 
 export const Container = styled.div`
   width: 370px;
-  height: 218px;
-  max-height: 218px;
+  height: 260px;
+  max-height: 260px;
   overflow-y: auto;
 
   ::-webkit-scrollbar {
