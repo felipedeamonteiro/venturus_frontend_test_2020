@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { usePlayer } from '../../hooks/players';
 
 import { Container } from './styles';
@@ -12,16 +12,40 @@ interface PlayerInfo {
 }
 
 interface PlayerContainer {
-  data: PlayerInfo[];
+  playersDataOutsideField: PlayerInfo[];
 }
 
-const PlayersContainer: React.FC<PlayerContainer> = ({ data }) => {
-  const { handleDragStart } = usePlayer();
+const PlayersContainer: React.FC<PlayerContainer> = ({
+  playersDataOutsideField,
+}) => {
+  const {
+    handleDragStart,
+    playerWasPutInField,
+    playerInfoPutInField,
+    setPlayerWasPutInField,
+  } = usePlayer();
+  const [playersData, setPlayersData] = useState<PlayerInfo[]>([]);
+
+  useEffect(() => {
+    setPlayersData(playersDataOutsideField);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (playerWasPutInField) {
+      const filteredPlayers = playersDataOutsideField.filter(
+        playerData => playerData.id !== playerInfoPutInField.id,
+      );
+      setPlayersData(filteredPlayers);
+    }
+    setPlayerWasPutInField(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playerWasPutInField]);
 
   return (
     <>
       <Container>
-        {data.map((playerInfo, index) => (
+        {playersData.map((playerInfo, index) => (
           <div
             key={index}
             className="players-container"
@@ -52,9 +76,9 @@ const PlayersContainer: React.FC<PlayerContainer> = ({ data }) => {
         ))}
       </Container>
       <p style={{ marginTop: 6, color: '#70008c', fontWeight: 600 }}>
-        {data.length}
+        {playersData.length}
         -player
-        {data.length > 1 || data.length === 0 ? 's' : ''}
+        {playersData.length > 1 || playersData.length === 0 ? 's' : ''}
       </p>
     </>
   );

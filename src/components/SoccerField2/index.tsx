@@ -3,9 +3,13 @@ import React, { useState } from 'react';
 import PlayerDropablePosition from '../PlayerDropablePosition';
 import Input from '../Input';
 import { Container } from './styles';
+import { usePlayer } from '../../hooks/players';
 
 const SoccerField2: React.FC = () => {
   const [formationValue, setformationValue] = useState<string>('-');
+  const { teamPlayersPosition } = usePlayer();
+
+  const stringfiedTeamInfo = JSON.stringify(teamPlayersPosition);
 
   return (
     <Container formationValue={formationValue}>
@@ -33,6 +37,14 @@ const SoccerField2: React.FC = () => {
           value={formationValue}
           onChange={e => setformationValue(e.target.value)}
           name="formation-box"
+          style={{ visibility: 'hidden', marginBottom: -30 }}
+        />
+      </span>
+      <span>
+        <Input
+          value={stringfiedTeamInfo}
+          onChange={() => ''}
+          name="team-players-formation"
           style={{ visibility: 'hidden', marginBottom: -30 }}
         />
       </span>

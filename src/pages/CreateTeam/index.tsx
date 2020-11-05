@@ -43,7 +43,6 @@ const CreateTeam: React.FC = () => {
   const [playersDataOutsideField, setPlayersDataOutsideField] = useState<
     PlayersData[]
   >([]);
-  const [playersOnField, setPlayersOnField] = useState<PlayersData[]>([]);
 
   const history = useHistory();
 
@@ -111,7 +110,6 @@ const CreateTeam: React.FC = () => {
       setFirstSearchIsComplete(true);
       setIsLoading(false);
     } catch (error) {
-      console.error('error', error);
       setGotError1(true);
       setError1([error]);
       setIsLoading(false);
@@ -130,7 +128,6 @@ const CreateTeam: React.FC = () => {
           team: teamId,
         },
       });
-      console.log('data', data);
 
       if (typeof data.errors.search === typeof 'string') {
         setIsLoading2(false);
@@ -160,7 +157,6 @@ const CreateTeam: React.FC = () => {
       setPlayersDataOutsideField(customPlayersData);
       setIsLoading2(false);
     } catch (error) {
-      console.error('error', error);
       setGotError2(true);
       setError2([error]);
       setIsLoading2(false);
@@ -328,7 +324,9 @@ const CreateTeam: React.FC = () => {
                       </button>
                     </div>
                   </div>
-                  <PlayersContainer data={playersDataOutsideField} />
+                  <PlayersContainer
+                    playersDataOutsideField={playersDataOutsideField}
+                  />
                 </div>
               </div>
             </div>

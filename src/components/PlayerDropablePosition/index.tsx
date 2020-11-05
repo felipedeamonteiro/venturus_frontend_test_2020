@@ -19,7 +19,6 @@ const PlayerDropablePosition: React.FC<PositionProps> = ({
   useEffect(() => {
     teamPlayersPosition.forEach(player => {
       if (player.position === positionNumber) {
-        console.log('player data', player);
         const [firstName, secondName] = player.player.name.split(' ');
         setNameInitials(firstName[0] + secondName[0].toUpperCase());
         setHasPlayer(true);
@@ -35,8 +34,8 @@ const PlayerDropablePosition: React.FC<PositionProps> = ({
       {!hasPlayer ? (
         <div
           className="player-position"
-          onDragOver={e => handleDragOver(e, positionNumber)}
-          onDrop={e => handleDrop(e, positionNumber, 'dropou')}
+          onDragOver={e => handleDragOver(e)}
+          onDrop={e => handleDrop(e, positionNumber)}
         >
           <div className="player-position-center">
             <GoPlus size={20} />
@@ -45,8 +44,8 @@ const PlayerDropablePosition: React.FC<PositionProps> = ({
       ) : (
         <div
           className="player-position"
-          onDragOver={e => handleDragOver(e, positionNumber)}
-          onDrop={e => handleDrop(e, positionNumber, 'dropou')}
+          onDragOver={e => handleDragOver(e)}
+          onDrop={e => handleDrop(e, positionNumber)}
         >
           <div className="player-position-center">
             <p>{nameInitials}</p>
