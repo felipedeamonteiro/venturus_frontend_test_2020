@@ -26,19 +26,16 @@ const SignIn: React.FC = () => {
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
-          signin: Yup.string()
-            .matches(
-              /[A-Z][a-z]* [A-Z][a-z]*/,
-              'Incorrect format. Try Again, example: Felipe Monteiro',
-            )
-            .required('Name required! Example: Felipe Monteiro'),
+          signin: Yup.string().required(
+            'Name required! Example: Felipe Monteiro',
+          ),
         });
         await schema.validate(data, {
           abortEarly: false,
         });
 
         signIn({
-          name: data.signin,
+          rawName: data.signin,
         });
       } catch (error) {
         const errors = getValidationErrors(error);

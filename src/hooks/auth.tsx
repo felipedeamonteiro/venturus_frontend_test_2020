@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useState, useContext } from 'react';
 
 interface SignInCredentials {
-  name: string;
+  rawName: string;
 }
 
 interface AuthContextData {
@@ -31,7 +31,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     return null;
   });
 
-  const signIn = useCallback(({ name }) => {
+  const signIn = useCallback(({ rawName }) => {
+    const name = rawName.toUpperCase();
     const firstName = name.split(' ')[0];
     const lastName = name.split(' ').splice(-1)[0];
 

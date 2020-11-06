@@ -10,7 +10,9 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     if (user) {
-      setInitials(user.firstName[0] + user.lastName[0]);
+      setInitials(
+        user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase(),
+      );
     }
   }, [user]);
 
