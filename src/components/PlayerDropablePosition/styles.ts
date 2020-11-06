@@ -44,40 +44,85 @@ export const Container = styled.div<PositionProps>`
   ${props =>
     props.hasPlayer &&
     css`
-      .player-position {
-        border: 2px dashed lightgray;
-        width: 65px;
-        height: 65px;
-        line-height: 65px;
-        vertical-align: middle;
-        text-align: center;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        .player-position-center {
-          z-index: 1;
-          background: #fff;
-          border: 1px solid #de0039;
-
-          width: 55px;
-          height: 55px;
-          line-height: 55px;
-          vertical-align: middle;
-          text-align: center;
-          font-size: 45px;
-          border-radius: 50%;
+      .player-div {
+        .tooltip-div {
+          position: absolute;
           display: flex;
-          align-items: center;
-          justify-content: center;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: space-evenly;
+          width: 190px;
+          height: 100px;
+          background: black;
+          border-radius: 4px;
+          font-size: 12px;
+          z-index: 2;
+          margin-top: 68px;
+          opacity: 0;
+          transition: opacity 0.4s;
+          visibility: hidden;
 
-          p {
-            color: #70008c;
-            font-size: 20px;
-            font-weight: 500;
+          div {
+            height: 20px;
+            display: flex;
+            flex-direction: row;
+            bottom: 20px;
+
+            p {
+              margin-left: 4px;
+              color: #fff;
+              max-width: 140px;
+              -webkit-box-orient: horizontal;
+              -webkit-line-clamp: 1;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              font-weight: 500;
+            }
           }
         }
+
+        .player-position {
+          border: 2px dashed lightgray;
+          width: 65px;
+          height: 65px;
+          line-height: 65px;
+          vertical-align: middle;
+          text-align: center;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .player-position-center {
+            z-index: 1;
+            background: #fff;
+            border: 1px solid #de0039;
+
+            width: 55px;
+            height: 55px;
+            line-height: 55px;
+            vertical-align: middle;
+            text-align: center;
+            font-size: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            p {
+              color: #70008c;
+              font-size: 20px;
+              font-weight: 500;
+            }
+          }
+        }
+      }
+
+      .player-div:hover .tooltip-div {
+        opacity: 1;
+        transition: opacity 0.4s;
+        visibility: visible;
       }
     `}
 `;

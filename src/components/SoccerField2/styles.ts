@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { transparentize } from 'polished';
+import { transparentize, shade } from 'polished';
 
 interface SoccerFieldData {
   formationValue: string;
@@ -41,6 +41,11 @@ export const Container = styled.div<SoccerFieldData>`
       width: fit-content;
       font-weight: 500;
       padding: 5px;
+      transition: background-color 0.2;
+
+      &:hover {
+        background: ${shade(0.2, '#de0039')};
+      }
     }
   }
 

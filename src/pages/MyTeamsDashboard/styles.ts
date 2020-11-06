@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { shade } from 'polished';
 
 export const MiddleContainer = styled.div`
   display: flex;
@@ -28,6 +29,11 @@ export const MiddleContainer = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
+      transition: background-color 0.2;
+
+      &:hover {
+        background: ${shade(0.2, '#de0039')};
+      }
     }
 
     h1 {
@@ -88,7 +94,7 @@ export const MiddleContainer = styled.div`
             height: 90%;
 
             .team-info {
-              width: 96%;
+              width: 220px;
               height: 40px;
               padding: 8px;
               margin: 6px 0 0 4px;

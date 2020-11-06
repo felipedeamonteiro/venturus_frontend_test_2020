@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { GoPlus } from 'react-icons/go';
 import { Container } from './styles';
 
-import { usePlayer } from '../../hooks/players';
+import { usePlayer, Player } from '../../hooks/players';
 
 interface PositionProps {
   positionNumber: number;
@@ -14,6 +14,8 @@ const PlayerDropablePosition: React.FC<PositionProps> = ({
 }) => {
   const [hasPlayer, setHasPlayer] = useState<boolean>(false);
   const [nameInitials, setNameInitials] = useState<string>('');
+  const [playerInfo, setPlayerInfo] = useState<Player>({} as Player);
+
   const {
     handleDragOver,
     handleDrop,
@@ -26,10 +28,9 @@ const PlayerDropablePosition: React.FC<PositionProps> = ({
       if (player.position === positionNumber) {
         const firstName = player.player.name.split(' ')[0];
         const lastName = player.player.name.split(' ').splice(-1)[0];
-        console.log('firstName:', firstName);
-        console.log('lastName:', lastName);
         setNameInitials(firstName[0] + lastName[0]);
         setHasPlayer(true);
+        setPlayerInfo(player.player);
       }
     });
   }, [positionNumber, teamPlayersPosition]);
@@ -39,9 +40,6 @@ const PlayerDropablePosition: React.FC<PositionProps> = ({
       setHasPlayer(false);
     }
   }, [clearStates]);
-
-  // [x] - Pegar as iniciais do nome do jogador;
-  // [] - Montar a caixinha com o hover e informações dele;
 
   return (
     <Container positionNumber={positionNumber} hasPlayer={hasPlayer}>
@@ -56,13 +54,33 @@ const PlayerDropablePosition: React.FC<PositionProps> = ({
           </div>
         </div>
       ) : (
-        <div
-          className="player-position"
-          onDragOver={e => handleDragOver(e)}
-          onDrop={e => handleDrop(e, positionNumber)}
-        >
-          <div className="player-position-center">
-            <p>{nameInitials}</p>
+        <div className="player-div">
+          <div className="tooltip-div">
+            <div>
+              <p>Name:</p>
+              <p>{playerInfo.name}</p>
+            </div>
+            <div>
+              <p>Age:</p>
+              <p>{playerInfo.age}</p>
+            </div>
+            <div>
+              <p>Nationality:</p>
+              <p>{playerInfo.nationality}</p>
+            </div>
+            <div>
+              <p>Position:</p>
+              <p>{playerInfo.position}</p>
+            </div>
+          </div>
+          <div
+            className="player-position"
+            onDragOver={e => handleDragOver(e)}
+            onDrop={e => handleDrop(e, positionNumber)}
+          >
+            <div className="player-position-center">
+              <p>{nameInitials}</p>
+            </div>
           </div>
         </div>
       )}

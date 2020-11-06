@@ -102,7 +102,6 @@ const CreateTeam: React.FC = () => {
       setFirstSearchIsComplete(true);
       setIsLoading(false);
     } catch (error) {
-      console.error('error', error);
       setGotError1(true);
       setError1([error]);
       setIsLoading(false);
@@ -149,7 +148,6 @@ const CreateTeam: React.FC = () => {
       setPlayersData(customPlayersData);
       setIsLoading2(false);
     } catch (error) {
-      console.error('error', error);
       setGotError2(true);
       setError2([error]);
       setIsLoading2(false);

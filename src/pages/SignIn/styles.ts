@@ -7,6 +7,10 @@ export const Container = styled.div`
   flex-direction: column;
   padding: 150px;
 
+  button {
+    width: 370px;
+  }
+
   img {
     width: 150px;
     height: 150px;

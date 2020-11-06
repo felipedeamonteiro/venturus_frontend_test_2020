@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useCallback, useState } from 'react';
 
-interface Player {
+export interface Player {
   id: number;
   name: string;
   age: number;
