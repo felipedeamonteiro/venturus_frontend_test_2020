@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { shade } from 'polished';
 
 export const Container = styled.header`
   top: 0;
@@ -40,6 +41,11 @@ export const Container = styled.header`
       cursor: pointer;
       background: none;
       border: none;
+      transition: color 0.2;
+
+      &:hover {
+        color: ${shade(0.2, '#70008c')};
+      }
     }
 
     h4 {

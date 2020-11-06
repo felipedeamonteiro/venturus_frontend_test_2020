@@ -14,15 +14,39 @@ interface Team {
 
 interface TeamsContextData {
   teams: Team[];
+  saveTeamInformation(teamSubmitInfo: Team): void;
+  updateTeamInformation(teamSubmitInfo: Team): void;
 }
 
 const TeamsContext = createContext<TeamsContextData>({} as TeamsContextData);
 
 export const TeamsProvider: React.FC = ({ children }) => {
+  const [userTeamsInformation, setUserTeamsInformation] = useState<Team[]>([]);
+
+  const saveTeamInformation = useCallback(
+    ({ teamSubmitInfo }) => {
+      setUserTeamsInformation([...userTeamsInformation, teamSubmitInfo]);
+    },
+    [userTeamsInformation],
+  );
+
+  const updateTeamInformation = useCallback(
+    ({ teamSubmitInfo }) => {
+      const filteredData = userTeamsInformation.filter(
+        teamInformation => teamInformation.id !== teamSubmitInfo.id,
+      );
+
+      setUserTeamsInformation([...filteredData, teamSubmitInfo]);
+    },
+    [userTeamsInformation],
+  );
+
   return (
     <TeamsContext.Provider
       value={{
-        teams: [],
+        teams: userTeamsInformation,
+        saveTeamInformation,
+        updateTeamInformation,
       }}
     >
       {children}
