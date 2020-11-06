@@ -1,13 +1,12 @@
 import React, { createContext, useContext, useCallback, useState } from 'react';
-import { uuid } from 'uuidv4';
 
-interface Team {
+export interface Team {
   id: string;
   teamName: string;
   description: string;
   website: string;
   teamType: 'Real' | 'Fantasy';
-  tags: string[];
+  tags: string[] | [];
   formation: string;
   playersInfo: string;
 }
@@ -40,6 +39,14 @@ export const TeamsProvider: React.FC = ({ children }) => {
     },
     [userTeamsInformation],
   );
+
+  // const handleShowMostAndLessPickedPlayers = useCallback(() => {
+  //   // Use Quicksort applied to Javascript
+  // }, []);
+
+  // const handleHighestAndLowestAvgAgePlayers = useCallback(() => {
+  //   // Use Quicksort applied to Javascript
+  // }, []);
 
   return (
     <TeamsContext.Provider

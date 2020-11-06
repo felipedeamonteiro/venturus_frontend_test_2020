@@ -1,11 +1,14 @@
+/* eslint-disable react/jsx-indent */
 import React, { useCallback, useState } from 'react';
 import { Form } from '@unform/web';
+import { uuid } from 'uuidv4';
 
 import { BiArrowBack, BiSearchAlt2 } from 'react-icons/bi';
 import { VscLoading } from 'react-icons/vsc';
 import { useHistory } from 'react-router-dom';
 import api from '../../services/api';
 import { MiddleContainer } from './styles';
+import { useTeams, Team } from '../../hooks/teams';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -25,6 +28,16 @@ interface PlayersData {
   position: string;
 }
 
+interface FormRawData {
+  teamName: string;
+  description: string;
+  website: string;
+  teamType: 'Real' | 'Fantasy' | '';
+  tags: string[] | [];
+  formation: string;
+  playersInfo: string;
+}
+
 const CreateTeam: React.FC = () => {
   const [searchTeam, setSearchTeam] = useState<string>('');
   const [searchTeamCountry, setSearchTeamCountry] = useState<string>('');
@@ -39,16 +52,101 @@ const CreateTeam: React.FC = () => {
   const [error1, setError1] = useState<string[]>([]);
   const [error2, setError2] = useState<string[]>([]);
   const [gotError2, setGotError2] = useState<boolean>(false);
+  const [submissionErrors, setSubmissionErrors] = useState<string[]>([]);
+  const [gotsubmissionErrors, setGotsubmissionErrors] = useState<boolean>(
+    false,
+  );
 
   const [playersDataOutsideField, setPlayersDataOutsideField] = useState<
     PlayersData[]
   >([]);
 
+  const { saveTeamInformation } = useTeams();
   const history = useHistory();
 
-  const handleSubmit = useCallback((data): void => {
-    console.log(data);
-  }, []);
+  const handleSubmit = useCallback(
+    (data: FormRawData): void => {
+      console.log(data);
+      setSubmissionErrors([]);
+
+      if (
+        data.teamName === '' ||
+        data.description === '' ||
+        data.website === '' ||
+        data.teamType === '' ||
+        data.formation === '-' ||
+        data.playersInfo === '[]'
+      ) {
+        if (data.teamName === '') {
+          console.log('Entrei no team name');
+          setSubmissionErrors([
+            ...submissionErrors,
+            'Team name field must be filled!',
+          ]);
+          console.log('submissionErrors', submissionErrors);
+        }
+        if (data.description === '') {
+          console.log('Entrei no descriptions');
+          setSubmissionErrors([
+            ...submissionErrors,
+            'Decription field must be filled!',
+          ]);
+          console.log('submissionErrors', submissionErrors);
+        }
+        if (data.website === '') {
+          console.log('Entrei no website');
+          setSubmissionErrors([
+            ...submissionErrors,
+            'Website field must be filled!',
+          ]);
+          console.log('submissionErrors', submissionErrors);
+        }
+        if (data.teamType === '') {
+          console.log('Entrei no team type');
+          setSubmissionErrors([
+            ...submissionErrors,
+            'A team type must be chosen!',
+          ]);
+          console.log('submissionErrors', submissionErrors);
+        }
+        if (data.formation === '-') {
+          console.log('Entrei no formation');
+          setSubmissionErrors([
+            ...submissionErrors,
+            'A team formation must be chosen!',
+          ]);
+          console.log('submissionErrors', submissionErrors);
+        }
+        if (data.playersInfo === '[]') {
+          console.log('Entrei no playerinfo');
+          setSubmissionErrors([
+            ...submissionErrors,
+            'A team formation with players must be done!',
+          ]);
+          console.log('submissionErrors', submissionErrors);
+        }
+        setGotsubmissionErrors(true);
+        console.log('submissionErrors Final', submissionErrors);
+        return;
+      }
+      setGotsubmissionErrors(false);
+
+      const submissionData: Team = {
+        id: uuid(),
+        teamName: data.teamName,
+        description: data.description,
+        website: data.website,
+        teamType: data.teamType,
+        tags: data.tags,
+        formation: data.formation,
+        playersInfo: data.playersInfo,
+      };
+
+      saveTeamInformation(submissionData);
+      history.push('/dashboard');
+    },
+    [saveTeamInformation, submissionErrors, history],
+  );
 
   const handleClearPlayersInfo = useCallback(() => {
     setSearchTeam('');
@@ -61,6 +159,7 @@ const CreateTeam: React.FC = () => {
     setError2([]);
     setGotError1(false);
     setGotError2(false);
+    setSubmissionErrors([]);
   }, []);
 
   const handleSearchTeams = useCallback(async () => {
@@ -186,7 +285,7 @@ const CreateTeam: React.FC = () => {
           <h2>Create your team</h2>
           <button type="button" className="arrow" onClick={handleGetBack}>
             <BiArrowBack size={20} />
-            <p>Voltar</p>
+            <p>Get back</p>
           </button>
           <Form onSubmit={handleSubmit} id="form">
             <div className="upper-title">
@@ -196,7 +295,7 @@ const CreateTeam: React.FC = () => {
               <div className="upper-info">
                 <div className="left-div">
                   <Input
-                    name="team-name"
+                    name="teamName"
                     placeholder="Insert team name"
                     label="Team name"
                   />
@@ -216,7 +315,7 @@ const CreateTeam: React.FC = () => {
                   />
 
                   <RadioButton
-                    name="team-type"
+                    name="teamType"
                     title="Team type"
                     options={radioOptions}
                   />
@@ -236,6 +335,19 @@ const CreateTeam: React.FC = () => {
                   <Button type="submit" style={{ width: 320 }}>
                     Save
                   </Button>
+                  <div>
+                    <ul style={{ listStyle: 'none' }}>
+                      {gotsubmissionErrors
+                        ? submissionErrors.map((error, index) => (
+                            <li key={index} style={{ marginTop: 2 }}>
+                              <p style={{ color: 'red', fontSize: 12 }}>
+                                {error}
+                              </p>
+                            </li>
+                          ))
+                        : ''}
+                    </ul>
+                  </div>
                 </div>
 
                 <div className="bottom-right-div">

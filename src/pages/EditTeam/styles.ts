@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { shade } from 'polished';
 
 export const MiddleContainer = styled.div`
   display: flex;
@@ -18,7 +19,7 @@ export const MiddleContainer = styled.div`
     background: #fff;
     border-radius: 15px;
     width: 93%;
-    height: 1230px;
+    height: 1330px;
     margin: 50px 40px 40px;
     padding: 24px;
     text-decoration: none;
@@ -78,6 +79,8 @@ export const MiddleContainer = styled.div`
     }
 
     .configure-squad-container {
+      height: 700px;
+
       .bottom-title {
         display: flex;
         align-items: center;
@@ -86,11 +89,18 @@ export const MiddleContainer = styled.div`
       }
 
       .bottom-info {
+        height: inherit;
         display: flex;
         justify-content: space-between;
         margin: 0 160px;
 
+        .bottom-left-div {
+          height: inherit;
+        }
+
         .bottom-right-div {
+          height: inherit;
+
           button {
             margin: -25px 0 25px 0;
             width: 30px;
@@ -103,6 +113,11 @@ export const MiddleContainer = styled.div`
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: background-color 0.2;
+
+            &:hover {
+              background: ${shade(0.2, '#de0039')};
+            }
           }
 
           .button-errors-loading-div {
@@ -163,6 +178,7 @@ export const MiddleContainer = styled.div`
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
+            transition: background-color 0.2;
 
             .error-messages2 {
               font-size: 14px;

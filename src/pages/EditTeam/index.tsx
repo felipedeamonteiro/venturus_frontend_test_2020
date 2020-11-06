@@ -18,6 +18,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 interface PlayersData {
+  id: number;
   name: string;
   age: number;
   nationality: string;
@@ -32,16 +33,20 @@ const CreateTeam: React.FC = () => {
   const [firstSearchIsComplete, setFirstSearchIsComplete] = useState<boolean>(
     false,
   );
-  const [playersData, setPlayersData] = useState<PlayersData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoading2, setIsLoading2] = useState<boolean>(false);
   const [gotError1, setGotError1] = useState<boolean>(false);
   const [error1, setError1] = useState<string[]>([]);
   const [error2, setError2] = useState<string[]>([]);
   const [gotError2, setGotError2] = useState<boolean>(false);
+
+  const [playersDataOutsideField, setPlayersDataOutsideField] = useState<
+    PlayersData[]
+  >([]);
+
   const history = useHistory();
 
-  const handleSubmit = useCallback((data: any): void => {
+  const handleSubmit = useCallback((data): void => {
     console.log(data);
   }, []);
 
@@ -51,7 +56,7 @@ const CreateTeam: React.FC = () => {
     setTeamId('');
     setSearchPlayer('');
     setFirstSearchIsComplete(false);
-    setPlayersData([]);
+    setPlayersDataOutsideField([]);
     setError1([]);
     setError2([]);
     setGotError1(false);
@@ -60,6 +65,9 @@ const CreateTeam: React.FC = () => {
 
   const handleSearchTeams = useCallback(async () => {
     try {
+      setSearchPlayer('');
+      setFirstSearchIsComplete(false);
+      setPlayersDataOutsideField([]);
       setError1([]);
       setGotError1(false);
       setIsLoading(true);
@@ -110,7 +118,7 @@ const CreateTeam: React.FC = () => {
 
   const handleSearchPlayers = useCallback(async () => {
     try {
-      setPlayersData([]);
+      setPlayersDataOutsideField([]);
       setError2([]);
       setGotError2(false);
       setIsLoading2(true);
@@ -138,14 +146,15 @@ const CreateTeam: React.FC = () => {
       const customPlayersData = data.response.map(
         (superData: any): PlayersData => {
           return {
+            id: superData.player.id,
             name: superData.player.name,
             age: superData.player.age,
             nationality: superData.player.nationality,
-            position: superData.statistics[0].games.position,
+            position: superData.statistics[0]?.games.position,
           };
         },
       );
-      setPlayersData(customPlayersData);
+      setPlayersDataOutsideField(customPlayersData);
       setIsLoading2(false);
     } catch (error) {
       setGotError2(true);
@@ -174,10 +183,10 @@ const CreateTeam: React.FC = () => {
       <Header />
       <MiddleContainer>
         <div className="main-container">
-          <h2>Create your team</h2>
+          <h2>Update your team</h2>
           <button type="button" className="arrow" onClick={handleGetBack}>
             <BiArrowBack size={20} />
-            <p>Voltar</p>
+            <p>Get back</p>
           </button>
           <Form onSubmit={handleSubmit} id="form">
             <div className="upper-title">
@@ -224,7 +233,7 @@ const CreateTeam: React.FC = () => {
               <div className="bottom-info">
                 <div className="bottom-left-div">
                   <SoccerField2 />
-                  <Button type="submit" style={{ width: 300 }}>
+                  <Button type="submit" style={{ width: 320 }}>
                     Save
                   </Button>
                 </div>
@@ -311,10 +320,13 @@ const CreateTeam: React.FC = () => {
                         className="clear-button"
                         onClick={handleClearPlayersInfo}
                       >
-                        <p>Clear players data</p>
+                        <p>Clear data</p>
                       </button>
                     </div>
                   </div>
+                  <PlayersContainer
+                    playersDataOutsideField={playersDataOutsideField}
+                  />
                 </div>
               </div>
             </div>

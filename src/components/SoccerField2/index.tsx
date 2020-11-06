@@ -52,7 +52,7 @@ const SoccerField2: React.FC = () => {
         <Input
           value={formationValue}
           onChange={e => setformationValue(e.target.value)}
-          name="formation-box"
+          name="formation"
           style={{ visibility: 'hidden', marginBottom: -30 }}
         />
       </span>
@@ -60,7 +60,7 @@ const SoccerField2: React.FC = () => {
         <Input
           value={teamPlayersPositionState}
           onChange={() => ''}
-          name="team-players-formation"
+          name="playersInfo"
           style={{ visibility: 'hidden', marginBottom: -30 }}
         />
       </span>
