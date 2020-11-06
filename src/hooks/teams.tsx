@@ -25,6 +25,7 @@ export const TeamsProvider: React.FC = ({ children }) => {
   const saveTeamInformation = useCallback(
     ({ teamSubmitInfo }) => {
       setUserTeamsInformation([...userTeamsInformation, teamSubmitInfo]);
+      console.log('userTeamsInformation, no hook', userTeamsInformation);
     },
     [userTeamsInformation],
   );

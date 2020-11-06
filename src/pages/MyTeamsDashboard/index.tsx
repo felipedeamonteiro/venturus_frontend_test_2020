@@ -8,6 +8,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 import { MiddleContainer } from './styles';
+import { useTeams } from '../../hooks/teams';
 
 interface Example {
   col1: string;
@@ -16,10 +17,25 @@ interface Example {
 
 const MyTeamsDashboard: React.FC = () => {
   const history = useHistory();
+  const { saveTeamInformation } = useTeams();
 
   const handleGoFoward = useCallback(() => {
     history.push('/create_team');
   }, [history]);
+
+  const handleTestes = useCallback(() => {
+    const testeDeMerda: any = {
+      id: 'oifjiej',
+      teamName: 'Time do Carilha',
+      description: 'Miau é isso ae',
+      website: 'site de bosta',
+      teamType: 'Real',
+      tags: [],
+      formation: '3 - 3 - 4',
+      playersInfo: 'Um monte de coisa',
+    };
+    saveTeamInformation(testeDeMerda);
+  }, [saveTeamInformation]);
 
   const columns = useMemo(
     () => [
@@ -71,6 +87,14 @@ const MyTeamsDashboard: React.FC = () => {
         <div className="left-container">
           <div>
             <h1>My teams</h1>
+            <button
+              type="button"
+              title="Create a team"
+              onClick={handleTestes}
+              style={{ background: '#70008c' }}
+            >
+              <HiOutlinePlus size={17} color="#fff" />
+            </button>
             <button
               type="button"
               title="Create a team"

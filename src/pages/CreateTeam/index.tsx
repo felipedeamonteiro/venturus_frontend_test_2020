@@ -66,7 +66,6 @@ const CreateTeam: React.FC = () => {
 
   const handleSubmit = useCallback(
     (data: any): void => {
-      data.preventDefault();
       console.log(data);
       setSubmissionErrors([]);
 
