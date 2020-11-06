@@ -40,6 +40,9 @@ const Input: React.FC<InputProps> = ({
         placeholder={placeholder}
         disabled={disabled}
         value={value}
+        onKeyPress={e => {
+          if (e.key === 'Enter') e.preventDefault();
+        }}
         {...rest}
       />
 

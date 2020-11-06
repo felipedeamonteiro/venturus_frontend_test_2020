@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-indent */
 import React, { useCallback, useState } from 'react';
 import { Form } from '@unform/web';
-import { uuid } from 'uuidv4';
+import { v4 as uuid } from 'uuid';
 
 import { BiArrowBack, BiSearchAlt2 } from 'react-icons/bi';
 import { VscLoading } from 'react-icons/vsc';
@@ -65,7 +65,8 @@ const CreateTeam: React.FC = () => {
   const history = useHistory();
 
   const handleSubmit = useCallback(
-    (data: FormRawData): void => {
+    (data: any): void => {
+      data.preventDefault();
       console.log(data);
       setSubmissionErrors([]);
 
@@ -83,6 +84,7 @@ const CreateTeam: React.FC = () => {
             ...submissionErrors,
             'Team name field must be filled!',
           ]);
+
           console.log('submissionErrors', submissionErrors);
         }
         if (data.description === '') {
@@ -91,6 +93,7 @@ const CreateTeam: React.FC = () => {
             ...submissionErrors,
             'Decription field must be filled!',
           ]);
+
           console.log('submissionErrors', submissionErrors);
         }
         if (data.website === '') {
@@ -99,6 +102,7 @@ const CreateTeam: React.FC = () => {
             ...submissionErrors,
             'Website field must be filled!',
           ]);
+
           console.log('submissionErrors', submissionErrors);
         }
         if (data.teamType === '') {
@@ -107,6 +111,7 @@ const CreateTeam: React.FC = () => {
             ...submissionErrors,
             'A team type must be chosen!',
           ]);
+
           console.log('submissionErrors', submissionErrors);
         }
         if (data.formation === '-') {
@@ -115,6 +120,7 @@ const CreateTeam: React.FC = () => {
             ...submissionErrors,
             'A team formation must be chosen!',
           ]);
+
           console.log('submissionErrors', submissionErrors);
         }
         if (data.playersInfo === '[]') {
@@ -340,7 +346,7 @@ const CreateTeam: React.FC = () => {
                       {gotsubmissionErrors
                         ? submissionErrors.map((error, index) => (
                             <li key={index} style={{ marginTop: 2 }}>
-                              <p style={{ color: 'red', fontSize: 12 }}>
+                              <p style={{ color: 'red', fontSize: 14 }}>
                                 {error}
                               </p>
                             </li>

@@ -2,10 +2,13 @@ import React from 'react';
 
 import { AuthProvider } from './auth';
 import { PlayerProvider } from './players';
+import { TeamsProvider } from './teams';
 
 const AppProvider: React.FC = ({ children }) => (
   <AuthProvider>
-    <PlayerProvider>{children}</PlayerProvider>
+    <TeamsProvider>
+      <PlayerProvider>{children}</PlayerProvider>
+    </TeamsProvider>
   </AuthProvider>
 );
 

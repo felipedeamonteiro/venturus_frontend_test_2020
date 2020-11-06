@@ -13,10 +13,10 @@ export const MiddleContainer = styled.div`
     flex-direction: row;
     border: none;
     background: none;
-    transition: background-color 0.2;
+    transition: color 0.2s;
 
     &:hover {
-      background: ${shade(0.2, '#de0039')};
+      color: ${shade(0.2, '#de0039')};
     }
   }
 
