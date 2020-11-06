@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useCallback, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useCallback,
+  useState,
+  useEffect,
+} from 'react';
 
 export interface Player {
   id: number;
@@ -16,7 +22,7 @@ interface TeamPlayersPosition {
 interface PlayersContextData {
   player: Player[];
   playerWasPutInField: boolean;
-  clearStates: boolean;
+  clearPlayersInFieldState: boolean;
   playerInfoPutInField: Player;
   teamPlayersPosition: TeamPlayersPosition[];
   handleDragStart(e: any, playerInfo: Player): void;
@@ -24,6 +30,7 @@ interface PlayersContextData {
   handleDrop(e: any, positionNumber: number): void;
   setPlayerWasPutInField(a: boolean): void;
   handleClearFieldInfo(): void;
+  setClearPlayersInFieldState(a: boolean): void;
 }
 
 const PlayerContext = createContext<PlayersContextData>(
@@ -31,7 +38,7 @@ const PlayerContext = createContext<PlayersContextData>(
 );
 
 export const PlayerProvider: React.FC = ({ children }) => {
-  const [playersInfo, setPlayersInfo] = useState<Player[]>([]);
+  const [playersInfoState, setPlayersInfoState] = useState<Player[]>([]);
   const [teamPlayersPosition, setTeamPlayersPosition] = useState<
     TeamPlayersPosition[]
   >([]);
@@ -41,7 +48,19 @@ export const PlayerProvider: React.FC = ({ children }) => {
   const [playerInfoPutInField, setPlayerInfoPutInField] = useState<Player>(
     {} as Player,
   );
-  const [clearStates, setClearStates] = useState<boolean>(false);
+  const [clearPlayersInFieldState, setClearPlayersInFieldState] = useState<
+    boolean
+  >(false);
+  const [
+    onClearFieldPlayersGetBackToContainer,
+    setOnClearFieldPlayersGetBackToContainer,
+  ] = useState<Player[]>([]);
+
+  useEffect(() => {
+    if (clearPlayersInFieldState) {
+      setTeamPlayersPosition([]);
+    }
+  }, [clearPlayersInFieldState]);
 
   const handleDragStart = useCallback((e, playerInfo) => {
     e.dataTransfer.setData('playerInfo', JSON.stringify(playerInfo));
@@ -55,7 +74,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
     (e, positionNumber) => {
       const playerInfoMonster = e.dataTransfer.getData('playerInfo');
       const parsedPlayerInfo = JSON.parse(playerInfoMonster);
-      setPlayersInfo([...playersInfo, parsedPlayerInfo]);
+      setPlayersInfoState([...playersInfoState, parsedPlayerInfo]);
       const playerCompleteInfo: TeamPlayersPosition = {
         position: positionNumber,
         player: JSON.parse(playerInfoMonster),
@@ -64,25 +83,29 @@ export const PlayerProvider: React.FC = ({ children }) => {
       setPlayerInfoPutInField(playerCompleteInfo.player);
       setPlayerWasPutInField(true);
     },
-    [teamPlayersPosition, playersInfo],
+    [teamPlayersPosition, playersInfoState],
   );
 
   const handleClearFieldInfo = useCallback(() => {
+    teamPlayersPosition.map(teamplayer =>
+      setPlayersInfoState(state => [...state, teamplayer.player]),
+    );
     setTeamPlayersPosition([]);
-    setClearStates(true);
+    setClearPlayersInFieldState(true);
   }, []);
 
   return (
     <PlayerContext.Provider
       value={{
-        player: playersInfo,
-        handleDragStart,
-        handleDragOver,
-        handleDrop,
+        player: playersInfoState,
         teamPlayersPosition,
         playerInfoPutInField,
         playerWasPutInField,
-        clearStates,
+        clearPlayersInFieldState,
+        handleDragStart,
+        handleDragOver,
+        handleDrop,
+        setClearPlayersInFieldState,
         setPlayerWasPutInField,
         handleClearFieldInfo,
       }}

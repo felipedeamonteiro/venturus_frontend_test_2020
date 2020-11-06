@@ -118,7 +118,6 @@ export const MiddleContainer = styled.div`
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: background-color 0.2;
 
             &:hover {
               background: ${shade(0.2, '#de0039')};
@@ -183,7 +182,7 @@ export const MiddleContainer = styled.div`
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            transition: background-color 0.2;
+            transition: background-color 0.2s;
 
             .error-messages2 {
               font-size: 14px;

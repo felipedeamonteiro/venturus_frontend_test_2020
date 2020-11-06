@@ -20,7 +20,8 @@ const PlayerDropablePosition: React.FC<PositionProps> = ({
     handleDragOver,
     handleDrop,
     teamPlayersPosition,
-    clearStates,
+    setClearPlayersInFieldState,
+    clearPlayersInFieldState,
   } = usePlayer();
 
   useEffect(() => {
@@ -36,10 +37,12 @@ const PlayerDropablePosition: React.FC<PositionProps> = ({
   }, [positionNumber, teamPlayersPosition]);
 
   useEffect(() => {
-    if (clearStates) {
+    if (clearPlayersInFieldState) {
       setHasPlayer(false);
+      setPlayerInfo({} as Player);
     }
-  }, [clearStates]);
+    setClearPlayersInFieldState(false);
+  }, [clearPlayersInFieldState, setClearPlayersInFieldState]);
 
   return (
     <Container positionNumber={positionNumber} hasPlayer={hasPlayer}>

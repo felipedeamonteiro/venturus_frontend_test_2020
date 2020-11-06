@@ -29,6 +29,8 @@ interface PlayersData {
   age: number;
   nationality: string;
   position: string;
+  team: string;
+  season: number;
 }
 
 interface FormErrors {
@@ -60,6 +62,7 @@ const CreateTeam: React.FC = () => {
   const [firstSearchIsComplete, setFirstSearchIsComplete] = useState<boolean>(
     false,
   );
+  const [searchSeason, setSearchSeason] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoading2, setIsLoading2] = useState<boolean>(false);
   const [gotError1, setGotError1] = useState<boolean>(false);
@@ -87,7 +90,9 @@ const CreateTeam: React.FC = () => {
           description: Yup.string().required(
             'Decription field must be filled!',
           ),
-          website: Yup.string().url('Website field must have a valid url.'),
+          website: Yup.string()
+            .url('Website field must have a valid url.')
+            .required('Website field must be filled!'),
           teamType: Yup.string().required('A team type must be chosen!'),
           formation: Yup.string().min(2, 'A team formation must be chosen!'),
           playersInfo: Yup.string().min(
@@ -224,6 +229,7 @@ const CreateTeam: React.FC = () => {
         params: {
           search: searchPlayer,
           team: teamId,
+          season: searchSeason,
         },
       });
 
@@ -249,6 +255,8 @@ const CreateTeam: React.FC = () => {
             age: superData.player.age,
             nationality: superData.player.nationality,
             position: superData.statistics[0]?.games.position,
+            team: superData.statistics[0]?.team.name,
+            season: superData.statistics[0]?.league.season,
           };
         },
       );
@@ -304,6 +312,7 @@ const CreateTeam: React.FC = () => {
                     form="form"
                     maxLength={300}
                     name="description"
+                    placeholder="Add description"
                   />
                 </div>
                 <div className="right-div">
@@ -395,6 +404,14 @@ const CreateTeam: React.FC = () => {
                   </div>
 
                   <div>
+                    <Input
+                      name="team-season"
+                      placeholder="Season"
+                      label="Season (year)"
+                      disabled={!firstSearchIsComplete}
+                      value={searchSeason}
+                      onChange={e => setSearchSeason(e.target.value)}
+                    />
                     <Input
                       name="search-players"
                       placeholder="Search"

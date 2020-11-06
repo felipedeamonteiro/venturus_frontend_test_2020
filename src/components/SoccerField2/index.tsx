@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import PlayerDropablePosition from '../PlayerDropablePosition';
 import Input from '../Input';
@@ -18,12 +18,20 @@ const SoccerField2: React.FC = () => {
     setTeamPlayersPositionState(stringfiedTeamInfo);
   }, [teamPlayersPosition]);
 
+  const handleSelectValue = useCallback(
+    value => {
+      handleClearFieldInfo();
+      setformationValue(value);
+    },
+    [handleClearFieldInfo],
+  );
+
   return (
     <Container formationValue={formationValue}>
       <div className="select-div">
         <label htmlFor="formation-box">Formation</label>
         <select
-          onChange={e => setformationValue(e.target.value)}
+          onChange={e => handleSelectValue(e.target.value)}
           name="formation-box"
           id="formation-box"
           defaultValue="-"
@@ -51,7 +59,7 @@ const SoccerField2: React.FC = () => {
       <span>
         <Input
           value={formationValue}
-          onChange={e => setformationValue(e.target.value)}
+          onChange={() => ''}
           name="formation"
           style={{ visibility: 'hidden', marginBottom: -30 }}
         />

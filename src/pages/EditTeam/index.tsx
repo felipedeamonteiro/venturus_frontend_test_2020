@@ -1,11 +1,17 @@
-import React, { useCallback, useState } from 'react';
+/* eslint-disable react/jsx-indent */
+import React, { useCallback, useState, useRef } from 'react';
 import { Form } from '@unform/web';
+import { v4 as uuid } from 'uuid';
+import { FormHandles } from '@unform/core';
+import * as Yup from 'yup';
 
 import { BiArrowBack, BiSearchAlt2 } from 'react-icons/bi';
 import { VscLoading } from 'react-icons/vsc';
 import { useHistory } from 'react-router-dom';
+import getValidationErrors from '../../utils/getValidationErrors';
 import api from '../../services/api';
 import { MiddleContainer } from './styles';
+import { useTeams, Team } from '../../hooks/teams';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -23,9 +29,32 @@ interface PlayersData {
   age: number;
   nationality: string;
   position: string;
+  team: string;
+  season: number;
+}
+
+interface FormErrors {
+  teamName?: string;
+  description?: string;
+  website?: string;
+  teamType?: string;
+  formation?: string;
+  playersInfo?: string;
+}
+
+interface FormRawData {
+  teamName: string;
+  description: string;
+  website: string;
+  teamType: 'Real' | 'Fantasy' | '';
+  tags: string[] | [];
+  formation: string;
+  playersInfo: string;
 }
 
 const CreateTeam: React.FC = () => {
+  const formRef = useRef<FormHandles>(null);
+
   const [searchTeam, setSearchTeam] = useState<string>('');
   const [searchTeamCountry, setSearchTeamCountry] = useState<string>('');
   const [teamId, setTeamId] = useState<string>('');
@@ -33,22 +62,95 @@ const CreateTeam: React.FC = () => {
   const [firstSearchIsComplete, setFirstSearchIsComplete] = useState<boolean>(
     false,
   );
+  const [searchSeason, setSearchSeason] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoading2, setIsLoading2] = useState<boolean>(false);
   const [gotError1, setGotError1] = useState<boolean>(false);
   const [error1, setError1] = useState<string[]>([]);
   const [error2, setError2] = useState<string[]>([]);
   const [gotError2, setGotError2] = useState<boolean>(false);
+  const [submissionErrors, setSubmissionErrors] = useState<any>([]);
+  const [gotsubmissionErrors, setGotsubmissionErrors] = useState<boolean>(
+    false,
+  );
 
   const [playersDataOutsideField, setPlayersDataOutsideField] = useState<
     PlayersData[]
   >([]);
 
+  const { saveTeamInformation } = useTeams();
   const history = useHistory();
 
-  const handleSubmit = useCallback((data): void => {
-    console.log(data);
-  }, []);
+  const handleSubmit = useCallback(
+    async (data: FormRawData) => {
+      try {
+        formRef.current?.setErrors({});
+        const schema = Yup.object().shape({
+          teamName: Yup.string().required('Team name field must be filled!'),
+          description: Yup.string().required(
+            'Decription field must be filled!',
+          ),
+          website: Yup.string()
+            .url('Website field must have a valid url.')
+            .required('Website field must be filled!'),
+          teamType: Yup.string().required('A team type must be chosen!'),
+          formation: Yup.string().min(2, 'A team formation must be chosen!'),
+          playersInfo: Yup.string().min(
+            10,
+            'A team formation with players must be done!',
+          ),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+        console.log('data', data);
+
+        setGotsubmissionErrors(false);
+
+        const submissionData: Team = {
+          id: uuid(),
+          teamName: data.teamName,
+          description: data.description,
+          website: data.website,
+          teamType: data.teamType,
+          tags: data.tags,
+          formation: data.formation,
+          playersInfo: data.playersInfo,
+        };
+
+        saveTeamInformation(submissionData);
+        history.push('/dashboard');
+      } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+          setGotsubmissionErrors(true);
+          const errors: FormErrors = getValidationErrors(error);
+
+          formRef.current?.setErrors(errors);
+
+          if (errors.teamName) {
+            setSubmissionErrors((state: any) => [...state, errors.teamName]);
+          }
+          if (errors.description) {
+            setSubmissionErrors((state: any) => [...state, errors.description]);
+          }
+          if (errors.website) {
+            setSubmissionErrors((state: any) => [...state, errors.website]);
+          }
+          if (errors.teamType) {
+            setSubmissionErrors((state: any) => [...state, errors.teamType]);
+          }
+          if (errors.formation) {
+            setSubmissionErrors((state: any) => [...state, errors.formation]);
+          }
+          if (errors.playersInfo) {
+            setSubmissionErrors((state: any) => [...state, errors.playersInfo]);
+          }
+        }
+      }
+    },
+    [saveTeamInformation, history],
+  );
 
   const handleClearPlayersInfo = useCallback(() => {
     setSearchTeam('');
@@ -61,6 +163,7 @@ const CreateTeam: React.FC = () => {
     setError2([]);
     setGotError1(false);
     setGotError2(false);
+    setSubmissionErrors([]);
   }, []);
 
   const handleSearchTeams = useCallback(async () => {
@@ -126,6 +229,7 @@ const CreateTeam: React.FC = () => {
         params: {
           search: searchPlayer,
           team: teamId,
+          season: searchSeason,
         },
       });
 
@@ -151,6 +255,8 @@ const CreateTeam: React.FC = () => {
             age: superData.player.age,
             nationality: superData.player.nationality,
             position: superData.statistics[0]?.games.position,
+            team: superData.statistics[0]?.team.name,
+            season: superData.statistics[0]?.league.season,
           };
         },
       );
@@ -183,7 +289,7 @@ const CreateTeam: React.FC = () => {
       <Header />
       <MiddleContainer>
         <div className="main-container">
-          <h2>Update your team</h2>
+          <h2>Create your team</h2>
           <button type="button" className="arrow" onClick={handleGetBack}>
             <BiArrowBack size={20} />
             <p>Get back</p>
@@ -196,7 +302,7 @@ const CreateTeam: React.FC = () => {
               <div className="upper-info">
                 <div className="left-div">
                   <Input
-                    name="team-name"
+                    name="teamName"
                     placeholder="Insert team name"
                     label="Team name"
                   />
@@ -216,7 +322,7 @@ const CreateTeam: React.FC = () => {
                   />
 
                   <RadioButton
-                    name="team-type"
+                    name="teamType"
                     title="Team type"
                     options={radioOptions}
                   />
@@ -236,6 +342,19 @@ const CreateTeam: React.FC = () => {
                   <Button type="submit" style={{ width: 320 }}>
                     Save
                   </Button>
+                  <div>
+                    <ul style={{ listStyle: 'none' }}>
+                      {gotsubmissionErrors
+                        ? submissionErrors.map((error: any, index: number) => (
+                            <li key={index} style={{ marginTop: 2 }}>
+                              <p style={{ color: 'red', fontSize: 14 }}>
+                                {error}
+                              </p>
+                            </li>
+                          ))
+                        : ''}
+                    </ul>
+                  </div>
                 </div>
 
                 <div className="bottom-right-div">
@@ -284,6 +403,14 @@ const CreateTeam: React.FC = () => {
                   </div>
 
                   <div>
+                    <Input
+                      name="team-season"
+                      placeholder="Season"
+                      label="Season (year)"
+                      disabled={!firstSearchIsComplete}
+                      value={searchSeason}
+                      onChange={e => setSearchSeason(e.target.value)}
+                    />
                     <Input
                       name="search-players"
                       placeholder="Search"

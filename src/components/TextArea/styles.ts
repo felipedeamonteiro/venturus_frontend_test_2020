@@ -18,6 +18,10 @@ export const Container = styled.div`
     height: 170px;
     font-family: 'Roboto Slab', serif;
 
+    &::placeholder {
+      color: #b5bcc7;
+    }
+
     &:focus {
       border: 1px solid #de0039;
     }

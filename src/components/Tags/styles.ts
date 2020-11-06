@@ -3,6 +3,7 @@ import { shade } from 'polished';
 
 interface ContainerProps {
   isFocused: boolean;
+  hasTags: boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -94,6 +95,16 @@ export const Container = styled.div<ContainerProps>`
         border: none;
         font-size: 14px;
         font-family: 'Roboto Slab', serif;
+
+        &::placeholder {
+          color: #b5bcc7;
+
+          ${props =>
+            props.hasTags &&
+            css`
+              visibility: hidden;
+            `}
+        }
       }
     }
   }

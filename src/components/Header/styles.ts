@@ -41,10 +41,10 @@ export const Container = styled.header`
       cursor: pointer;
       background: none;
       border: none;
-      transition: color 0.2;
+      transition: color 0.2s;
 
       &:hover {
-        color: ${shade(0.2, '#70008c')};
+        color: ${shade(0.4, '#70008c')};
       }
     }
 
@@ -55,7 +55,7 @@ export const Container = styled.header`
 
     .user-initials {
       clear: left;
-      border: 1px solid transparent;
+      border: 1px solid #de0039;
       background: #fff;
       color: #000;
       width: 40px;

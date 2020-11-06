@@ -59,7 +59,7 @@ const Tags: React.FC<TagsProps> = ({ label, name, ...props }) => {
   }, [fieldName, registerField]);
 
   return (
-    <Container isFocused={isFocused}>
+    <Container isFocused={isFocused} hasTags={!!(tags.length > 0)}>
       <label htmlFor={name}>{label}</label>
       <div>
         <ul>
@@ -84,6 +84,7 @@ const Tags: React.FC<TagsProps> = ({ label, name, ...props }) => {
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             onKeyPress={e => e.key === 'Enter' && e.preventDefault()}
+            placeholder="Add tags pressing 'Enter'"
             {...props}
           />
         </ul>

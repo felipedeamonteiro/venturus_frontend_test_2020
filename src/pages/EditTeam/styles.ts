@@ -13,13 +13,18 @@ export const MiddleContainer = styled.div`
     flex-direction: row;
     border: none;
     background: none;
+    transition: color 0.2s;
+
+    &:hover {
+      color: ${shade(0.2, '#de0039')};
+    }
   }
 
   div.main-container {
     background: #fff;
     border-radius: 15px;
     width: 93%;
-    height: 1330px;
+    height: 1380px;
     margin: 50px 40px 40px;
     padding: 24px;
     text-decoration: none;
@@ -113,7 +118,6 @@ export const MiddleContainer = styled.div`
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: background-color 0.2;
 
             &:hover {
               background: ${shade(0.2, '#de0039')};
@@ -178,7 +182,7 @@ export const MiddleContainer = styled.div`
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            transition: background-color 0.2;
+            transition: background-color 0.2s;
 
             .error-messages2 {
               font-size: 14px;

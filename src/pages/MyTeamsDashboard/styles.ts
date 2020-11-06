@@ -29,7 +29,6 @@ export const MiddleContainer = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      transition: background-color 0.2;
 
       &:hover {
         background: ${shade(0.2, '#de0039')};

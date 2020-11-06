@@ -64,6 +64,8 @@ export const Container = styled.div`
     }
 
     .pc-bottom-info {
+      max-width: 90%;
+      max-height: 40px;
       width: 90%;
       display: flex;
       align-items: center;

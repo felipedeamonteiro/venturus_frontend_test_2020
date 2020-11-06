@@ -41,7 +41,6 @@ export const Container = styled.div<SoccerFieldData>`
       width: fit-content;
       font-weight: 500;
       padding: 5px;
-      transition: background-color 0.2;
 
       &:hover {
         background: ${shade(0.2, '#de0039')};
