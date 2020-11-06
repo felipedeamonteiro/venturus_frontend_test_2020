@@ -6,9 +6,9 @@ import { TeamsProvider } from './teams';
 
 const AppProvider: React.FC = ({ children }) => (
   <AuthProvider>
-    <TeamsProvider>
-      <PlayerProvider>{children}</PlayerProvider>
-    </TeamsProvider>
+    <PlayerProvider>
+      <TeamsProvider>{children}</TeamsProvider>
+    </PlayerProvider>
   </AuthProvider>
 );
 

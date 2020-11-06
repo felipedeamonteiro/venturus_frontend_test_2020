@@ -1,11 +1,14 @@
 /* eslint-disable react/jsx-indent */
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import { Form } from '@unform/web';
 import { v4 as uuid } from 'uuid';
+import { FormHandles } from '@unform/core';
+import * as Yup from 'yup';
 
 import { BiArrowBack, BiSearchAlt2 } from 'react-icons/bi';
 import { VscLoading } from 'react-icons/vsc';
 import { useHistory } from 'react-router-dom';
+import getValidationErrors from '../../utils/getValidationErrors';
 import api from '../../services/api';
 import { MiddleContainer } from './styles';
 import { useTeams, Team } from '../../hooks/teams';
@@ -28,6 +31,15 @@ interface PlayersData {
   position: string;
 }
 
+interface FormErrors {
+  teamName?: string;
+  description?: string;
+  website?: string;
+  teamType?: string;
+  formation?: string;
+  playersInfo?: string;
+}
+
 interface FormRawData {
   teamName: string;
   description: string;
@@ -39,6 +51,8 @@ interface FormRawData {
 }
 
 const CreateTeam: React.FC = () => {
+  const formRef = useRef<FormHandles>(null);
+
   const [searchTeam, setSearchTeam] = useState<string>('');
   const [searchTeamCountry, setSearchTeamCountry] = useState<string>('');
   const [teamId, setTeamId] = useState<string>('');
@@ -52,7 +66,7 @@ const CreateTeam: React.FC = () => {
   const [error1, setError1] = useState<string[]>([]);
   const [error2, setError2] = useState<string[]>([]);
   const [gotError2, setGotError2] = useState<boolean>(false);
-  const [submissionErrors, setSubmissionErrors] = useState<string[]>([]);
+  const [submissionErrors, setSubmissionErrors] = useState<any>([]);
   const [gotsubmissionErrors, setGotsubmissionErrors] = useState<boolean>(
     false,
   );
@@ -65,92 +79,72 @@ const CreateTeam: React.FC = () => {
   const history = useHistory();
 
   const handleSubmit = useCallback(
-    (data: any): void => {
-      console.log(data);
-      setSubmissionErrors([]);
-
-      if (
-        data.teamName === '' ||
-        data.description === '' ||
-        data.website === '' ||
-        data.teamType === '' ||
-        data.formation === '-' ||
-        data.playersInfo === '[]'
-      ) {
-        if (data.teamName === '') {
-          console.log('Entrei no team name');
-          setSubmissionErrors([
-            ...submissionErrors,
-            'Team name field must be filled!',
-          ]);
-
-          console.log('submissionErrors', submissionErrors);
-        }
-        if (data.description === '') {
-          console.log('Entrei no descriptions');
-          setSubmissionErrors([
-            ...submissionErrors,
+    async (data: FormRawData) => {
+      try {
+        formRef.current?.setErrors({});
+        const schema = Yup.object().shape({
+          teamName: Yup.string().required('Team name field must be filled!'),
+          description: Yup.string().required(
             'Decription field must be filled!',
-          ]);
-
-          console.log('submissionErrors', submissionErrors);
-        }
-        if (data.website === '') {
-          console.log('Entrei no website');
-          setSubmissionErrors([
-            ...submissionErrors,
-            'Website field must be filled!',
-          ]);
-
-          console.log('submissionErrors', submissionErrors);
-        }
-        if (data.teamType === '') {
-          console.log('Entrei no team type');
-          setSubmissionErrors([
-            ...submissionErrors,
-            'A team type must be chosen!',
-          ]);
-
-          console.log('submissionErrors', submissionErrors);
-        }
-        if (data.formation === '-') {
-          console.log('Entrei no formation');
-          setSubmissionErrors([
-            ...submissionErrors,
-            'A team formation must be chosen!',
-          ]);
-
-          console.log('submissionErrors', submissionErrors);
-        }
-        if (data.playersInfo === '[]') {
-          console.log('Entrei no playerinfo');
-          setSubmissionErrors([
-            ...submissionErrors,
+          ),
+          website: Yup.string().url('Website field must have a valid url.'),
+          teamType: Yup.string().required('A team type must be chosen!'),
+          formation: Yup.string().min(2, 'A team formation must be chosen!'),
+          playersInfo: Yup.string().min(
+            10,
             'A team formation with players must be done!',
-          ]);
-          console.log('submissionErrors', submissionErrors);
+          ),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+        console.log('data', data);
+
+        setGotsubmissionErrors(false);
+
+        const submissionData: Team = {
+          id: uuid(),
+          teamName: data.teamName,
+          description: data.description,
+          website: data.website,
+          teamType: data.teamType,
+          tags: data.tags,
+          formation: data.formation,
+          playersInfo: data.playersInfo,
+        };
+
+        saveTeamInformation(submissionData);
+        history.push('/dashboard');
+      } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+          setGotsubmissionErrors(true);
+          const errors: FormErrors = getValidationErrors(error);
+
+          formRef.current?.setErrors(errors);
+
+          if (errors.teamName) {
+            setSubmissionErrors((state: any) => [...state, errors.teamName]);
+          }
+          if (errors.description) {
+            setSubmissionErrors((state: any) => [...state, errors.description]);
+          }
+          if (errors.website) {
+            setSubmissionErrors((state: any) => [...state, errors.website]);
+          }
+          if (errors.teamType) {
+            setSubmissionErrors((state: any) => [...state, errors.teamType]);
+          }
+          if (errors.formation) {
+            setSubmissionErrors((state: any) => [...state, errors.formation]);
+          }
+          if (errors.playersInfo) {
+            setSubmissionErrors((state: any) => [...state, errors.playersInfo]);
+          }
         }
-        setGotsubmissionErrors(true);
-        console.log('submissionErrors Final', submissionErrors);
-        return;
       }
-      setGotsubmissionErrors(false);
-
-      const submissionData: Team = {
-        id: uuid(),
-        teamName: data.teamName,
-        description: data.description,
-        website: data.website,
-        teamType: data.teamType,
-        tags: data.tags,
-        formation: data.formation,
-        playersInfo: data.playersInfo,
-      };
-
-      saveTeamInformation(submissionData);
-      history.push('/dashboard');
     },
-    [saveTeamInformation, submissionErrors, history],
+    [saveTeamInformation, history],
   );
 
   const handleClearPlayersInfo = useCallback(() => {
@@ -343,7 +337,7 @@ const CreateTeam: React.FC = () => {
                   <div>
                     <ul style={{ listStyle: 'none' }}>
                       {gotsubmissionErrors
-                        ? submissionErrors.map((error, index) => (
+                        ? submissionErrors.map((error: any, index: number) => (
                             <li key={index} style={{ marginTop: 2 }}>
                               <p style={{ color: 'red', fontSize: 14 }}>
                                 {error}

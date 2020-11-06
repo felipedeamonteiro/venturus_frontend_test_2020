@@ -5,7 +5,7 @@ export interface Team {
   teamName: string;
   description: string;
   website: string;
-  teamType: 'Real' | 'Fantasy';
+  teamType: 'Real' | 'Fantasy' | '';
   tags: string[] | [];
   formation: string;
   playersInfo: string;
@@ -23,9 +23,13 @@ export const TeamsProvider: React.FC = ({ children }) => {
   const [userTeamsInformation, setUserTeamsInformation] = useState<Team[]>([]);
 
   const saveTeamInformation = useCallback(
-    ({ teamSubmitInfo }) => {
-      setUserTeamsInformation([...userTeamsInformation, teamSubmitInfo]);
-      console.log('userTeamsInformation, no hook', userTeamsInformation);
+    teamSubmitInfo => {
+      // console.log('teamSubmitInfo, no hook', teamSubmitInfo);
+      setUserTeamsInformation(state => [...state, teamSubmitInfo]);
+      // console.log('userTeamsInformation, no hook', userTeamsInformation);
+      setUserTeamsInformation(state =>
+        state.filter(content => content !== undefined),
+      );
     },
     [userTeamsInformation],
   );
@@ -40,6 +44,10 @@ export const TeamsProvider: React.FC = ({ children }) => {
     },
     [userTeamsInformation],
   );
+
+  // const removeTeam = useCallback((id: string) => {
+  //   setMessages(state => state.filter(message => message.id !== id));
+  // }, []);
 
   // const handleShowMostAndLessPickedPlayers = useCallback(() => {
   //   // Use Quicksort applied to Javascript

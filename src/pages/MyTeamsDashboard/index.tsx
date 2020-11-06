@@ -87,9 +87,10 @@ const MyTeamsDashboard: React.FC = () => {
         <div className="left-container">
           <div>
             <h1>My teams</h1>
+            <p style={{ color: '#70008c' }}>botão de teste</p>
             <button
               type="button"
-              title="Create a team"
+              title="Botão de teste"
               onClick={handleTestes}
               style={{ background: '#70008c' }}
             >
