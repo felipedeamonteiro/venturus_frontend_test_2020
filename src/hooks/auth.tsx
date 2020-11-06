@@ -13,7 +13,7 @@ interface AuthContextData {
 interface User {
   name: string;
   firstName: string;
-  secondName: string;
+  lastName: string;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -22,23 +22,24 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState(() => {
     const name = localStorage.getItem('@VenturusTest:name');
     const firstName = localStorage.getItem('@VenturusTest:firstName');
-    const secondName = localStorage.getItem('@VenturusTest:secondName');
+    const lastName = localStorage.getItem('@VenturusTest:lastName');
 
-    if (name && firstName && secondName) {
-      return { name, firstName, secondName };
+    if (name && firstName && lastName) {
+      return { name, firstName, lastName };
     }
 
     return null;
   });
 
   const signIn = useCallback(({ name }) => {
-    const [firstName, secondName] = name.split(' ');
+    const firstName = name.split(' ')[0];
+    const lastName = name.split(' ').splice(-1)[0];
 
     localStorage.setItem('@VenturusTest:name', name);
     localStorage.setItem('@VenturusTest:firstName', firstName);
-    localStorage.setItem('@VenturusTest:secondName', secondName);
+    localStorage.setItem('@VenturusTest:lastName', lastName);
 
-    setData({ name, firstName, secondName });
+    setData({ name, firstName, lastName });
   }, []);
 
   const signOut = useCallback(() => {
