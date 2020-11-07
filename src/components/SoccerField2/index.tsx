@@ -5,7 +5,15 @@ import Input from '../Input';
 import { Container } from './styles';
 import { usePlayer } from '../../hooks/players';
 
-const SoccerField2: React.FC = () => {
+interface FieldProps {
+  selectEditDefaultValue?: string;
+  fieldEditDefaultValue?: string;
+}
+
+const SoccerField2: React.FC<FieldProps> = ({
+  selectEditDefaultValue,
+  fieldEditDefaultValue,
+}) => {
   const [formationValue, setformationValue] = useState<string>('-');
   const [teamPlayersPositionState, setTeamPlayersPositionState] = useState<
     string

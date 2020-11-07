@@ -7,14 +7,21 @@ import { Container } from './styles';
 interface TagsProps {
   label?: string;
   name: string;
+  defaultValue?: string[];
 }
 
-const Tags: React.FC<TagsProps> = ({ label, name, ...props }) => {
+const Tags: React.FC<TagsProps> = ({ label, name, defaultValue, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [inputTags, setInputTags] = useState<string>('');
   const [tags, setTags] = useState<string[]>([]);
   const inputRefs = useRef<string[]>([]);
   const { fieldName, registerField } = useField(name);
+
+  useEffect(() => {
+    if (!!defaultValue && defaultValue.length > 0) {
+      setTags(defaultValue);
+    }
+  }, [defaultValue]);
 
   const removeTag = useCallback(
     tag => {

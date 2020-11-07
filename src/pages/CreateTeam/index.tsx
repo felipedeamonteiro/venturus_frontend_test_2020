@@ -8,7 +8,6 @@ import * as Yup from 'yup';
 import { BiArrowBack, BiSearchAlt2 } from 'react-icons/bi';
 import { VscLoading } from 'react-icons/vsc';
 import { useHistory } from 'react-router-dom';
-import { HiOutlinePlus } from 'react-icons/hi';
 import getValidationErrors from '../../utils/getValidationErrors';
 import api from '../../services/api';
 import { MiddleContainer } from './styles';

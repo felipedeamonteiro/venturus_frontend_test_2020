@@ -54,7 +54,7 @@ interface FormRawData {
   playersInfo: string;
 }
 
-const CreateTeam: React.FC = () => {
+const EditTeam: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const [searchTeam, setSearchTeam] = useState<string>('');
@@ -81,8 +81,12 @@ const CreateTeam: React.FC = () => {
   >([]);
 
   const { playersPosition } = usePlayer();
-  const { saveTeamInformation } = useTeams();
+  const { handleUpdateTeamData, updateTeamData, teams } = useTeams();
   const history = useHistory();
+
+  const realUpdateTeamData: Team = teams.filter(
+    team => team.id === updateTeamData.id,
+  )[0];
 
   const handleSubmit = useCallback(
     async (data: FormRawData) => {
@@ -130,7 +134,7 @@ const CreateTeam: React.FC = () => {
           playersInfo: JSON.parse(data.playersInfo),
         };
 
-        saveTeamInformation(submissionData);
+        handleUpdateTeamData(submissionData);
         history.push('/dashboard');
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
@@ -160,7 +164,7 @@ const CreateTeam: React.FC = () => {
         }
       }
     },
-    [playersPosition.length, saveTeamInformation, history],
+    [playersPosition.length, handleUpdateTeamData, history],
   );
 
   const handleClearPlayersInfo = useCallback(() => {
@@ -296,15 +300,15 @@ const CreateTeam: React.FC = () => {
   ];
 
   const handleTestes = useCallback(() => {
-    console.log('playersPosition', playersPosition);
-  }, [playersPosition]);
+    console.log('realUpdateTeamData', realUpdateTeamData);
+  }, [realUpdateTeamData]);
 
   return (
     <>
       <Header />
       <MiddleContainer>
         <div className="main-container">
-          <h2>Create your team</h2>
+          <h2>Update your team data</h2>
           <button type="button" className="arrow" onClick={handleGetBack}>
             <BiArrowBack size={20} />
             <p>Get back</p>
@@ -328,6 +332,7 @@ const CreateTeam: React.FC = () => {
                     name="teamName"
                     placeholder="Insert team name"
                     label="Team name"
+                    updateDefaultValue={realUpdateTeamData.teamName}
                   />
 
                   <TextArea
@@ -336,6 +341,7 @@ const CreateTeam: React.FC = () => {
                     maxLength={300}
                     name="description"
                     placeholder="Add description"
+                    defaultValue={realUpdateTeamData.description}
                   />
                 </div>
                 <div className="right-div">
@@ -343,6 +349,7 @@ const CreateTeam: React.FC = () => {
                     name="website"
                     placeholder="http://myteam.com"
                     label="Team website"
+                    updateDefaultValue={realUpdateTeamData.website}
                   />
 
                   <RadioButton
@@ -351,7 +358,11 @@ const CreateTeam: React.FC = () => {
                     options={radioOptions}
                   />
 
-                  <Tags name="tags" label="Tags" />
+                  <Tags
+                    name="tags"
+                    label="Tags"
+                    defaultValue={realUpdateTeamData.tags}
+                  />
                 </div>
               </div>
             </div>
@@ -362,7 +373,10 @@ const CreateTeam: React.FC = () => {
 
               <div className="bottom-info">
                 <div className="bottom-left-div">
-                  <SoccerField2 />
+                  <SoccerField2
+                    selectEditDefaultValue={realUpdateTeamData.formation}
+                    fieldEditDefaultValue={realUpdateTeamData.playersInfo}
+                  />
                   <Button type="submit" style={{ width: 320 }}>
                     Save
                   </Button>
@@ -481,4 +495,4 @@ const CreateTeam: React.FC = () => {
   );
 };
 
-export default CreateTeam;
+export default EditTeam;

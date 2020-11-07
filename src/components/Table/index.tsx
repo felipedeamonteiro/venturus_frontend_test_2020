@@ -22,11 +22,15 @@ const Table: React.FC<ITable> = ({ columns, data }: any) => {
     rows,
     prepareRow,
   } = useTable({ data, columns, manualSortBy: true } as any, useSortBy);
-  const { handleDeleteTeam } = useTeams();
+  const { handleDeleteTeam, setUpdateTeamData } = useTeams();
 
-  const handleGoToEditTeam = useCallback(() => {
-    history.push('/edit_team');
-  }, [history]);
+  const handleGoToEditTeam = useCallback(
+    (stringfiedTeamData: string) => {
+      setUpdateTeamData(JSON.parse(stringfiedTeamData));
+      history.push('/edit_team');
+    },
+    [history],
+  );
 
   return (
     <Container>
@@ -87,7 +91,11 @@ const Table: React.FC<ITable> = ({ columns, data }: any) => {
                           <MdShare title="Share" />
                           <MdModeEdit
                             title="Edit"
-                            onClick={handleGoToEditTeam}
+                            onClick={() =>
+                              handleGoToEditTeam(
+                                JSON.stringify(cell.row.original),
+                              )
+                            }
                           />
                         </span>
                       </div>

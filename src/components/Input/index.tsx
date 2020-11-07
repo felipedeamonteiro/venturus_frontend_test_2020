@@ -9,6 +9,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
   disabled?: boolean;
   value?: string;
+  updateDefaultValue?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -17,10 +18,16 @@ const Input: React.FC<InputProps> = ({
   name,
   placeholder,
   value,
+  updateDefaultValue,
   ...rest
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const { fieldName, defaultValue, error, registerField } = useField(name);
+  const {
+    fieldName,
+    defaultValue = updateDefaultValue || '',
+    error,
+    registerField,
+  } = useField(name);
 
   useEffect(() => {
     registerField({

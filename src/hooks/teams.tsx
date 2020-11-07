@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useCallback,
-  useState,
-  useEffect,
-} from 'react';
+import React, { createContext, useContext, useCallback, useState } from 'react';
 
 export interface Team {
   id: string;
@@ -17,16 +11,27 @@ export interface Team {
   playersInfo: string;
 }
 
+export interface TableTeamData {
+  id: string;
+  name: string;
+  description: string;
+}
+
 interface TeamsContextData {
   teams: Team[];
+  updateTeamData: TableTeamData;
   saveTeamInformation(teamSubmitInfo: Team): void;
-  updateTeamInformation(teamSubmitInfo: Team): void;
+  handleUpdateTeamData(teamSubmitInfo: Team): void;
   handleDeleteTeam(teamDataStringfied: string): void;
+  setUpdateTeamData(teamData: TableTeamData): void;
 }
 
 const TeamsContext = createContext<TeamsContextData>({} as TeamsContextData);
 
 export const TeamsProvider: React.FC = ({ children }) => {
+  const [updateTeamData, setUpdateTeamData] = useState<TableTeamData>(
+    {} as TableTeamData,
+  );
   const [userTeamsInformation, setUserTeamsInformation] = useState<Team[]>(
     () => {
       const teamsData = localStorage.getItem('@VenturusTest:Teams');
@@ -48,7 +53,7 @@ export const TeamsProvider: React.FC = ({ children }) => {
   );
 
   // Used in UPDATE Teams Page when submitting data
-  const updateTeamInformation = useCallback(
+  const handleUpdateTeamData = useCallback(
     ({ teamSubmitInfo }) => {
       const filteredData = userTeamsInformation.filter(
         teamInformation => teamInformation.id !== teamSubmitInfo.id,
@@ -84,9 +89,11 @@ export const TeamsProvider: React.FC = ({ children }) => {
     <TeamsContext.Provider
       value={{
         teams: userTeamsInformation,
+        updateTeamData,
         saveTeamInformation,
-        updateTeamInformation,
+        handleUpdateTeamData,
         handleDeleteTeam,
+        setUpdateTeamData,
       }}
     >
       {children}
