@@ -45,14 +45,47 @@ export const Container = styled.div`
       tr {
         border-bottom: 1px solid lightgray;
 
-        span {
-          float: right;
-          visibility: hidden;
+        td {
+          padding: 13px 4px !important;
+
+          > p {
+            max-width: 135px;
+            -webkit-box-orient: horizontal;
+            -webkit-line-clamp: 1;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+          }
+
+          div {
+            border-bottom: 0 !important;
+            padding: 0 !important;
+            max-width: 98%;
+            width: 98% !important;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            span {
+              visibility: hidden;
+            }
+
+            p {
+              max-width: 220px;
+              -webkit-box-orient: horizontal;
+              -webkit-line-clamp: 1;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              overflow: hidden;
+            }
+          }
         }
 
         &:hover {
           background: #fce9f7;
           width: 100%;
+
           span {
             visibility: visible;
             width: 75px;

@@ -60,10 +60,18 @@ const Table: React.FC<ITable> = ({ columns, data }: any) => {
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map((cell, index) => {
-                  return (
+                  return index === 0 ? (
                     <td {...cell.getCellProps()}>
-                      {cell.render('Cell')}
-                      {index === 1 ? (
+                      <p title={cell ? (cell.value as string) : ''}>
+                        {cell.render('Cell')}
+                      </p>
+                    </td>
+                  ) : (
+                    <td {...cell.getCellProps()}>
+                      <div>
+                        <p title={cell ? (cell.value as string) : ''}>
+                          {cell.render('Cell')}
+                        </p>
                         <span>
                           <FaTrash title="Remove" onClick={handleDeleteTeam} />
                           <MdShare title="Share" />
@@ -72,9 +80,7 @@ const Table: React.FC<ITable> = ({ columns, data }: any) => {
                             onClick={handleGoToEditTeam}
                           />
                         </span>
-                      ) : (
-                        ''
-                      )}
+                      </div>
                     </td>
                   );
                 })}
