@@ -17,11 +17,21 @@ interface RadioProps
   name: string;
   title: string;
   options: RadioOption[];
+  updateDefaultValue?: 'Real' | 'Fantasy' | '';
 }
 
-const RadioButton: React.FC<RadioProps> = ({ name, title, options }) => {
+const RadioButton: React.FC<RadioProps> = ({
+  name,
+  title,
+  options,
+  updateDefaultValue,
+}) => {
   const inputRefs = useRef<HTMLInputElement[]>([]);
-  const { fieldName, defaultValue = '', registerField } = useField(name);
+  const {
+    fieldName,
+    defaultValue = updateDefaultValue || '',
+    registerField,
+  } = useField(name);
 
   useEffect(() => {
     registerField<string>({

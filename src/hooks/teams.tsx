@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useCallback, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { TeamPlayersPosition } from './players';
 
 export interface Team {
@@ -44,6 +45,7 @@ export const TeamsProvider: React.FC = ({ children }) => {
       return [];
     },
   );
+  const history = useHistory();
 
   // Used in CREATE Teams Page when submitting data
   const saveTeamInformation = useCallback(
@@ -55,12 +57,17 @@ export const TeamsProvider: React.FC = ({ children }) => {
 
   // Used in UPDATE Teams Page when submitting data
   const handleUpdateTeamData = useCallback(
-    ({ teamSubmitInfo }) => {
-      const filteredData = userTeamsInformation.filter(
-        teamInformation => teamInformation.id !== teamSubmitInfo.id,
-      );
+    ({ teamUpdateSubmitInfo }) => {
+      console.log('Entrei no handle Update');
+      console.log('userTeamsInformation', userTeamsInformation);
+      console.log('teamUpdateSubmitInfo', teamUpdateSubmitInfo);
 
-      setUserTeamsInformation([...filteredData, teamSubmitInfo]);
+      const filteredData = userTeamsInformation.filter(
+        teamInformation => teamInformation.id !== teamUpdateSubmitInfo.id,
+      );
+      // console.log('Filtrei os dados');
+      // setUserTeamsInformation([filteredData, teamUpdateSubmitInfo]);
+      // history.push('/dashboard');
     },
     [userTeamsInformation],
   );

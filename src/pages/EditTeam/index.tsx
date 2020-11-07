@@ -4,10 +4,10 @@ import { Form } from '@unform/web';
 import { v4 as uuid } from 'uuid';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-
+import { useHistory } from 'react-router-dom';
 import { BiArrowBack, BiSearchAlt2 } from 'react-icons/bi';
 import { VscLoading } from 'react-icons/vsc';
-import { useHistory } from 'react-router-dom';
+
 import { HiOutlinePlus } from 'react-icons/hi';
 import getValidationErrors from '../../utils/getValidationErrors';
 import api from '../../services/api';
@@ -80,7 +80,7 @@ const EditTeam: React.FC = () => {
     PlayersData[]
   >([]);
 
-  const { playersPosition } = usePlayer();
+  const { playersPosition, setPlayersPosition } = usePlayer();
   const { handleUpdateTeamData, updateTeamData, teams } = useTeams();
   const history = useHistory();
 
@@ -88,8 +88,13 @@ const EditTeam: React.FC = () => {
     team => team.id === updateTeamData.id,
   )[0];
 
+  if (playersPosition.length === 0) {
+    setPlayersPosition([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+  }
+
   const handleSubmit = useCallback(
     async (data: FormRawData) => {
+      console.log('1');
       try {
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
@@ -107,6 +112,7 @@ const EditTeam: React.FC = () => {
             'A team formation with players must be done!',
           ),
         });
+        console.log('2');
 
         if (playersPosition.length < 11) {
           setSubmissionErrors((state: any) => [
@@ -120,7 +126,7 @@ const EditTeam: React.FC = () => {
         await schema.validate(data, {
           abortEarly: false,
         });
-
+        console.log('3');
         setGotsubmissionErrors(false);
 
         const submissionData: Team = {
@@ -133,9 +139,13 @@ const EditTeam: React.FC = () => {
           formation: data.formation,
           playersInfo: JSON.parse(data.playersInfo),
         };
+        console.log('4');
+
+        console.log('data', data);
+        console.log('submissionData', submissionData);
 
         handleUpdateTeamData(submissionData);
-        history.push('/dashboard');
+        console.log('Cheguei aqui para ir embora dessa página');
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           setGotsubmissionErrors(true);
@@ -164,7 +174,7 @@ const EditTeam: React.FC = () => {
         }
       }
     },
-    [playersPosition.length, handleUpdateTeamData, history],
+    [playersPosition.length, handleUpdateTeamData],
   );
 
   const handleClearPlayersInfo = useCallback(() => {
@@ -300,12 +310,9 @@ const EditTeam: React.FC = () => {
   ];
 
   const handleTestes = useCallback(() => {
-    console.log(
-      'realUpdateTeamData. formation',
-      JSON.stringify(realUpdateTeamData.playersInfo),
-    );
+    console.log('playersPosition', playersPosition);
     console.log('realUpdateTeamData', realUpdateTeamData);
-  }, [realUpdateTeamData]);
+  }, [playersPosition]);
 
   return (
     <>
@@ -360,6 +367,7 @@ const EditTeam: React.FC = () => {
                     name="teamType"
                     title="Team type"
                     options={radioOptions}
+                    updateDefaultValue={realUpdateTeamData.teamType}
                   />
 
                   <Tags
