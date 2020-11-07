@@ -104,7 +104,7 @@ const CreateTeam: React.FC = () => {
           ),
         });
 
-        if (playersPosition.length !== 11) {
+        if (playersPosition.length < 11) {
           setSubmissionErrors((state: any) => [
             ...state,
             'You need to fill all positions with players.',
@@ -128,7 +128,7 @@ const CreateTeam: React.FC = () => {
           teamType: data.teamType,
           tags: data.tags,
           formation: data.formation,
-          playersInfo: data.playersInfo,
+          playersInfo: JSON.parse(data.playersInfo),
         };
 
         saveTeamInformation(submissionData);
@@ -297,8 +297,8 @@ const CreateTeam: React.FC = () => {
   ];
 
   const handleTestes = useCallback(() => {
-    console.log('Teste');
-  }, []);
+    console.log('playersPosition', playersPosition);
+  }, [playersPosition]);
 
   return (
     <>

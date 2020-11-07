@@ -38,23 +38,15 @@ export const TeamsProvider: React.FC = ({ children }) => {
     },
   );
 
-  // useEffect(() => {
-  //   localStorage.setItem(
-  //     '@VenturusTest:Teams',
-  //     JSON.stringify(userTeamsInformation),
-  //   );
-  // }, [userTeamsInformation]);
-
+  // Used in CREATE Teams Page when submitting data
   const saveTeamInformation = useCallback(
     teamSubmitInfo => {
-      console.log('userTeamsInformation - 1', userTeamsInformation);
       setUserTeamsInformation([...userTeamsInformation, teamSubmitInfo]);
-
-      console.log('userTeamsInformation - 2', userTeamsInformation);
     },
     [userTeamsInformation],
   );
 
+  // Used in UPDATE Teams Page when submitting data
   const updateTeamInformation = useCallback(
     ({ teamSubmitInfo }) => {
       const filteredData = userTeamsInformation.filter(
@@ -66,14 +58,17 @@ export const TeamsProvider: React.FC = ({ children }) => {
     [userTeamsInformation],
   );
 
+  // Used in MY DASHBOARD to REMOVE a team from data
   // const removeTeam = useCallback((id: string) => {
   //   setMessages(state => state.filter(message => message.id !== id));
   // }, []);
 
+  // Used in MY DASHBOARD to show data
   // const handleShowMostAndLessPickedPlayers = useCallback(() => {
   //   // Use Quicksort applied to Javascript
   // }, []);
 
+  // Used in MY DASHBOARD to show data
   // const handleHighestAndLowestAvgAgePlayers = useCallback(() => {
   //   // Use Quicksort applied to Javascript
   // }, []);

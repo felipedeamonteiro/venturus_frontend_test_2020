@@ -2,7 +2,6 @@ import React, { useMemo, useCallback, useEffect } from 'react';
 import { HiOutlinePlus } from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
 
-import { FaWindowMinimize } from 'react-icons/fa';
 import Table from '../../components/Table';
 import SoccerField1 from '../../components/SoccerField1';
 import Header from '../../components/Header';
@@ -12,13 +11,17 @@ import { MiddleContainer } from './styles';
 import { useTeams } from '../../hooks/teams';
 
 interface Example {
-  col1: string;
-  col2: string;
+  name: string;
+  description: string;
 }
 
 const MyTeamsDashboard: React.FC = () => {
   const history = useHistory();
   const { saveTeamInformation, teams } = useTeams();
+
+  useEffect(() => {
+    localStorage.setItem('@VenturusTest:Teams', JSON.stringify(teams));
+  }, [teams]);
 
   const handleGoFoward = useCallback(() => {
     history.push('/create_team');
@@ -196,7 +199,7 @@ const MyTeamsDashboard: React.FC = () => {
     [],
   );
 
-  const treatedData = teams.map(team => ({
+  const treatedDataToTable = teams.map(team => ({
     name: team.teamName,
     description: team.description,
   }));
@@ -226,7 +229,7 @@ const MyTeamsDashboard: React.FC = () => {
               <HiOutlinePlus size={17} color="#fff" />
             </button>
           </div>
-          <Table columns={columns} data={treatedData} />
+          <Table columns={columns} data={treatedDataToTable} />
         </div>
         <div className="right-container">
           <div className="top-container">
