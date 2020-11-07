@@ -300,6 +300,10 @@ const EditTeam: React.FC = () => {
   ];
 
   const handleTestes = useCallback(() => {
+    console.log(
+      'realUpdateTeamData. formation',
+      JSON.stringify(realUpdateTeamData.playersInfo),
+    );
     console.log('realUpdateTeamData', realUpdateTeamData);
   }, [realUpdateTeamData]);
 

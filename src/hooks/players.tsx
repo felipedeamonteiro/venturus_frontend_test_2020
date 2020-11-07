@@ -14,7 +14,7 @@ export interface Player {
   position: string;
 }
 
-interface TeamPlayersPosition {
+export interface TeamPlayersPosition {
   position: number;
   player: Player;
 }
@@ -33,6 +33,7 @@ interface PlayersContextData {
   setPlayerWasPutInField(a: boolean): void;
   handleClearFieldInfo(): void;
   setClearPlayersInFieldState(a: boolean): void;
+  setTeamPlayersPosition(teamPlayersPosition: TeamPlayersPosition[]): void;
 }
 
 const PlayerContext = createContext<PlayersContextData>(
@@ -103,6 +104,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
         playerWasPutInField,
         clearPlayersInFieldState,
         playersPosition,
+        setTeamPlayersPosition,
         setPlayersPosition,
         handleDragStart,
         handleDragOver,

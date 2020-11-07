@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useCallback, useState } from 'react';
+import { TeamPlayersPosition } from './players';
 
 export interface Team {
   id: string;
@@ -8,7 +9,7 @@ export interface Team {
   teamType: 'Real' | 'Fantasy' | '';
   tags: string[] | [];
   formation: string;
-  playersInfo: string;
+  playersInfo: TeamPlayersPosition[];
 }
 
 export interface TableTeamData {
