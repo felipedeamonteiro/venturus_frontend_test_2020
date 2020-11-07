@@ -21,6 +21,7 @@ interface TeamsContextData {
   teams: Team[];
   saveTeamInformation(teamSubmitInfo: Team): void;
   updateTeamInformation(teamSubmitInfo: Team): void;
+  handleDeleteTeam(teamDataStringfied: string): void;
 }
 
 const TeamsContext = createContext<TeamsContextData>({} as TeamsContextData);
@@ -58,10 +59,16 @@ export const TeamsProvider: React.FC = ({ children }) => {
     [userTeamsInformation],
   );
 
-  // Used in MY DASHBOARD to REMOVE a team from data
-  // const removeTeam = useCallback((id: string) => {
-  //   setMessages(state => state.filter(message => message.id !== id));
-  // }, []);
+  // Used in MY DASHBOARD to REMOVE a team from data and table
+  const handleDeleteTeam = useCallback((teamDataStringfied: string) => {
+    const teamData = JSON.parse(teamDataStringfied);
+    // eslint-disable-next-line no-alert
+    if (window.confirm('Are you sure in removing this team?')) {
+      setUserTeamsInformation(state =>
+        state.filter(team => team.id !== teamData.id),
+      );
+    }
+  }, []);
 
   // Used in MY DASHBOARD to show data
   // const handleShowMostAndLessPickedPlayers = useCallback(() => {
@@ -79,6 +86,7 @@ export const TeamsProvider: React.FC = ({ children }) => {
         teams: userTeamsInformation,
         saveTeamInformation,
         updateTeamInformation,
+        handleDeleteTeam,
       }}
     >
       {children}

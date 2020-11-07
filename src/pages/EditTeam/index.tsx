@@ -8,10 +8,12 @@ import * as Yup from 'yup';
 import { BiArrowBack, BiSearchAlt2 } from 'react-icons/bi';
 import { VscLoading } from 'react-icons/vsc';
 import { useHistory } from 'react-router-dom';
+import { HiOutlinePlus } from 'react-icons/hi';
 import getValidationErrors from '../../utils/getValidationErrors';
 import api from '../../services/api';
 import { MiddleContainer } from './styles';
 import { useTeams, Team } from '../../hooks/teams';
+import { usePlayer } from '../../hooks/players';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -62,7 +64,7 @@ const CreateTeam: React.FC = () => {
   const [firstSearchIsComplete, setFirstSearchIsComplete] = useState<boolean>(
     false,
   );
-  const [searchSeason, setSearchSeason] = useState<string>('');
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoading2, setIsLoading2] = useState<boolean>(false);
   const [gotError1, setGotError1] = useState<boolean>(false);
@@ -78,6 +80,7 @@ const CreateTeam: React.FC = () => {
     PlayersData[]
   >([]);
 
+  const { playersPosition } = usePlayer();
   const { saveTeamInformation } = useTeams();
   const history = useHistory();
 
@@ -101,10 +104,18 @@ const CreateTeam: React.FC = () => {
           ),
         });
 
+        if (playersPosition.length < 11) {
+          setSubmissionErrors((state: any) => [
+            ...state,
+            'You need to fill all positions with players.',
+          ]);
+          setGotsubmissionErrors(true);
+          return;
+        }
+
         await schema.validate(data, {
           abortEarly: false,
         });
-        console.log('data', data);
 
         setGotsubmissionErrors(false);
 
@@ -116,7 +127,7 @@ const CreateTeam: React.FC = () => {
           teamType: data.teamType,
           tags: data.tags,
           formation: data.formation,
-          playersInfo: data.playersInfo,
+          playersInfo: JSON.parse(data.playersInfo),
         };
 
         saveTeamInformation(submissionData);
@@ -149,7 +160,7 @@ const CreateTeam: React.FC = () => {
         }
       }
     },
-    [saveTeamInformation, history],
+    [playersPosition.length, saveTeamInformation, history],
   );
 
   const handleClearPlayersInfo = useCallback(() => {
@@ -225,11 +236,11 @@ const CreateTeam: React.FC = () => {
       setError2([]);
       setGotError2(false);
       setIsLoading2(true);
+
       const { data } = await api.get('players', {
         params: {
           search: searchPlayer,
           team: teamId,
-          season: searchSeason,
         },
       });
 
@@ -284,6 +295,10 @@ const CreateTeam: React.FC = () => {
     },
   ];
 
+  const handleTestes = useCallback(() => {
+    console.log('playersPosition', playersPosition);
+  }, [playersPosition]);
+
   return (
     <>
       <Header />
@@ -296,6 +311,14 @@ const CreateTeam: React.FC = () => {
           </button>
           <Form onSubmit={handleSubmit} id="form">
             <div className="upper-title">
+              <button
+                type="button"
+                title="Botão de teste"
+                onClick={handleTestes}
+                style={{ background: '#70008c' }}
+              >
+                <HiOutlinePlus size={17} color="#fff" />
+              </button>
               <h4>TEAM INFORMATION</h4>
             </div>
             <div className="team-information-form">
@@ -312,6 +335,7 @@ const CreateTeam: React.FC = () => {
                     form="form"
                     maxLength={300}
                     name="description"
+                    placeholder="Add description"
                   />
                 </div>
                 <div className="right-div">
@@ -361,14 +385,14 @@ const CreateTeam: React.FC = () => {
                   <div className="search-team-div">
                     <Input
                       name="search-team"
-                      placeholder="Search"
+                      placeholder="Search team name and..."
                       label="Search team name"
                       value={searchTeam}
                       onChange={e => setSearchTeam(e.target.value)}
                     />
                     <Input
                       name="search-team-country"
-                      placeholder="Search"
+                      placeholder="...team country to free up player search"
                       label="Team country"
                       value={searchTeamCountry}
                       onChange={e => setSearchTeamCountry(e.target.value)}
@@ -404,16 +428,8 @@ const CreateTeam: React.FC = () => {
 
                   <div>
                     <Input
-                      name="team-season"
-                      placeholder="Season"
-                      label="Season (year)"
-                      disabled={!firstSearchIsComplete}
-                      value={searchSeason}
-                      onChange={e => setSearchSeason(e.target.value)}
-                    />
-                    <Input
                       name="search-players"
-                      placeholder="Search"
+                      placeholder="Search player"
                       label="Search players"
                       disabled={!firstSearchIsComplete}
                       value={searchPlayer}

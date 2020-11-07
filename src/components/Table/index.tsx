@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-curly-newline */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useCallback } from 'react';
 import { useTable, useSortBy } from 'react-table';
@@ -5,6 +6,7 @@ import { FaSortUp, FaSortDown, FaSort, FaTrash } from 'react-icons/fa';
 import { MdModeEdit, MdShare } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import { Container } from './styles';
+import { useTeams } from '../../hooks/teams';
 
 interface ITable {
   columns: any[];
@@ -20,14 +22,11 @@ const Table: React.FC<ITable> = ({ columns, data }: any) => {
     rows,
     prepareRow,
   } = useTable({ data, columns, manualSortBy: true } as any, useSortBy);
+  const { handleDeleteTeam } = useTeams();
 
   const handleGoToEditTeam = useCallback(() => {
     history.push('/edit_team');
   }, [history]);
-
-  const handleDeleteTeam = useCallback(() => {
-    console.log('Team removed.');
-  }, []);
 
   return (
     <Container>
@@ -64,6 +63,10 @@ const Table: React.FC<ITable> = ({ columns, data }: any) => {
                     <td {...cell.getCellProps()}>
                       <p title={cell ? (cell.value as string) : ''}>
                         {cell.render('Cell')}
+                        {/* {console.log(
+                          'row cell',
+                          JSON.stringify(cell.row.original),
+                        )} */}
                       </p>
                     </td>
                   ) : (
@@ -73,7 +76,14 @@ const Table: React.FC<ITable> = ({ columns, data }: any) => {
                           {cell.render('Cell')}
                         </p>
                         <span>
-                          <FaTrash title="Remove" onClick={handleDeleteTeam} />
+                          <FaTrash
+                            title="Remove"
+                            onClick={() =>
+                              handleDeleteTeam(
+                                JSON.stringify(cell.row.original),
+                              )
+                            }
+                          />
                           <MdShare title="Share" />
                           <MdModeEdit
                             title="Edit"

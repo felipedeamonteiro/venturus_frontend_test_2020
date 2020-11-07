@@ -116,7 +116,6 @@ const CreateTeam: React.FC = () => {
         await schema.validate(data, {
           abortEarly: false,
         });
-        console.log('data', data);
 
         setGotsubmissionErrors(false);
 
@@ -296,10 +295,6 @@ const CreateTeam: React.FC = () => {
     },
   ];
 
-  const handleTestes = useCallback(() => {
-    console.log('playersPosition', playersPosition);
-  }, [playersPosition]);
-
   return (
     <>
       <Header />
@@ -312,14 +307,6 @@ const CreateTeam: React.FC = () => {
           </button>
           <Form onSubmit={handleSubmit} id="form">
             <div className="upper-title">
-              <button
-                type="button"
-                title="Botão de teste"
-                onClick={handleTestes}
-                style={{ background: '#70008c' }}
-              >
-                <HiOutlinePlus size={17} color="#fff" />
-              </button>
               <h4>TEAM INFORMATION</h4>
             </div>
             <div className="team-information-form">

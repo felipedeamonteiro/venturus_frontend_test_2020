@@ -17,7 +17,7 @@ interface Example {
 
 const MyTeamsDashboard: React.FC = () => {
   const history = useHistory();
-  const { saveTeamInformation, teams } = useTeams();
+  const { teams } = useTeams();
 
   useEffect(() => {
     localStorage.setItem('@VenturusTest:Teams', JSON.stringify(teams));
@@ -180,8 +180,8 @@ const MyTeamsDashboard: React.FC = () => {
       teamType: 'fantasy',
       website: 'http://timedoido.com',
     };
-    saveTeamInformation(testeDeMerda);
-  }, [saveTeamInformation]);
+    // saveTeamInformation(testeDeMerda);
+  }, []);
 
   const columns = useMemo(
     () => [
@@ -200,6 +200,7 @@ const MyTeamsDashboard: React.FC = () => {
   );
 
   const treatedDataToTable = teams.map(team => ({
+    id: team.id,
     name: team.teamName,
     description: team.description,
   }));
