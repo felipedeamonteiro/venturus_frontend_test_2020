@@ -25,6 +25,8 @@ interface PlayersContextData {
   clearPlayersInFieldState: boolean;
   playerInfoPutInField: Player;
   teamPlayersPosition: TeamPlayersPosition[];
+  playersPosition: number[];
+  setPlayersPosition(playersPosition: number[]): void;
   handleDragStart(e: any, playerInfo: Player): void;
   handleDragOver(e: any): void;
   handleDrop(e: any, positionNumber: number): void;
@@ -51,10 +53,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
   const [clearPlayersInFieldState, setClearPlayersInFieldState] = useState<
     boolean
   >(false);
-  const [
-    onClearFieldPlayersGetBackToContainer,
-    setOnClearFieldPlayersGetBackToContainer,
-  ] = useState<Player[]>([]);
+  const [playersPosition, setPlayersPosition] = useState<number[]>([]);
 
   useEffect(() => {
     if (clearPlayersInFieldState) {
@@ -82,6 +81,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
       setTeamPlayersPosition([...teamPlayersPosition, playerCompleteInfo]);
       setPlayerInfoPutInField(playerCompleteInfo.player);
       setPlayerWasPutInField(true);
+      setPlayersPosition(state => [...state, positionNumber]);
     },
     [teamPlayersPosition, playersInfoState],
   );
@@ -92,7 +92,7 @@ export const PlayerProvider: React.FC = ({ children }) => {
     );
     setTeamPlayersPosition([]);
     setClearPlayersInFieldState(true);
-  }, []);
+  }, [teamPlayersPosition]);
 
   return (
     <PlayerContext.Provider
@@ -102,6 +102,8 @@ export const PlayerProvider: React.FC = ({ children }) => {
         playerInfoPutInField,
         playerWasPutInField,
         clearPlayersInFieldState,
+        playersPosition,
+        setPlayersPosition,
         handleDragStart,
         handleDragOver,
         handleDrop,

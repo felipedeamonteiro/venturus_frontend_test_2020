@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useCallback, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useCallback,
+  useState,
+  useEffect,
+} from 'react';
 
 export interface Team {
   id: string;
@@ -20,16 +26,31 @@ interface TeamsContextData {
 const TeamsContext = createContext<TeamsContextData>({} as TeamsContextData);
 
 export const TeamsProvider: React.FC = ({ children }) => {
-  const [userTeamsInformation, setUserTeamsInformation] = useState<Team[]>([]);
+  const [userTeamsInformation, setUserTeamsInformation] = useState<Team[]>(
+    () => {
+      const teamsData = localStorage.getItem('@VenturusTest:Teams');
+
+      if (teamsData) {
+        return JSON.parse(teamsData);
+      }
+
+      return [];
+    },
+  );
+
+  // useEffect(() => {
+  //   localStorage.setItem(
+  //     '@VenturusTest:Teams',
+  //     JSON.stringify(userTeamsInformation),
+  //   );
+  // }, [userTeamsInformation]);
 
   const saveTeamInformation = useCallback(
     teamSubmitInfo => {
-      // console.log('teamSubmitInfo, no hook', teamSubmitInfo);
-      setUserTeamsInformation(state => [...state, teamSubmitInfo]);
-      // console.log('userTeamsInformation, no hook', userTeamsInformation);
-      setUserTeamsInformation(state =>
-        state.filter(content => content !== undefined),
-      );
+      console.log('userTeamsInformation - 1', userTeamsInformation);
+      setUserTeamsInformation([...userTeamsInformation, teamSubmitInfo]);
+
+      console.log('userTeamsInformation - 2', userTeamsInformation);
     },
     [userTeamsInformation],
   );

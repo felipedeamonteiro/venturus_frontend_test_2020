@@ -1,7 +1,8 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useEffect } from 'react';
 import { HiOutlinePlus } from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
 
+import { FaWindowMinimize } from 'react-icons/fa';
 import Table from '../../components/Table';
 import SoccerField1 from '../../components/SoccerField1';
 import Header from '../../components/Header';
@@ -17,7 +18,7 @@ interface Example {
 
 const MyTeamsDashboard: React.FC = () => {
   const history = useHistory();
-  const { saveTeamInformation } = useTeams();
+  const { saveTeamInformation, teams } = useTeams();
 
   const handleGoFoward = useCallback(() => {
     history.push('/create_team');
@@ -25,14 +26,156 @@ const MyTeamsDashboard: React.FC = () => {
 
   const handleTestes = useCallback(() => {
     const testeDeMerda: any = {
-      id: 'oifjiej',
-      teamName: 'Time do Carilha',
-      description: 'Miau é isso ae',
-      website: 'site de bosta',
-      teamType: 'Real',
-      tags: [],
-      formation: '3 - 3 - 4',
-      playersInfo: 'Um monte de coisa',
+      description: 'Time da doidera',
+      formation: '4 - 2 - 3 - 1',
+      id: 'f017825b-aeea-45a6-98b3-071b95cf8770',
+      playersInfo: [
+        {
+          position: 11,
+          player: {
+            id: 9858,
+            name: 'Sosthenes José Santos Salles',
+            age: 33,
+            nationality: 'Brazil',
+            position: 'Attacker',
+            team: 'Santos',
+            season: 2016,
+          },
+        },
+        {
+          position: 2,
+          player: {
+            id: 10376,
+            name: 'Jose Carlos Cracco Neto',
+            age: 26,
+            nationality: 'Brazil',
+            position: 'Defender',
+            team: 'Santos',
+            season: 2017,
+          },
+        },
+        {
+          position: 10,
+          player: {
+            id: 12915,
+            name: 'Jose Henrique da Silva Dourado',
+            age: 31,
+            nationality: 'Brazil',
+            position: 'Attacker',
+            team: 'Santos',
+            season: 2013,
+          },
+        },
+        {
+          position: 3,
+          player: {
+            id: 26945,
+            name: 'Leonardo José Aparecido Moura',
+            age: 33,
+            nationality: 'Brazil',
+            position: 'Defender',
+            team: 'Santos',
+            season: 2015,
+          },
+        },
+        {
+          position: 8,
+          player: {
+            id: 35187,
+            name: 'José Eduardo Bischofe de Almeida',
+            age: 33,
+            nationality: 'Brazil',
+            position: 'Attacker',
+            team: 'Santos',
+            season: '2011',
+          },
+        },
+        {
+          position: 9,
+          player: {
+            id: 47319,
+            name: 'Willian José',
+            age: 29,
+            nationality: 'Brazil',
+            position: 'Attacker',
+            team: 'Santos',
+            season: 2013,
+          },
+        },
+        {
+          position: 6,
+          player: {
+            id: 77894,
+            name: 'Elivelton José da Silva',
+            age: 28,
+            nationality: 'Brazil',
+            position: 'Midfielder',
+            team: 'Santos',
+            season: '2011',
+          },
+        },
+        {
+          position: 7,
+          player: {
+            id: 80364,
+            name: 'José Roberto da Silva Júnior',
+            age: 43,
+            nationality: 'Brazil',
+            position: 'Midfielder',
+            team: 'Santos',
+            season: '2007',
+          },
+        },
+        {
+          position: 4,
+          player: {
+            id: 114515,
+            name: 'Adaílton José dos Santos Filho',
+            age: 34,
+            nationality: 'Brazil',
+            position: 'Defender',
+            team: 'Santos',
+            season: '2009',
+          },
+        },
+        {
+          position: 1,
+          player: {
+            id: 234372,
+            name: 'Jose Charles Soares Matos',
+            age: 21,
+            nationality: 'Brazil',
+            position: 'Defender',
+            team: 'Santos',
+            season: '2018',
+          },
+        },
+        {
+          position: 5,
+          player: {
+            id: 80385,
+            name: 'José Luis dos Santos Pinto',
+            age: 28,
+            nationality: 'Brazil',
+            position: 'Midfielder',
+            team: 'Santos',
+            season: '2010',
+          },
+        },
+      ],
+      tags: [
+        'dhsuishudsh',
+        'sdijsoids',
+        'sipdjsiodjsoid',
+        'sidjsij',
+        'sidjsoi',
+        'sjdsij',
+        'osdp',
+        'osdk',
+      ],
+      teamName: 'Time doido',
+      teamType: 'fantasy',
+      website: 'http://timedoido.com',
     };
     saveTeamInformation(testeDeMerda);
   }, [saveTeamInformation]);
@@ -41,43 +184,22 @@ const MyTeamsDashboard: React.FC = () => {
     () => [
       {
         Header: 'Name',
-        accessor: 'col1' as keyof Example,
+        accessor: 'name' as keyof Example,
         sortType: 'basic',
       },
       {
         Header: 'Description',
-        accessor: 'col2' as keyof Example,
+        accessor: 'description' as keyof Example,
         sortType: 'basic',
       },
     ],
     [],
   );
 
-  const data = useMemo(
-    () => [
-      {
-        col1: 'Real Madrid',
-        col2: 'Real Madrid Squad',
-      },
-      {
-        col1: 'Milan',
-        col2: 'Milan Squad',
-      },
-      {
-        col1: 'Liverpool',
-        col2: 'Liverpool Squad',
-      },
-      {
-        col1: 'Bayern Munich',
-        col2: 'Bayern Munich Squad',
-      },
-      {
-        col1: 'Lazio',
-        col2: 'Lazio Squad',
-      },
-    ],
-    [],
-  );
+  const treatedData = teams.map(team => ({
+    name: team.teamName,
+    description: team.description,
+  }));
 
   return (
     <>
@@ -104,7 +226,7 @@ const MyTeamsDashboard: React.FC = () => {
               <HiOutlinePlus size={17} color="#fff" />
             </button>
           </div>
-          <Table columns={columns} data={data} />
+          <Table columns={columns} data={treatedData} />
         </div>
         <div className="right-container">
           <div className="top-container">
@@ -162,7 +284,6 @@ const MyTeamsDashboard: React.FC = () => {
               </div>
             </div>
           </div>
-
           <SoccerField1 />
         </div>
       </MiddleContainer>
