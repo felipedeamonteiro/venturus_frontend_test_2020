@@ -88,6 +88,7 @@ const EditTeam: React.FC = () => {
     team => team.id === updateTeamData.id,
   )[0];
 
+  // TODO:  It's needed to fix this
   if (playersPosition.length === 0) {
     setPlayersPosition([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
   }
@@ -129,8 +130,8 @@ const EditTeam: React.FC = () => {
         console.log('3');
         setGotsubmissionErrors(false);
 
-        const submissionData: Team = {
-          id: uuid(),
+        const submissionEditData: Team = {
+          id: realUpdateTeamData.id,
           teamName: data.teamName,
           description: data.description,
           website: data.website,
@@ -142,10 +143,11 @@ const EditTeam: React.FC = () => {
         console.log('4');
 
         console.log('data', data);
-        console.log('submissionData', submissionData);
+        console.log('submissionData', submissionEditData);
 
-        handleUpdateTeamData(submissionData);
+        handleUpdateTeamData(submissionEditData);
         console.log('Cheguei aqui para ir embora dessa página');
+        history.push('/dashboard');
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           setGotsubmissionErrors(true);
@@ -326,6 +328,7 @@ const EditTeam: React.FC = () => {
           </button>
           <Form onSubmit={handleSubmit} id="form">
             <div className="upper-title">
+              <p>Botão de teste Edit Team</p>
               <button
                 type="button"
                 title="Botão de teste"

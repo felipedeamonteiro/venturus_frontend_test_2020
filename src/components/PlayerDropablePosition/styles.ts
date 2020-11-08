@@ -52,7 +52,7 @@ export const Container = styled.div<PositionProps>`
           align-items: flex-start;
           justify-content: space-evenly;
           width: 190px;
-          height: 100px;
+          height: 120px;
           background: black;
           border-radius: 4px;
           font-size: 12px;

@@ -12,6 +12,7 @@ export interface Player {
   age: number;
   nationality: string;
   position: string;
+  team: string;
 }
 
 export interface TeamPlayersPosition {

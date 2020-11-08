@@ -75,6 +75,10 @@ const PlayerDropablePosition: React.FC<PositionProps> = ({
               <p>Position:</p>
               <p>{playerInfo.position}</p>
             </div>
+            <div>
+              <p>Team:</p>
+              <p>{playerInfo.team}</p>
+            </div>
           </div>
           <div
             className="player-position"

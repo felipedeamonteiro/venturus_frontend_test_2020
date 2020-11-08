@@ -22,7 +22,7 @@ export const Container = styled.div`
 
   .players-container {
     width: 350px;
-    height: 65px;
+    height: 90px;
     background: linear-gradient(to bottom, #f9f9f9, #e6e6e6);
     display: flex;
     align-items: center;
@@ -70,6 +70,30 @@ export const Container = styled.div`
       display: flex;
       align-items: center;
       justify-content: space-between;
+
+      > div {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        margin: 6px 0 2px 0;
+
+        p {
+          max-width: 200px;
+          -webkit-box-orient: horizontal;
+          -webkit-line-clamp: 1;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+      }
+    }
+
+    .pc-team-info {
+      max-width: 90%;
+      max-height: 40px;
+      width: 90%;
+      display: flex;
+      align-items: flex-start;
 
       > div {
         display: flex;

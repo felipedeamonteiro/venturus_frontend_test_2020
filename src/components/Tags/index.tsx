@@ -19,6 +19,7 @@ const Tags: React.FC<TagsProps> = ({ label, name, defaultValue, ...props }) => {
 
   useEffect(() => {
     if (!!defaultValue && defaultValue.length > 0) {
+      setTags([]);
       setTags(defaultValue);
     }
   }, [defaultValue]);

@@ -57,7 +57,7 @@ export const TeamsProvider: React.FC = ({ children }) => {
 
   // Used in UPDATE Teams Page when submitting data
   const handleUpdateTeamData = useCallback(
-    ({ teamUpdateSubmitInfo }) => {
+    teamUpdateSubmitInfo => {
       console.log('Entrei no handle Update');
       console.log('userTeamsInformation', userTeamsInformation);
       console.log('teamUpdateSubmitInfo', teamUpdateSubmitInfo);
@@ -65,9 +65,9 @@ export const TeamsProvider: React.FC = ({ children }) => {
       const filteredData = userTeamsInformation.filter(
         teamInformation => teamInformation.id !== teamUpdateSubmitInfo.id,
       );
-      // console.log('Filtrei os dados');
-      // setUserTeamsInformation([filteredData, teamUpdateSubmitInfo]);
-      // history.push('/dashboard');
+      console.log('Filtrei os dados');
+      console.log('filteredData', filteredData);
+      setUserTeamsInformation([...filteredData, teamUpdateSubmitInfo]);
     },
     [userTeamsInformation],
   );

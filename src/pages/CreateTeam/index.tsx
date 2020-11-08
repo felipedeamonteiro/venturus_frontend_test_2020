@@ -31,7 +31,6 @@ interface PlayersData {
   nationality: string;
   position: string;
   team: string;
-  season: number;
 }
 
 interface FormErrors {
@@ -266,7 +265,6 @@ const CreateTeam: React.FC = () => {
             nationality: superData.player.nationality,
             position: superData.statistics[0]?.games.position,
             team: superData.statistics[0]?.team.name,
-            season: superData.statistics[0]?.league.season,
           };
         },
       );

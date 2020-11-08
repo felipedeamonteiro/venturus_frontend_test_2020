@@ -60,6 +60,7 @@ const SoccerField2: React.FC<FieldProps> = ({
 
   return (
     <Container formationValue={formationValue}>
+      <p>Botão de teste soccer Field 2</p>
       <button
         type="button"
         title="Botão de teste"

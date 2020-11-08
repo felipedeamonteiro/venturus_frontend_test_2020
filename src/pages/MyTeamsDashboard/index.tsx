@@ -2,6 +2,7 @@ import React, { useMemo, useCallback, useEffect } from 'react';
 import { HiOutlinePlus } from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
 
+import { array } from 'yup';
 import Table from '../../components/Table';
 import SoccerField1 from '../../components/SoccerField1';
 import Header from '../../components/Header';
@@ -42,7 +43,6 @@ const MyTeamsDashboard: React.FC = () => {
             nationality: 'Brazil',
             position: 'Attacker',
             team: 'Santos',
-            season: 2016,
           },
         },
         {
@@ -54,7 +54,6 @@ const MyTeamsDashboard: React.FC = () => {
             nationality: 'Brazil',
             position: 'Defender',
             team: 'Santos',
-            season: 2017,
           },
         },
         {
@@ -66,7 +65,6 @@ const MyTeamsDashboard: React.FC = () => {
             nationality: 'Brazil',
             position: 'Attacker',
             team: 'Santos',
-            season: 2013,
           },
         },
         {
@@ -78,7 +76,6 @@ const MyTeamsDashboard: React.FC = () => {
             nationality: 'Brazil',
             position: 'Defender',
             team: 'Santos',
-            season: 2015,
           },
         },
         {
@@ -90,7 +87,6 @@ const MyTeamsDashboard: React.FC = () => {
             nationality: 'Brazil',
             position: 'Attacker',
             team: 'Santos',
-            season: '2011',
           },
         },
         {
@@ -102,7 +98,6 @@ const MyTeamsDashboard: React.FC = () => {
             nationality: 'Brazil',
             position: 'Attacker',
             team: 'Santos',
-            season: 2013,
           },
         },
         {
@@ -114,7 +109,6 @@ const MyTeamsDashboard: React.FC = () => {
             nationality: 'Brazil',
             position: 'Midfielder',
             team: 'Santos',
-            season: '2011',
           },
         },
         {
@@ -126,7 +120,6 @@ const MyTeamsDashboard: React.FC = () => {
             nationality: 'Brazil',
             position: 'Midfielder',
             team: 'Santos',
-            season: '2007',
           },
         },
         {
@@ -138,7 +131,6 @@ const MyTeamsDashboard: React.FC = () => {
             nationality: 'Brazil',
             position: 'Defender',
             team: 'Santos',
-            season: '2009',
           },
         },
         {
@@ -150,7 +142,6 @@ const MyTeamsDashboard: React.FC = () => {
             nationality: 'Brazil',
             position: 'Defender',
             team: 'Santos',
-            season: '2018',
           },
         },
         {
@@ -162,7 +153,6 @@ const MyTeamsDashboard: React.FC = () => {
             nationality: 'Brazil',
             position: 'Midfielder',
             team: 'Santos',
-            season: '2010',
           },
         },
       ],
