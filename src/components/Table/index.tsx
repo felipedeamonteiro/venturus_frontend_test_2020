@@ -67,10 +67,6 @@ const Table: React.FC<ITable> = ({ columns, data }: any) => {
                     <td {...cell.getCellProps()}>
                       <p title={cell ? (cell.value as string) : ''}>
                         {cell.render('Cell')}
-                        {/* {console.log(
-                          'row cell',
-                          JSON.stringify(cell.row.original),
-                        )} */}
                       </p>
                     </td>
                   ) : (

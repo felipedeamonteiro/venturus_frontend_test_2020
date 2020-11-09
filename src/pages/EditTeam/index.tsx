@@ -130,7 +130,6 @@ const EditTeam: React.FC = () => {
 
   const handleSubmit = useCallback(
     async (data: FormRawData) => {
-      console.log('1');
       try {
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
@@ -148,7 +147,6 @@ const EditTeam: React.FC = () => {
             'A team formation with players must be done!',
           ),
         });
-        console.log('2');
 
         if (playersPositionStateHere.length < 11) {
           setSubmissionErrors((state: any) => [
@@ -162,7 +160,7 @@ const EditTeam: React.FC = () => {
         await schema.validate(data, {
           abortEarly: false,
         });
-        console.log('3');
+
         setGotsubmissionErrors(false);
 
         const submissionEditData: Team = {
@@ -175,14 +173,11 @@ const EditTeam: React.FC = () => {
           formation: data.formation,
           playersInfo: JSON.parse(data.playersInfo),
         };
-        console.log('4');
+
         setTeamDataStored(submissionEditData);
 
-        console.log('data', data);
-        console.log('submissionData', submissionEditData);
-
         handleUpdateTeamData(submissionEditData);
-        console.log('Cheguei aqui para ir embora dessa página');
+
         localStorage.removeItem('@VenturusTest:updateTeam');
         history.push('/dashboard');
       } catch (error) {
@@ -354,11 +349,6 @@ const EditTeam: React.FC = () => {
     },
   ];
 
-  const handleTestes = useCallback(() => {
-    console.log('playersPositionStateHere', playersPositionStateHere);
-    console.log('teamDataStored', teamDataStored);
-  }, [playersPositionStateHere, teamDataStored]);
-
   return (
     <>
       <Header />
@@ -371,15 +361,6 @@ const EditTeam: React.FC = () => {
           </button>
           <Form onSubmit={handleSubmit} id="form">
             <div className="upper-title">
-              <p>Botão de teste Edit Team</p>
-              <button
-                type="button"
-                title="Botão de teste"
-                onClick={handleTestes}
-                style={{ background: '#70008c' }}
-              >
-                <HiOutlinePlus size={17} color="#fff" />
-              </button>
               <h4>TEAM INFORMATION</h4>
             </div>
             <div className="team-information-form">

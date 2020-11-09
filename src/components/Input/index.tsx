@@ -17,13 +17,12 @@ const Input: React.FC<InputProps> = ({
   label,
   name,
   placeholder,
-  value,
   updateDefaultValue,
   ...rest
 }) => {
   const [defaultValueState, setDefaultValueState] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
-  const { fieldName, error, registerField } = useField(name);
+  const { fieldName, defaultValue, error, registerField } = useField(name);
 
   useEffect(() => {
     registerField({
@@ -42,10 +41,11 @@ const Input: React.FC<InputProps> = ({
         ref={inputRef}
         type="text"
         name={name}
-        defaultValue={defaultValueState}
+        defaultValue={defaultValue}
         placeholder={placeholder}
         disabled={disabled}
-        value={value}
+        value={defaultValueState}
+        onChange={e => setDefaultValueState(e.target.value)}
         onKeyPress={e => {
           if (e.key === 'Enter') e.preventDefault();
         }}

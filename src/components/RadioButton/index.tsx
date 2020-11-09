@@ -29,7 +29,7 @@ const RadioButton: React.FC<RadioProps> = ({
   const inputRefs = useRef<HTMLInputElement[]>([]);
   const {
     fieldName,
-    defaultValue = updateDefaultValue || '',
+    defaultValue = updateDefaultValue,
     registerField,
   } = useField(name);
 
@@ -61,7 +61,7 @@ const RadioButton: React.FC<RadioProps> = ({
               inputRefs.current[index] = ref as HTMLInputElement;
             }}
             className="bolin"
-            defaultChecked={defaultValue.includes(option.value)}
+            defaultChecked={defaultValue}
             type="radio"
             name={name}
             id={option.value}

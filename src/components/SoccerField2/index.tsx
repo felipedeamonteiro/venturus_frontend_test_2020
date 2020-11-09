@@ -52,30 +52,16 @@ const SoccerField2: React.FC<FieldProps> = ({
     [handleClearFieldInfo],
   );
 
-  const handleTestes = useCallback(() => {
-    console.log('fieldEditDefaultValue', typeof fieldEditDefaultValue);
-    console.log('teamPlayersPositionState', teamPlayersPositionState);
-    console.log('teamPlayersPosition', teamPlayersPosition);
-  }, [fieldEditDefaultValue, teamPlayersPosition, teamPlayersPositionState]);
-
   return (
     <Container formationValue={formationValue}>
-      <p>Botão de teste soccer Field 2</p>
-      <button
-        type="button"
-        title="Botão de teste"
-        onClick={handleTestes}
-        style={{ background: '#70008c' }}
-      >
-        <HiOutlinePlus size={17} color="#fff" />
-      </button>
       <div className="select-div">
         <label htmlFor="formation-box">Formation</label>
         <select
           onChange={e => handleSelectValue(e.target.value)}
           name="formation-box"
           id="formation-box"
-          defaultValue={selectEditDefaultValue || '-'}
+          defaultValue={selectEditDefaultValue}
+          value={formationValue}
         >
           <option value="-">-</option>
           <option value="3 - 2 - 2 - 3">3 - 2 - 2 - 3</option>
