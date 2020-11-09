@@ -1,10 +1,9 @@
 /* eslint-disable react/jsx-indent */
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useCallback, useState, useRef, useEffect } from 'react';
 import { Form } from '@unform/web';
-import { v4 as uuid } from 'uuid';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { BiArrowBack, BiSearchAlt2 } from 'react-icons/bi';
 import { VscLoading } from 'react-icons/vsc';
 
@@ -75,23 +74,59 @@ const EditTeam: React.FC = () => {
   const [gotsubmissionErrors, setGotsubmissionErrors] = useState<boolean>(
     false,
   );
-
   const [playersDataOutsideField, setPlayersDataOutsideField] = useState<
     PlayersData[]
   >([]);
 
-  const { playersPosition, setPlayersPosition } = usePlayer();
+  // chamei esses métodos globais do usePlayer() para arrumar a parte
+  // de validação dos jogadores no campo.
+  const { teamPlayersPosition } = usePlayer();
   const { handleUpdateTeamData, updateTeamData, teams } = useTeams();
   const history = useHistory();
 
-  const realUpdateTeamData: Team = teams.filter(
-    team => team.id === updateTeamData.id,
-  )[0];
+  // This state controls the state here in this page
+  const [teamDataStored, setTeamDataStored] = useState<Team>(() => {
+    const teamToBeUpdatedData = localStorage.getItem(
+      '@VenturusTest:updateTeam',
+    );
 
-  // TODO:  It's needed to fix this
-  if (playersPosition.length === 0) {
-    setPlayersPosition([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
-  }
+    if (teamToBeUpdatedData || teamToBeUpdatedData === 'undefined') {
+      return JSON.parse(teamToBeUpdatedData);
+    }
+    return {} as Team;
+  });
+  // This state constrols the position of players here
+  const [playersPositionStateHere, setPlayersPositionStateHere] = useState<
+    number[]
+  >([]);
+
+  useEffect(() => {
+    if (playersPositionStateHere.length < 11) {
+      teamPlayersPosition.map(teamPlayerPosition =>
+        setPlayersPositionStateHere(state => [
+          ...state,
+          teamPlayerPosition.position,
+        ]),
+      );
+    }
+    const realUpdateTeamData: Team = teams.filter(
+      team => team.id === updateTeamData.id,
+    )[0];
+
+    if (!teamDataStored.id) {
+      localStorage.setItem(
+        '@VenturusTest:updateTeam',
+        JSON.stringify(realUpdateTeamData),
+      );
+      setTeamDataStored(realUpdateTeamData);
+    }
+  }, [
+    playersPositionStateHere.length,
+    teamDataStored.id,
+    teamPlayersPosition,
+    teams,
+    updateTeamData.id,
+  ]);
 
   const handleSubmit = useCallback(
     async (data: FormRawData) => {
@@ -115,7 +150,7 @@ const EditTeam: React.FC = () => {
         });
         console.log('2');
 
-        if (playersPosition.length < 11) {
+        if (playersPositionStateHere.length < 11) {
           setSubmissionErrors((state: any) => [
             ...state,
             'You need to fill all positions with players.',
@@ -131,7 +166,7 @@ const EditTeam: React.FC = () => {
         setGotsubmissionErrors(false);
 
         const submissionEditData: Team = {
-          id: realUpdateTeamData.id,
+          id: teamDataStored.id,
           teamName: data.teamName,
           description: data.description,
           website: data.website,
@@ -141,12 +176,14 @@ const EditTeam: React.FC = () => {
           playersInfo: JSON.parse(data.playersInfo),
         };
         console.log('4');
+        setTeamDataStored(submissionEditData);
 
         console.log('data', data);
         console.log('submissionData', submissionEditData);
 
         handleUpdateTeamData(submissionEditData);
         console.log('Cheguei aqui para ir embora dessa página');
+        localStorage.removeItem('@VenturusTest:updateTeam');
         history.push('/dashboard');
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
@@ -176,7 +213,12 @@ const EditTeam: React.FC = () => {
         }
       }
     },
-    [playersPosition.length, handleUpdateTeamData],
+    [
+      playersPositionStateHere.length,
+      teamDataStored.id,
+      handleUpdateTeamData,
+      history,
+    ],
   );
 
   const handleClearPlayersInfo = useCallback(() => {
@@ -297,6 +339,7 @@ const EditTeam: React.FC = () => {
   }, [searchPlayer, teamId]);
 
   const handleGetBack = useCallback(() => {
+    localStorage.removeItem('@VenturusTest:updateTeam');
     history.push('/dashboard');
   }, [history]);
 
@@ -312,16 +355,16 @@ const EditTeam: React.FC = () => {
   ];
 
   const handleTestes = useCallback(() => {
-    console.log('playersPosition', playersPosition);
-    console.log('realUpdateTeamData', realUpdateTeamData);
-  }, [playersPosition]);
+    console.log('playersPositionStateHere', playersPositionStateHere);
+    console.log('teamDataStored', teamDataStored);
+  }, [playersPositionStateHere, teamDataStored]);
 
   return (
     <>
       <Header />
       <MiddleContainer>
         <div className="main-container">
-          <h2>Update your team data</h2>
+          <h2>Edit your team data</h2>
           <button type="button" className="arrow" onClick={handleGetBack}>
             <BiArrowBack size={20} />
             <p>Get back</p>
@@ -346,7 +389,7 @@ const EditTeam: React.FC = () => {
                     name="teamName"
                     placeholder="Insert team name"
                     label="Team name"
-                    updateDefaultValue={realUpdateTeamData.teamName}
+                    updateDefaultValue={teamDataStored.teamName}
                   />
 
                   <TextArea
@@ -355,7 +398,7 @@ const EditTeam: React.FC = () => {
                     maxLength={300}
                     name="description"
                     placeholder="Add description"
-                    defaultValue={realUpdateTeamData.description}
+                    defaultValue={teamDataStored.description}
                   />
                 </div>
                 <div className="right-div">
@@ -363,20 +406,20 @@ const EditTeam: React.FC = () => {
                     name="website"
                     placeholder="http://myteam.com"
                     label="Team website"
-                    updateDefaultValue={realUpdateTeamData.website}
+                    updateDefaultValue={teamDataStored.website}
                   />
 
                   <RadioButton
                     name="teamType"
                     title="Team type"
                     options={radioOptions}
-                    updateDefaultValue={realUpdateTeamData.teamType}
+                    updateDefaultValue={teamDataStored.teamType}
                   />
 
                   <Tags
                     name="tags"
                     label="Tags"
-                    defaultValue={realUpdateTeamData.tags}
+                    defaultValue={teamDataStored.tags}
                   />
                 </div>
               </div>
@@ -389,8 +432,8 @@ const EditTeam: React.FC = () => {
               <div className="bottom-info">
                 <div className="bottom-left-div">
                   <SoccerField2
-                    selectEditDefaultValue={realUpdateTeamData.formation}
-                    fieldEditDefaultValue={realUpdateTeamData.playersInfo}
+                    selectEditDefaultValue={teamDataStored.formation}
+                    fieldEditDefaultValue={teamDataStored.playersInfo}
                   />
                   <Button type="submit" style={{ width: 320 }}>
                     Save

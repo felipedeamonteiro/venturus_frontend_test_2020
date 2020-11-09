@@ -29,7 +29,7 @@ const Table: React.FC<ITable> = ({ columns, data }: any) => {
       setUpdateTeamData(JSON.parse(stringfiedTeamData));
       history.push('/edit_team');
     },
-    [history],
+    [history, setUpdateTeamData],
   );
 
   return (

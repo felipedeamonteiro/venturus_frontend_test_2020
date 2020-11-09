@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, useEffect, useRef } from 'react';
+import React, { InputHTMLAttributes, useEffect, useRef, useState } from 'react';
 import { useField } from '@unform/core';
 
 import { Container } from './styles';
@@ -21,13 +21,9 @@ const Input: React.FC<InputProps> = ({
   updateDefaultValue,
   ...rest
 }) => {
+  const [defaultValueState, setDefaultValueState] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
-  const {
-    fieldName,
-    defaultValue = updateDefaultValue || '',
-    error,
-    registerField,
-  } = useField(name);
+  const { fieldName, error, registerField } = useField(name);
 
   useEffect(() => {
     registerField({
@@ -35,7 +31,10 @@ const Input: React.FC<InputProps> = ({
       ref: inputRef.current,
       path: 'value',
     });
-  }, [fieldName, registerField]);
+    if (updateDefaultValue) {
+      setDefaultValueState(updateDefaultValue);
+    }
+  }, [fieldName, registerField, updateDefaultValue]);
 
   return (
     <Container isErrored={!!error} isDisabled={disabled}>
@@ -43,7 +42,7 @@ const Input: React.FC<InputProps> = ({
         ref={inputRef}
         type="text"
         name={name}
-        defaultValue={defaultValue}
+        defaultValue={defaultValueState}
         placeholder={placeholder}
         disabled={disabled}
         value={value}

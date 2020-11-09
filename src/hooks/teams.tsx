@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useCallback, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { TeamPlayersPosition } from './players';
 
 export interface Team {
@@ -45,7 +44,6 @@ export const TeamsProvider: React.FC = ({ children }) => {
       return [];
     },
   );
-  const history = useHistory();
 
   // Used in CREATE Teams Page when submitting data
   const saveTeamInformation = useCallback(

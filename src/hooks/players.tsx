@@ -78,14 +78,25 @@ export const PlayerProvider: React.FC = ({ children }) => {
       setPlayersInfoState([...playersInfoState, parsedPlayerInfo]);
       const playerCompleteInfo: TeamPlayersPosition = {
         position: positionNumber,
-        player: JSON.parse(playerInfoMonster),
+        player: parsedPlayerInfo,
       };
-      setTeamPlayersPosition([...teamPlayersPosition, playerCompleteInfo]);
+
+      const teamPlayersPositionFiltered = teamPlayersPosition.filter(
+        teamPlayerPosition => teamPlayerPosition.position !== positionNumber,
+      );
+      const playersPositionfiltered = playersPosition.filter(
+        playerPosition => playerPosition !== positionNumber,
+      );
+
+      setTeamPlayersPosition([
+        ...teamPlayersPositionFiltered,
+        playerCompleteInfo,
+      ]);
       setPlayerInfoPutInField(playerCompleteInfo.player);
       setPlayerWasPutInField(true);
-      setPlayersPosition(state => [...state, positionNumber]);
+      setPlayersPosition([...playersPositionfiltered, positionNumber]);
     },
-    [teamPlayersPosition, playersInfoState],
+    [playersInfoState, teamPlayersPosition, playersPosition],
   );
 
   const handleClearFieldInfo = useCallback(() => {

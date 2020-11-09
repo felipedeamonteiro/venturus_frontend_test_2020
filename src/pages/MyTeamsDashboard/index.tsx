@@ -2,7 +2,6 @@ import React, { useMemo, useCallback, useEffect } from 'react';
 import { HiOutlinePlus } from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
 
-import { array } from 'yup';
 import Table from '../../components/Table';
 import SoccerField1 from '../../components/SoccerField1';
 import Header from '../../components/Header';
@@ -22,6 +21,7 @@ const MyTeamsDashboard: React.FC = () => {
 
   useEffect(() => {
     localStorage.setItem('@VenturusTest:Teams', JSON.stringify(teams));
+    localStorage.removeItem('@VenturusTest:updateTeam');
   }, [teams]);
 
   const handleGoFoward = useCallback(() => {
@@ -29,148 +29,7 @@ const MyTeamsDashboard: React.FC = () => {
   }, [history]);
 
   const handleTestes = useCallback(() => {
-    const testeDeMerda: any = {
-      description: 'Time da doidera',
-      formation: '4 - 2 - 3 - 1',
-      id: 'f017825b-aeea-45a6-98b3-071b95cf8770',
-      playersInfo: [
-        {
-          position: 11,
-          player: {
-            id: 9858,
-            name: 'Sosthenes José Santos Salles',
-            age: 33,
-            nationality: 'Brazil',
-            position: 'Attacker',
-            team: 'Santos',
-          },
-        },
-        {
-          position: 2,
-          player: {
-            id: 10376,
-            name: 'Jose Carlos Cracco Neto',
-            age: 26,
-            nationality: 'Brazil',
-            position: 'Defender',
-            team: 'Santos',
-          },
-        },
-        {
-          position: 10,
-          player: {
-            id: 12915,
-            name: 'Jose Henrique da Silva Dourado',
-            age: 31,
-            nationality: 'Brazil',
-            position: 'Attacker',
-            team: 'Santos',
-          },
-        },
-        {
-          position: 3,
-          player: {
-            id: 26945,
-            name: 'Leonardo José Aparecido Moura',
-            age: 33,
-            nationality: 'Brazil',
-            position: 'Defender',
-            team: 'Santos',
-          },
-        },
-        {
-          position: 8,
-          player: {
-            id: 35187,
-            name: 'José Eduardo Bischofe de Almeida',
-            age: 33,
-            nationality: 'Brazil',
-            position: 'Attacker',
-            team: 'Santos',
-          },
-        },
-        {
-          position: 9,
-          player: {
-            id: 47319,
-            name: 'Willian José',
-            age: 29,
-            nationality: 'Brazil',
-            position: 'Attacker',
-            team: 'Santos',
-          },
-        },
-        {
-          position: 6,
-          player: {
-            id: 77894,
-            name: 'Elivelton José da Silva',
-            age: 28,
-            nationality: 'Brazil',
-            position: 'Midfielder',
-            team: 'Santos',
-          },
-        },
-        {
-          position: 7,
-          player: {
-            id: 80364,
-            name: 'José Roberto da Silva Júnior',
-            age: 43,
-            nationality: 'Brazil',
-            position: 'Midfielder',
-            team: 'Santos',
-          },
-        },
-        {
-          position: 4,
-          player: {
-            id: 114515,
-            name: 'Adaílton José dos Santos Filho',
-            age: 34,
-            nationality: 'Brazil',
-            position: 'Defender',
-            team: 'Santos',
-          },
-        },
-        {
-          position: 1,
-          player: {
-            id: 234372,
-            name: 'Jose Charles Soares Matos',
-            age: 21,
-            nationality: 'Brazil',
-            position: 'Defender',
-            team: 'Santos',
-          },
-        },
-        {
-          position: 5,
-          player: {
-            id: 80385,
-            name: 'José Luis dos Santos Pinto',
-            age: 28,
-            nationality: 'Brazil',
-            position: 'Midfielder',
-            team: 'Santos',
-          },
-        },
-      ],
-      tags: [
-        'dhsuishudsh',
-        'sdijsoids',
-        'sipdjsiodjsoid',
-        'sidjsij',
-        'sidjsoi',
-        'sjdsij',
-        'osdp',
-        'osdk',
-      ],
-      teamName: 'Time doido',
-      teamType: 'fantasy',
-      website: 'http://timedoido.com',
-    };
-    // saveTeamInformation(testeDeMerda);
+    console.log('storage', localStorage.getItem('@VenturusTest:updateTeam'));
   }, []);
 
   const columns = useMemo(
