@@ -25,6 +25,8 @@ interface TeamsContextData {
   handleUpdateTeamData(teamSubmitInfo: Team): void;
   handleDeleteTeam(teamDataStringfied: string): void;
   setUpdateTeamData(teamData: TableTeamData): void;
+  handleShowMostAndLessPickedPlayers(): void;
+  handleHighestAndLowestAvgAgePlayers(): void;
 }
 
 const TeamsContext = createContext<TeamsContextData>({} as TeamsContextData);
@@ -77,14 +79,14 @@ export const TeamsProvider: React.FC = ({ children }) => {
   }, []);
 
   // Used in MY DASHBOARD to show data
-  // const handleShowMostAndLessPickedPlayers = useCallback(() => {
-  //   // Use Quicksort applied to Javascript
-  // }, []);
+  const handleShowMostAndLessPickedPlayers = useCallback(() => {
+    // Use Quicksort applied to Javascript
+  }, []);
 
   // Used in MY DASHBOARD to show data
-  // const handleHighestAndLowestAvgAgePlayers = useCallback(() => {
-  //   // Use Quicksort applied to Javascript
-  // }, []);
+  const handleHighestAndLowestAvgAgePlayers = useCallback(() => {
+    // Use Quicksort applied to Javascript
+  }, []);
 
   return (
     <TeamsContext.Provider
@@ -95,6 +97,8 @@ export const TeamsProvider: React.FC = ({ children }) => {
         handleUpdateTeamData,
         handleDeleteTeam,
         setUpdateTeamData,
+        handleShowMostAndLessPickedPlayers,
+        handleHighestAndLowestAvgAgePlayers,
       }}
     >
       {children}

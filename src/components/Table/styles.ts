@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { shade } from 'polished';
 
 export const Container = styled.div`
   /* .loading {
@@ -7,6 +8,22 @@ export const Container = styled.div`
     animation-iteration-count: infinite;
     animation-direction: alternate-reverse;
   } */
+  max-height: 600px;
+  overflow-y: auto;
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #ff99b3;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: ${shade(0.1, '#ff99b3')};
+  }
+
   border-bottom: 0 !important;
   table {
     width: 100%;

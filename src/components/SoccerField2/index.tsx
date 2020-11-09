@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { HiOutlinePlus } from 'react-icons/hi';
-
 import PlayerDropablePosition from '../PlayerDropablePosition';
 import Input from '../Input';
 import { Container } from './styles';

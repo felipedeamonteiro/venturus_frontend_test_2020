@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-curly-newline */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useField } from '@unform/core';
 import { FiX } from 'react-icons/fi';
@@ -34,7 +35,7 @@ const Tags: React.FC<TagsProps> = ({ label, name, defaultValue, ...props }) => {
   const inputKeyDown = useCallback(
     event => {
       const val = event.target.value;
-      if (event.key === 'Enter' && val) {
+      if ((event.key === 'Enter' || event.key === ';') && val) {
         if (tags.find(tag => tag.toLowerCase() === val.toLowerCase())) {
           return;
         }
@@ -88,11 +89,13 @@ const Tags: React.FC<TagsProps> = ({ label, name, defaultValue, ...props }) => {
             name={name}
             onKeyDown={e => inputKeyDown(e)}
             value={inputTags}
-            onChange={e => setInputTags(e.target.value)}
+            onChange={e =>
+              e.target.value === ';' ? '' : setInputTags(e.target.value)
+            }
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             onKeyPress={e => e.key === 'Enter' && e.preventDefault()}
-            placeholder="Add tags pressing 'Enter'"
+            placeholder="Add tags pressing 'Enter' or ;"
             {...props}
           />
         </ul>

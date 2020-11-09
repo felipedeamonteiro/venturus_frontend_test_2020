@@ -8,7 +8,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 import { MiddleContainer } from './styles';
-import { useTeams } from '../../hooks/teams';
+import { Team, useTeams } from '../../hooks/teams';
 
 interface Example {
   name: string;
@@ -17,14 +17,14 @@ interface Example {
 
 const MyTeamsDashboard: React.FC = () => {
   const history = useHistory();
-  const { teams } = useTeams();
+  const { teams, saveTeamInformation } = useTeams();
 
   useEffect(() => {
     localStorage.setItem('@VenturusTest:Teams', JSON.stringify(teams));
     localStorage.removeItem('@VenturusTest:updateTeam');
   }, [teams]);
 
-  const handleGoFoward = useCallback(() => {
+  const handleGoToCreateTeam = useCallback(() => {
     history.push('/create_team');
   }, [history]);
 
@@ -50,6 +50,143 @@ const MyTeamsDashboard: React.FC = () => {
     description: team.description,
   }));
 
+  const handleTeste = useCallback(() => {
+    const testeDeMerda: Team = {
+      description: 'Teste do Caralho',
+      formation: '4 - 2 - 3 - 1',
+      id: '107896d0-bde7-429b-a34l-5a2b5e3019b9',
+      playersInfo: [
+        {
+          player: {
+            age: 32,
+            id: 77768,
+            name: 'Everton José Modesto Silva',
+            nationality: 'Brazil',
+            position: 'Defender',
+            team: 'Flamengo',
+          },
+          position: 2,
+        },
+        {
+          player: {
+            age: 32,
+            id: 77768,
+            name: 'Everton José Modesto Silva',
+            nationality: 'Brazil',
+            position: 'Defender',
+            team: 'Flamengo',
+          },
+          position: 1,
+        },
+        {
+          player: {
+            age: 32,
+            id: 77768,
+            name: 'Everton José Modesto Silva',
+            nationality: 'Brazil',
+            position: 'Defender',
+            team: 'Flamengo',
+          },
+          position: 3,
+        },
+        {
+          player: {
+            age: 32,
+            id: 77768,
+            name: 'Everton José Modesto Silva',
+            nationality: 'Brazil',
+            position: 'Defender',
+            team: 'Flamengo',
+          },
+          position: 4,
+        },
+        {
+          player: {
+            age: 32,
+            id: 77768,
+            name: 'Everton José Modesto Silva',
+            nationality: 'Brazil',
+            position: 'Defender',
+            team: 'Flamengo',
+          },
+          position: 5,
+        },
+        {
+          player: {
+            age: 32,
+            id: 77768,
+            name: 'Everton José Modesto Silva',
+            nationality: 'Brazil',
+            position: 'Defender',
+            team: 'Flamengo',
+          },
+          position: 6,
+        },
+        {
+          player: {
+            age: 32,
+            id: 77768,
+            name: 'Everton José Modesto Silva',
+            nationality: 'Brazil',
+            position: 'Defender',
+            team: 'Flamengo',
+          },
+          position: 7,
+        },
+        {
+          player: {
+            age: 32,
+            id: 77768,
+            name: 'Everton José Modesto Silva',
+            nationality: 'Brazil',
+            position: 'Defender',
+            team: 'Flamengo',
+          },
+          position: 8,
+        },
+        {
+          player: {
+            age: 32,
+            id: 77768,
+            name: 'Everton José Modesto Silva',
+            nationality: 'Brazil',
+            position: 'Defender',
+            team: 'Flamengo',
+          },
+          position: 9,
+        },
+        {
+          player: {
+            age: 32,
+            id: 77768,
+            name: 'Everton José Modesto Silva',
+            nationality: 'Brazil',
+            position: 'Defender',
+            team: 'Flamengo',
+          },
+          position: 10,
+        },
+        {
+          player: {
+            age: 32,
+            id: 77768,
+            name: 'Everton José Modesto Silva',
+            nationality: 'Brazil',
+            position: 'Defender',
+            team: 'Flamengo',
+          },
+          position: 11,
+        },
+      ],
+      tags: ['Caralho!!!!', 'Porraa!!'],
+      teamName: 'Time Teste 3',
+      teamType: 'Real',
+      website: 'http://caralhodotime.com',
+    };
+    console.log('teams', teams);
+    saveTeamInformation(testeDeMerda);
+  }, []);
+
   return (
     <>
       <Header />
@@ -61,8 +198,17 @@ const MyTeamsDashboard: React.FC = () => {
 
             <button
               type="button"
+              title="Test Button"
+              onClick={handleTeste}
+              style={{ background: 'purple' }}
+            >
+              <HiOutlinePlus size={17} color="#fff" />
+            </button>
+
+            <button
+              type="button"
               title="Create a team"
-              onClick={handleGoFoward}
+              onClick={handleGoToCreateTeam}
             >
               <HiOutlinePlus size={17} color="#fff" />
             </button>
