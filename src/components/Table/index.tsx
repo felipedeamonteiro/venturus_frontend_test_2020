@@ -11,6 +11,7 @@ import { useTeams } from '../../hooks/teams';
 interface ITable {
   columns: any[];
   data: any[];
+  ordering?: { acessor: string; desc: boolean };
 }
 
 const Table: React.FC<ITable> = ({ columns, data }: any) => {

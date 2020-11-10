@@ -24,11 +24,6 @@ export interface TableTeamData {
   description: string;
 }
 
-interface pickedPlayersAndTeamProps {
-  teamName: string;
-  playersInfo: TeamPlayersPosition[];
-}
-
 interface MostLessPickedPlayers {
   id: number;
   name: string;
@@ -44,8 +39,6 @@ interface TeamsContextData {
   handleShowMostAndLessPickedPlayers(): void;
   handleHighestAndLowestAvgAgePlayers(): void;
   allPlayersSelected: MostLessPickedPlayers[];
-  pickedPlayersAndTeamData: pickedPlayersAndTeamProps[];
-  playersInfoState: any;
   theMostPickedPlayer: MostLessPickedPlayers[];
   theLessPickedPlayer: MostLessPickedPlayers[];
   playersInfoDataState: Player[];
@@ -65,13 +58,10 @@ export const TeamsProvider: React.FC = ({ children }) => {
   const [theLessPickedPlayer, setTheLessPickedPlayer] = useState<
     MostLessPickedPlayers[]
   >([] as MostLessPickedPlayers[]);
-  const [playersInfoState, setPlayersInfoState] = useState<any>();
   const [allPlayersSelected, setAllPlayersSelected] = useState<
     MostLessPickedPlayers[]
   >([]);
-  const [pickedPlayersAndTeamData, setPickedPlayersAndTeamData] = useState<
-    pickedPlayersAndTeamProps[]
-  >([]);
+
   const [updateTeamData, setUpdateTeamData] = useState<TableTeamData>(
     {} as TableTeamData,
   );
@@ -125,7 +115,6 @@ export const TeamsProvider: React.FC = ({ children }) => {
     let onlyPlayersInfo: Player[] = [];
 
     userTeamsInformation.forEach(userTeamData => {
-      console.log('userTeamData', userTeamData);
       userTeamData.playersInfo.map(playerInfo => {
         playersArrayByTeam.push(playerInfo.player);
         onlyPlayersInfo.push(playerInfo.player);
@@ -170,7 +159,7 @@ export const TeamsProvider: React.FC = ({ children }) => {
     );
     setTheMostPickedPlayer(realMostPickedPlayer);
     setTheLessPickedPlayer(realLessPickedPlayer);
-  }, [userTeamsInformation]);
+  }, [playersInfoDataState.length, userTeamsInformation]);
 
   // Used in MY DASHBOARD to show data
   const handleHighestAndLowestAvgAgePlayers = useCallback(() => {
@@ -190,8 +179,6 @@ export const TeamsProvider: React.FC = ({ children }) => {
         teams: userTeamsInformation,
         updateTeamData,
         allPlayersSelected,
-        pickedPlayersAndTeamData,
-        playersInfoState,
         theMostPickedPlayer,
         theLessPickedPlayer,
         playersInfoDataState,

@@ -17,18 +17,7 @@ interface Example {
 
 const MyTeamsDashboard: React.FC = () => {
   const history = useHistory();
-  const {
-    teams,
-    saveTeamInformation,
-    handleShowMostAndLessPickedPlayers,
-    handleHighestAndLowestAvgAgePlayers,
-    allPlayersSelected,
-    pickedPlayersAndTeamData,
-    playersInfoState,
-    theLessPickedPlayer,
-    theMostPickedPlayer,
-    playersInfoDataState,
-  } = useTeams();
+  const { teams, handleShowMostAndLessPickedPlayers } = useTeams();
 
   useEffect(() => {
     localStorage.setItem('@VenturusTest:Teams', JSON.stringify(teams));
@@ -45,12 +34,10 @@ const MyTeamsDashboard: React.FC = () => {
       {
         Header: 'Name',
         accessor: 'name' as keyof Example,
-        sortType: 'basic',
       },
       {
         Header: 'Description',
         accessor: 'description' as keyof Example,
-        sortType: 'basic',
       },
     ],
     [],
@@ -195,6 +182,7 @@ const MyTeamsDashboard: React.FC = () => {
       teamType: 'Real',
       website: 'http://caralhodotime.com',
     };
+    console.log('oi');
   }, []);
 
   return (
