@@ -17,12 +17,24 @@ interface Example {
 
 const MyTeamsDashboard: React.FC = () => {
   const history = useHistory();
-  const { teams, saveTeamInformation } = useTeams();
+  const {
+    teams,
+    saveTeamInformation,
+    handleShowMostAndLessPickedPlayers,
+    handleHighestAndLowestAvgAgePlayers,
+    allPlayersSelected,
+    pickedPlayersAndTeamData,
+    playersInfoState,
+    theLessPickedPlayer,
+    theMostPickedPlayer,
+    playersInfoDataState,
+  } = useTeams();
 
   useEffect(() => {
     localStorage.setItem('@VenturusTest:Teams', JSON.stringify(teams));
     localStorage.removeItem('@VenturusTest:updateTeam');
-  }, [teams]);
+    handleShowMostAndLessPickedPlayers();
+  }, [handleShowMostAndLessPickedPlayers, teams]);
 
   const handleGoToCreateTeam = useCallback(() => {
     history.push('/create_team');
@@ -179,12 +191,10 @@ const MyTeamsDashboard: React.FC = () => {
         },
       ],
       tags: ['Caralho!!!!', 'Porraa!!'],
-      teamName: 'Time Teste 3',
+      teamName: 'Time Teste Eterno',
       teamType: 'Real',
       website: 'http://caralhodotime.com',
     };
-    console.log('teams', teams);
-    saveTeamInformation(testeDeMerda);
   }, []);
 
   return (

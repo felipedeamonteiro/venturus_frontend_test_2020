@@ -94,6 +94,47 @@ export const Container = styled.div`
           border-radius: 50%;
         }
       }
+
+      .mp-tooltip-div {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-evenly;
+        width: 190px;
+        height: 120px;
+        background: black;
+        border-radius: 4px;
+        font-size: 12px;
+        z-index: 2;
+        margin: 175px 0 0 -100px;
+        opacity: 0;
+        transition: opacity 0.4s;
+
+        div {
+          height: 20px;
+          display: flex;
+          flex-direction: row;
+          bottom: 20px;
+
+          p {
+            margin-left: 4px;
+            color: #fff;
+            max-width: 140px;
+            -webkit-box-orient: horizontal;
+            -webkit-line-clamp: 1;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+
+    .player-mpp:hover .mp-tooltip-div {
+      opacity: 1;
+      transition: opacity 0.4s;
     }
 
     .player-lpp {
@@ -141,6 +182,47 @@ export const Container = styled.div`
           border-radius: 50%;
         }
       }
+
+      .lp-tooltip-div {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-evenly;
+        width: 190px;
+        height: 120px;
+        background: black;
+        border-radius: 4px;
+        font-size: 12px;
+        z-index: 2;
+        margin: 175px 0 0 -100px;
+        opacity: 0;
+        transition: opacity 0.4s;
+
+        div {
+          height: 20px;
+          display: flex;
+          flex-direction: row;
+          bottom: 20px;
+
+          p {
+            margin-left: 4px;
+            color: #fff;
+            max-width: 140px;
+            -webkit-box-orient: horizontal;
+            -webkit-line-clamp: 1;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+
+    .player-lpp:hover .lp-tooltip-div {
+      opacity: 1;
+      transition: opacity 0.4s;
     }
   }
 `;

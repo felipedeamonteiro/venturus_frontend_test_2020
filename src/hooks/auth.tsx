@@ -48,6 +48,10 @@ export const AuthProvider: React.FC = ({ children }) => {
     localStorage.removeItem('@VenturusTest:firstName');
     localStorage.removeItem('@VenturusTest:secondName');
     localStorage.removeItem('@VenturusTest:Teams');
+    localStorage.removeItem('@VenturusTest:mostPickedInitials');
+    localStorage.removeItem('@VenturusTest:lessPickedInitials');
+    localStorage.removeItem('@VenturusTest:mostPickedPlayer');
+    localStorage.removeItem('@VenturusTest:lessPickedPlayer');
 
     setData(null);
   }, []);
