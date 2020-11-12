@@ -1,3 +1,5 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable no-plusplus */
 /* eslint-disable array-callback-return */
 /* eslint-disable prefer-const */
 import React, { createContext, useContext, useCallback, useState } from 'react';
@@ -29,6 +31,20 @@ interface MostLessPickedPlayers {
   name: string;
 }
 
+interface PlayerAgeByTeam {
+  team: string;
+  playersAge: number[];
+}
+
+interface CalculatedAverageAges {
+  team: string;
+  avgAge: number;
+}
+
+interface TeamPlayersObject {
+  [key: string]: number[];
+}
+
 interface TeamsContextData {
   teams: Team[];
   updateTeamData: TableTeamData;
@@ -44,11 +60,44 @@ interface TeamsContextData {
   playersInfoDataState: Player[];
   lessPickedNumber: number;
   mostPickedNumber: number;
+  allPlayersAgesOrganizedByTeams: PlayerAgeByTeam[];
+  sortedHighestAvgAge: CalculatedAverageAges[];
+  sortedLowestAvgAge: CalculatedAverageAges[];
 }
 
 const TeamsContext = createContext<TeamsContextData>({} as TeamsContextData);
 
 export const TeamsProvider: React.FC = ({ children }) => {
+  const [sortedHighestAvgAge, setSortedHighestAvgAge] = useState<
+    CalculatedAverageAges[]
+  >(() => {
+    const highestAvgAgeArray = localStorage.getItem(
+      '@VenturusTest:HighestAvgAge',
+    );
+
+    if (highestAvgAgeArray) {
+      return JSON.parse(highestAvgAgeArray);
+    }
+
+    return [];
+  });
+  const [sortedLowestAvgAge, setSortedLowestAvgAge] = useState<
+    CalculatedAverageAges[]
+  >(() => {
+    const lowestAvgAgeArray = localStorage.getItem(
+      '@VenturusTest:LowestAvgAge',
+    );
+
+    if (lowestAvgAgeArray) {
+      return JSON.parse(lowestAvgAgeArray);
+    }
+
+    return [];
+  });
+  const [
+    allPlayersAgesOrganizedByTeams,
+    setAllPlayersAgesOrganizedByTeams,
+  ] = useState<PlayerAgeByTeam[]>([]);
   const [lessPickedNumber, setLessPickedNumber] = useState<number>(0);
   const [mostPickedNumber, setMostPickedNumber] = useState<number>(0);
   const [playersInfoDataState, setPlayersInfoDataState] = useState([] as any);
@@ -108,7 +157,7 @@ export const TeamsProvider: React.FC = ({ children }) => {
     }
   }, []);
 
-  // Used in MY DASHBOARD to show data
+  // Used in MY DASHBOARD SOCCER FIELD1 to show data
   const handleShowMostAndLessPickedPlayers = useCallback(() => {
     let playersArrayByTeam: Player[] = [];
     let allPlayersNamesAndIds: MostLessPickedPlayers[] = [];
@@ -132,6 +181,9 @@ export const TeamsProvider: React.FC = ({ children }) => {
 
     const mostPickedPlayer = mostFrequentElementInArray(allPlayersNamesAndIds);
     const lessPickedPlayer = lessFrequentElementInArray(allPlayersNamesAndIds);
+
+    console.log('mostPickedPlayer', mostPickedPlayer);
+    console.log('mostPickedPlayer', lessPickedPlayer);
 
     if (mostPickedPlayer && lessPickedPlayer) {
       const mostPickedPercentage = Number(
@@ -161,22 +213,72 @@ export const TeamsProvider: React.FC = ({ children }) => {
     setTheLessPickedPlayer(realLessPickedPlayer);
   }, [playersInfoDataState.length, userTeamsInformation]);
 
-  // Used in MY DASHBOARD to show data
+  // Used in MY DASHBOARD TOP 5 to show data
   const handleHighestAndLowestAvgAgePlayers = useCallback(() => {
-    // userTeamsInformation.forEach(userTeamData => {
-    //   const objectData = {
-    //     teamName: userTeamData.teamName,
-    //     playersInfo: userTeamData.playersInfo,
-    //   };
-    //   setPickedPlayersAndTeamData(state => [...state, objectData]);
-    // });
-    // For each team, calculate the average age of players
-  }, []);
+    const arrayPlayers: TeamPlayersObject = {};
+
+    userTeamsInformation.map(team => {
+      team.playersInfo.map(player => {
+        if (!arrayPlayers[player.player.team]) {
+          arrayPlayers[player.player.team] = [];
+        }
+        arrayPlayers[player.player.team].push(player.player.age);
+      });
+    });
+
+    const teamAvgAges = Object.entries(arrayPlayers).map(([team]) => {
+      const avgAge = Number(
+        (
+          arrayPlayers[team].reduce(
+            (acc: number, age: number) => acc + age,
+            0,
+          ) / arrayPlayers[team].length
+        ).toFixed(1),
+      );
+
+      return {
+        team,
+        avgAge,
+      };
+    });
+
+    const sortedArrayByAge = teamAvgAges.sort((a, b) => a.avgAge - b.avgAge);
+
+    let highestAvgAge: CalculatedAverageAges[] = [];
+    let lowestAvgAge: CalculatedAverageAges[] = [];
+    let z = sortedArrayByAge.length - 1;
+    if (sortedArrayByAge.length < 4) {
+      for (let i = 0; i < sortedArrayByAge.length; i++) {
+        highestAvgAge.push(sortedArrayByAge[z]);
+        lowestAvgAge.push(sortedArrayByAge[i]);
+        z -= 1;
+      }
+    } else {
+      for (let i = 0; i < 5; i++) {
+        highestAvgAge.push(sortedArrayByAge[z]);
+        lowestAvgAge.push(sortedArrayByAge[i]);
+        z -= 1;
+      }
+    }
+    setSortedHighestAvgAge(highestAvgAge);
+    setSortedLowestAvgAge(lowestAvgAge);
+    localStorage.setItem(
+      '@VenturusTest:HighestAvgAge',
+      JSON.stringify(highestAvgAge),
+    );
+    localStorage.setItem(
+      '@VenturusTest:LowestAvgAge',
+      JSON.stringify(lowestAvgAge),
+    );
+  }, [userTeamsInformation]);
 
   return (
     <TeamsContext.Provider
       value={{
         teams: userTeamsInformation,
+        allPlayersAgesOrganizedByTeams,
+        sortedHighestAvgAge,
+        sortedLowestAvgAge,
         updateTeamData,
         allPlayersSelected,
         theMostPickedPlayer,

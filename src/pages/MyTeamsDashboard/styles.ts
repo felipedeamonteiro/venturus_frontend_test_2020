@@ -102,9 +102,14 @@ export const MiddleContainer = styled.div`
               display: flex;
               justify-content: space-between;
               align-items: center;
+              cursor: default;
+              border: 2px solid transparent;
+              transition: border 0.2s;
+              font-size: 18px;
 
               &:hover {
                 border: 2px solid #de0039;
+                cursor: default;
               }
             }
           }
@@ -140,9 +145,14 @@ export const MiddleContainer = styled.div`
               display: flex;
               justify-content: space-between;
               align-items: center;
+              cursor: default;
+              border: 2px solid transparent;
+              transition: border 0.2s;
+              font-size: 18px;
 
               &:hover {
                 border: 2px solid #de0039;
+                cursor: default;
               }
             }
           }
