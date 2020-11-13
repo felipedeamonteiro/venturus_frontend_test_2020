@@ -25,7 +25,7 @@ Enjoy the application!
 
 It's a Soccer/Futebol squad manager (looks like a little `Cartola` from Brazil) and you can create teams with lots of descriptions and 10 different field formations. You can choose any player in the world saying its original team and country. These information are real and is acquired from the demo API [https://www.api-football.com/](https://www.api-football.com/).
 
-Descriptions of the tasks in this project can be seen here in this [board](https://trello.com/invite/b/9kzEclDG/e18b42f36ab9cbf4bab60431d74da372/teste-venturus-frontend-e-backend).
+Descriptions of the tasks for this project can be seen here in this [board](https://trello.com/invite/b/9kzEclDG/e18b42f36ab9cbf4bab60431d74da372/teste-venturus-frontend-e-backend).
 
 ## - How to run tests
 
