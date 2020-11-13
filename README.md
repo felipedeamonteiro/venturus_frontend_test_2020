@@ -25,4 +25,16 @@ Enjoy the application!
 
 It's Soccer/Futebol squad manager (looks like a little `Cartola` from Brazil) and you can create teams with lots of descriptions and 10 different field formations. You can choose any player in the world saying its original team and country. These information are real and is acquired from the demo API [https://www.api-football.com/](https://www.api-football.com/).
 
+## - How to run tests
+
+To run tests:
+```
+yarn test
+```
+
+To run coverage report:
+```
+yarn test --coverage --watchAll false
+```
+
 Enjoy!

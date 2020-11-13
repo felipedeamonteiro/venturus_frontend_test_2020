@@ -2,6 +2,7 @@ import React, { useCallback, useRef } from 'react';
 import * as Yup from 'yup';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
+import { useHistory } from 'react-router-dom';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { useAuth } from '../../hooks/auth';
 
@@ -19,6 +20,7 @@ const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const { signIn } = useAuth();
+  const history = useHistory();
 
   const handleSubmit = useCallback(
     async (data: SignInFormData) => {
@@ -37,13 +39,15 @@ const SignIn: React.FC = () => {
         signIn({
           rawName: data.signin,
         });
+
+        history.push('/dashboard');
       } catch (error) {
         const errors = getValidationErrors(error);
 
         formRef.current?.setErrors(errors);
       }
     },
-    [signIn],
+    [history, signIn],
   );
 
   return (
