@@ -50,8 +50,10 @@ export const AuthProvider: React.FC = ({ children }) => {
     localStorage.removeItem('@VenturusTest:Teams');
     localStorage.removeItem('@VenturusTest:mostPickedInitials');
     localStorage.removeItem('@VenturusTest:lessPickedInitials');
-    localStorage.removeItem('@VenturusTest:mostPickedPlayer');
-    localStorage.removeItem('@VenturusTest:lessPickedPlayer');
+    localStorage.removeItem('@VenturusTest:mostPickedPlayerInfo');
+    localStorage.removeItem('@VenturusTest:lessPickedPlayerInfo');
+    localStorage.removeItem('@VenturusTest:HighestAvgAge');
+    localStorage.removeItem('@VenturusTest:LowestAvgAge');
     localStorage.removeItem('@VenturusTest:HighestAvgAge');
     localStorage.removeItem('@VenturusTest:LowestAvgAge');
 

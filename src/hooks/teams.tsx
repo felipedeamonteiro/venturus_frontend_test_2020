@@ -1,7 +1,6 @@
-/* eslint-disable guard-for-in */
 /* eslint-disable no-plusplus */
 /* eslint-disable array-callback-return */
-/* eslint-disable prefer-const */
+
 import React, { createContext, useContext, useCallback, useState } from 'react';
 import { TeamPlayersPosition, Player } from './players';
 import {
@@ -31,11 +30,6 @@ interface MostLessPickedPlayers {
   name: string;
 }
 
-interface PlayerAgeByTeam {
-  team: string;
-  playersAge: number[];
-}
-
 interface CalculatedAverageAges {
   team: string;
   avgAge: number;
@@ -54,15 +48,20 @@ interface TeamsContextData {
   setUpdateTeamData(teamData: TableTeamData): void;
   handleShowMostAndLessPickedPlayers(): void;
   handleHighestAndLowestAvgAgePlayers(): void;
-  allPlayersSelected: MostLessPickedPlayers[];
+
   theMostPickedPlayer: MostLessPickedPlayers[];
   theLessPickedPlayer: MostLessPickedPlayers[];
   playersInfoDataState: Player[];
   lessPickedNumber: number;
   mostPickedNumber: number;
-  allPlayersAgesOrganizedByTeams: PlayerAgeByTeam[];
   sortedHighestAvgAge: CalculatedAverageAges[];
   sortedLowestAvgAge: CalculatedAverageAges[];
+  mostPickedNameInitials: string;
+  mostPickedPlayerData: Player[];
+  mostPickedPlayerBoolean: boolean;
+  lessPickedNameInitials: string;
+  lessPickedPlayerData: Player[];
+  lessPickedPlayerBoolean: boolean;
 }
 
 const TeamsContext = createContext<TeamsContextData>({} as TeamsContextData);
@@ -94,22 +93,18 @@ export const TeamsProvider: React.FC = ({ children }) => {
 
     return [];
   });
-  const [
-    allPlayersAgesOrganizedByTeams,
-    setAllPlayersAgesOrganizedByTeams,
-  ] = useState<PlayerAgeByTeam[]>([]);
+
   const [lessPickedNumber, setLessPickedNumber] = useState<number>(0);
   const [mostPickedNumber, setMostPickedNumber] = useState<number>(0);
-  const [playersInfoDataState, setPlayersInfoDataState] = useState([] as any);
+  const [playersInfoDataState, setPlayersInfoDataState] = useState<Player[]>(
+    [],
+  );
   const [theMostPickedPlayer, setTheMostPickedPlayer] = useState<
     MostLessPickedPlayers[]
   >([] as MostLessPickedPlayers[]);
   const [theLessPickedPlayer, setTheLessPickedPlayer] = useState<
     MostLessPickedPlayers[]
   >([] as MostLessPickedPlayers[]);
-  const [allPlayersSelected, setAllPlayersSelected] = useState<
-    MostLessPickedPlayers[]
-  >([]);
 
   const [updateTeamData, setUpdateTeamData] = useState<TableTeamData>(
     {} as TableTeamData,
@@ -125,6 +120,85 @@ export const TeamsProvider: React.FC = ({ children }) => {
       return [];
     },
   );
+  const [mostPickedNameInitials, setMostPickedNameInitials] = useState<string>(
+    () => {
+      const mostPickedInitials = localStorage.getItem(
+        '@VenturusTest:mostPickedInitials',
+      );
+
+      if (mostPickedInitials) {
+        return JSON.parse(mostPickedInitials);
+      }
+
+      return '';
+    },
+  );
+  const [mostPickedPlayerData, setMostPickedPlayerData] = useState<Player[]>(
+    () => {
+      const mostPickedPlayer = localStorage.getItem(
+        '@VenturusTest:mostPickedPlayer',
+      );
+
+      if (mostPickedPlayer) {
+        return JSON.parse(mostPickedPlayer);
+      }
+
+      return [] as Player[];
+    },
+  );
+  const [mostPickedPlayerBoolean, setMostPickedPlayerBoolean] = useState<
+    boolean
+  >(() => {
+    const mostPickedPlayer = localStorage.getItem(
+      '@VenturusTest:mostPickedPlayer',
+    );
+
+    if (mostPickedPlayer) {
+      return true;
+    }
+
+    return false;
+  });
+
+  const [lessPickedNameInitials, setLessPickedNameInitials] = useState<string>(
+    () => {
+      const lessPickedInitials = localStorage.getItem(
+        '@VenturusTest:lessPickedInitials',
+      );
+
+      if (lessPickedInitials) {
+        return JSON.parse(lessPickedInitials);
+      }
+
+      return '';
+    },
+  );
+  const [lessPickedPlayerData, setLessPickedPlayerData] = useState<Player[]>(
+    () => {
+      const lessPickedPlayer = localStorage.getItem(
+        '@VenturusTest:lessPickedPlayer',
+      );
+
+      if (lessPickedPlayer) {
+        return JSON.parse(lessPickedPlayer);
+      }
+
+      return [] as Player[];
+    },
+  );
+  const [lessPickedPlayerBoolean, setLessPickedPlayerBoolean] = useState<
+    boolean
+  >(() => {
+    const lessPickedPlayer = localStorage.getItem(
+      '@VenturusTest:lessPickedPlayer',
+    );
+
+    if (lessPickedPlayer) {
+      return true;
+    }
+
+    return false;
+  });
 
   // Used in CREATE Teams Page when submitting data
   const saveTeamInformation = useCallback(
@@ -150,137 +224,191 @@ export const TeamsProvider: React.FC = ({ children }) => {
   const handleDeleteTeam = useCallback((teamDataStringfied: string) => {
     const teamData = JSON.parse(teamDataStringfied);
     // eslint-disable-next-line no-alert
-    if (window.confirm('Are you sure in removing this team?')) {
+    if (window.confirm('Are you sure to remove this team?')) {
       setUserTeamsInformation(state =>
         state.filter(team => team.id !== teamData.id),
       );
     }
   }, []);
 
-  // Used in MY DASHBOARD SOCCER FIELD1 to show data
+  // 2 methods used in MY DASHBOARD SOCCER FIELD1 to show data
+
   const handleShowMostAndLessPickedPlayers = useCallback(() => {
-    let playersArrayByTeam: Player[] = [];
-    let allPlayersNamesAndIds: MostLessPickedPlayers[] = [];
-    let onlyPlayersInfo: Player[] = [];
+    const allPlayersNamesAndIds: MostLessPickedPlayers[] = [];
+    const allselectedPlayersInfo: Player[] = [];
 
-    userTeamsInformation.forEach(userTeamData => {
-      userTeamData.playersInfo.map(playerInfo => {
-        playersArrayByTeam.push(playerInfo.player);
-        onlyPlayersInfo.push(playerInfo.player);
+    if (userTeamsInformation.length > 0) {
+      userTeamsInformation.map(userTeamData => {
+        userTeamData.playersInfo.map(playerInfo => {
+          allselectedPlayersInfo.push(playerInfo.player);
+          allPlayersNamesAndIds.push({
+            id: playerInfo.player.id,
+            name: playerInfo.player.name,
+          });
+        });
       });
-    });
-    setPlayersInfoDataState(onlyPlayersInfo);
+      setPlayersInfoDataState(allselectedPlayersInfo);
 
-    playersArrayByTeam.forEach(playersArray => {
-      allPlayersNamesAndIds.push({
-        id: playersArray.id,
-        name: playersArray.name,
-      });
-    });
-    setAllPlayersSelected(allPlayersNamesAndIds);
-
-    const mostPickedPlayer = mostFrequentElementInArray(allPlayersNamesAndIds);
-    const lessPickedPlayer = lessFrequentElementInArray(allPlayersNamesAndIds);
-
-    console.log('mostPickedPlayer', mostPickedPlayer);
-    console.log('mostPickedPlayer', lessPickedPlayer);
-
-    if (mostPickedPlayer && lessPickedPlayer) {
-      const mostPickedPercentage = Number(
-        (
-          (mostPickedPlayer.quantity / playersInfoDataState.length) *
-          100
-        ).toFixed(2),
+      const mostPickedPlayer = mostFrequentElementInArray(
+        allPlayersNamesAndIds,
       );
-      const lessPickedPercentage = Number(
-        (
-          (lessPickedPlayer.quantity / playersInfoDataState.length) *
-          100
-        ).toFixed(2),
+      const lessPickedPlayer = lessFrequentElementInArray(
+        allPlayersNamesAndIds,
       );
-      setMostPickedNumber(mostPickedPercentage);
-      setLessPickedNumber(lessPickedPercentage);
+
+      if (mostPickedPlayer && lessPickedPlayer) {
+        const mostPickedPercentage = Number(
+          (
+            (mostPickedPlayer.quantity / allPlayersNamesAndIds.length) *
+            100
+          ).toFixed(2),
+        );
+        const lessPickedPercentage = Number(
+          (
+            (lessPickedPlayer.quantity / allPlayersNamesAndIds.length) *
+            100
+          ).toFixed(2),
+        );
+        setMostPickedNumber(mostPickedPercentage);
+        setLessPickedNumber(lessPickedPercentage);
+
+        const realMostPickedPlayer = allPlayersNamesAndIds.filter(
+          playersData =>
+            playersData.id === Number(mostPickedPlayer.mostFrequent),
+        );
+
+        const realLessPickedPlayer = allPlayersNamesAndIds.filter(
+          playersData =>
+            playersData.id === Number(lessPickedPlayer.lessFrequent),
+        );
+        setTheMostPickedPlayer(realMostPickedPlayer);
+        setTheLessPickedPlayer(realLessPickedPlayer);
+
+        const firstNameMostPicked = realMostPickedPlayer[0].name.split(' ')[0];
+        const lastNameMostPicked = realMostPickedPlayer[0].name
+          .split(' ')
+          .splice(-1)[0];
+        const mostPickedInitials: string =
+          firstNameMostPicked[0] + lastNameMostPicked[0];
+
+        setMostPickedNameInitials(mostPickedInitials);
+        localStorage.setItem(
+          '@VenturusTest:mostPickedInitials',
+          JSON.stringify(mostPickedInitials),
+        );
+        const mostPickedPlayerInfo = allselectedPlayersInfo.filter(
+          (playerData: Player) => {
+            return playerData.id === realMostPickedPlayer[0].id;
+          },
+        );
+
+        setMostPickedPlayerData(mostPickedPlayerInfo);
+        localStorage.setItem(
+          '@VenturusTest:mostPickedPlayerInfo',
+          JSON.stringify(mostPickedPlayerInfo),
+        );
+        setMostPickedPlayerBoolean(true);
+
+        const firstNameLessPicked = realLessPickedPlayer[0].name.split(' ')[0];
+        const lastNameLessPicked = realLessPickedPlayer[0].name
+          .split(' ')
+          .splice(-1)[0];
+        const lessPickedInitials: string =
+          firstNameLessPicked[0] + lastNameLessPicked[0];
+
+        setLessPickedNameInitials(lessPickedInitials);
+        localStorage.setItem(
+          '@VenturusTest:lessPickedInitials',
+          JSON.stringify(lessPickedInitials),
+        );
+        const lessPickedPlayerInfo = allselectedPlayersInfo.filter(
+          (playerData: Player) => playerData.id === realLessPickedPlayer[0].id,
+        );
+
+        setLessPickedPlayerData(lessPickedPlayerInfo);
+        localStorage.setItem(
+          '@VenturusTest:lessPickedPlayerInfo',
+          JSON.stringify(lessPickedPlayerInfo),
+        );
+        setLessPickedPlayerBoolean(true);
+      }
     }
-
-    const realMostPickedPlayer = allPlayersNamesAndIds.filter(
-      (playersData: any) => playersData.id === mostPickedPlayer,
-    );
-
-    const realLessPickedPlayer = allPlayersNamesAndIds.filter(
-      (playersData: any) => playersData.id === lessPickedPlayer,
-    );
-    setTheMostPickedPlayer(realMostPickedPlayer);
-    setTheLessPickedPlayer(realLessPickedPlayer);
-  }, [playersInfoDataState.length, userTeamsInformation]);
+  }, [userTeamsInformation]);
 
   // Used in MY DASHBOARD TOP 5 to show data
   const handleHighestAndLowestAvgAgePlayers = useCallback(() => {
     const arrayPlayers: TeamPlayersObject = {};
 
-    userTeamsInformation.map(team => {
-      team.playersInfo.map(player => {
-        if (!arrayPlayers[player.player.team]) {
-          arrayPlayers[player.player.team] = [];
-        }
-        arrayPlayers[player.player.team].push(player.player.age);
+    if (userTeamsInformation.length > 0) {
+      userTeamsInformation.map(team => {
+        team.playersInfo.map(playerData => {
+          if (!arrayPlayers[playerData.player.team]) {
+            arrayPlayers[playerData.player.team] = [];
+          }
+          arrayPlayers[playerData.player.team].push(playerData.player.age);
+        });
       });
-    });
 
-    const teamAvgAges = Object.entries(arrayPlayers).map(([team]) => {
-      const avgAge = Number(
-        (
-          arrayPlayers[team].reduce(
-            (acc: number, age: number) => acc + age,
-            0,
-          ) / arrayPlayers[team].length
-        ).toFixed(1),
+      const teamAvgAges = Object.entries(arrayPlayers).map(([team]) => {
+        const avgAge = Number(
+          (
+            arrayPlayers[team].reduce(
+              (acc: number, age: number) => acc + age,
+              0,
+            ) / arrayPlayers[team].length
+          ).toFixed(1),
+        );
+
+        return {
+          team,
+          avgAge,
+        };
+      });
+
+      const sortedArrayByAge = teamAvgAges.sort((a, b) => a.avgAge - b.avgAge);
+
+      const highestAvgAge: CalculatedAverageAges[] = [];
+      const lowestAvgAge: CalculatedAverageAges[] = [];
+      let z = sortedArrayByAge.length - 1;
+      if (sortedArrayByAge.length < 4) {
+        for (let i = 0; i < sortedArrayByAge.length; i++) {
+          highestAvgAge.push(sortedArrayByAge[z]);
+          lowestAvgAge.push(sortedArrayByAge[i]);
+          z -= 1;
+        }
+      } else {
+        for (let i = 0; i < 5; i++) {
+          highestAvgAge.push(sortedArrayByAge[z]);
+          lowestAvgAge.push(sortedArrayByAge[i]);
+          z -= 1;
+        }
+      }
+      setSortedHighestAvgAge(highestAvgAge);
+      setSortedLowestAvgAge(lowestAvgAge);
+      localStorage.setItem(
+        '@VenturusTest:HighestAvgAge',
+        JSON.stringify(highestAvgAge),
       );
-
-      return {
-        team,
-        avgAge,
-      };
-    });
-
-    const sortedArrayByAge = teamAvgAges.sort((a, b) => a.avgAge - b.avgAge);
-
-    let highestAvgAge: CalculatedAverageAges[] = [];
-    let lowestAvgAge: CalculatedAverageAges[] = [];
-    let z = sortedArrayByAge.length - 1;
-    if (sortedArrayByAge.length < 4) {
-      for (let i = 0; i < sortedArrayByAge.length; i++) {
-        highestAvgAge.push(sortedArrayByAge[z]);
-        lowestAvgAge.push(sortedArrayByAge[i]);
-        z -= 1;
-      }
-    } else {
-      for (let i = 0; i < 5; i++) {
-        highestAvgAge.push(sortedArrayByAge[z]);
-        lowestAvgAge.push(sortedArrayByAge[i]);
-        z -= 1;
-      }
+      localStorage.setItem(
+        '@VenturusTest:LowestAvgAge',
+        JSON.stringify(lowestAvgAge),
+      );
     }
-    setSortedHighestAvgAge(highestAvgAge);
-    setSortedLowestAvgAge(lowestAvgAge);
-    localStorage.setItem(
-      '@VenturusTest:HighestAvgAge',
-      JSON.stringify(highestAvgAge),
-    );
-    localStorage.setItem(
-      '@VenturusTest:LowestAvgAge',
-      JSON.stringify(lowestAvgAge),
-    );
   }, [userTeamsInformation]);
 
   return (
     <TeamsContext.Provider
       value={{
         teams: userTeamsInformation,
-        allPlayersAgesOrganizedByTeams,
+        mostPickedNameInitials,
+        mostPickedPlayerData,
+        mostPickedPlayerBoolean,
+        lessPickedNameInitials,
+        lessPickedPlayerData,
+        lessPickedPlayerBoolean,
         sortedHighestAvgAge,
         sortedLowestAvgAge,
         updateTeamData,
-        allPlayersSelected,
         theMostPickedPlayer,
         theLessPickedPlayer,
         playersInfoDataState,

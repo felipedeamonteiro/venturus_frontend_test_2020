@@ -11,7 +11,7 @@ import Footer from '../../components/Footer';
 import { MiddleContainer } from './styles';
 import { useTeams } from '../../hooks/teams';
 
-interface Example {
+interface TableColumns {
   name: string;
   description: string;
 }
@@ -29,7 +29,6 @@ const MyTeamsDashboard: React.FC = () => {
   useEffect(() => {
     localStorage.setItem('@VenturusTest:Teams', JSON.stringify(teams));
     localStorage.removeItem('@VenturusTest:updateTeam');
-    handleShowMostAndLessPickedPlayers();
     handleHighestAndLowestAvgAgePlayers();
   }, [
     handleHighestAndLowestAvgAgePlayers,
@@ -45,11 +44,11 @@ const MyTeamsDashboard: React.FC = () => {
     () => [
       {
         Header: 'Name',
-        accessor: 'name' as keyof Example,
+        accessor: 'name' as keyof TableColumns,
       },
       {
         Header: 'Description',
-        accessor: 'description' as keyof Example,
+        accessor: 'description' as keyof TableColumns,
       },
     ],
     [],
@@ -61,10 +60,6 @@ const MyTeamsDashboard: React.FC = () => {
     description: team.description,
   }));
 
-  const handleTeste = useCallback(() => {
-    handleHighestAndLowestAvgAgePlayers();
-  }, [handleHighestAndLowestAvgAgePlayers]);
-
   return (
     <>
       <Header />
@@ -73,15 +68,6 @@ const MyTeamsDashboard: React.FC = () => {
         <div className="left-container">
           <div>
             <h1>My teams</h1>
-
-            <button
-              type="button"
-              title="Test Button"
-              onClick={handleTeste}
-              style={{ background: 'purple' }}
-            >
-              <HiOutlinePlus size={17} color="#fff" />
-            </button>
 
             <button
               type="button"

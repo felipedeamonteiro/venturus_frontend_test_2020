@@ -47,6 +47,25 @@
 //   const sortedArray = quickSort(items, 0, items.length - 1);
 //   console.log(sortedArray); // prints [2,3,5,6,7,9]
 // }
+
+// export function mmmostFrequentElementInArray(
+//   array: any[],
+// ): MostFrequentElement | null {
+//   if (array.length === 0) return null;
+//   const modeMap: any = {};
+//   let maxEl = array[0].id;
+//   let maxCount = 1;
+//   for (let i = 0; i < array.length; i++) {
+//     const el = array[i].id;
+//     if (modeMap[el] === null) modeMap[el] === 1;
+//     else modeMap[el]++;
+//     if (modeMap[el] > maxCount) {
+//       maxEl = el;
+//       maxCount = modeMap[el];
+//     }
+//   }
+//   return { mostFrequent: maxEl, quantity: maxCount };
+// }
 interface MostFrequentElement {
   mostFrequent: string;
   quantity: number;
@@ -55,25 +74,6 @@ interface MostFrequentElement {
 interface LessFrequentElement {
   lessFrequent: string;
   quantity: number;
-}
-
-export function mostFrequentElementInArray(
-  array: any[],
-): MostFrequentElement | null {
-  if (array.length === 0) return null;
-  const modeMap: any = {};
-  let maxEl = array[0].id;
-  let maxCount = 1;
-  for (let i = 0; i < array.length; i++) {
-    const el = array[i].id;
-    if (modeMap[el] === null) modeMap[el] === 1;
-    else modeMap[el]++;
-    if (modeMap[el] > maxCount) {
-      maxEl = el;
-      maxCount = modeMap[el];
-    }
-  }
-  return { mostFrequent: maxEl, quantity: maxCount };
 }
 
 export function lessFrequentElementInArray(
@@ -90,4 +90,20 @@ export function lessFrequentElementInArray(
   ].reduce((r, v) => (v[1] < r[1] ? v : r)); // get the the item that appear less times
 
   return { lessFrequent: result[0], quantity: result[1] };
+}
+
+export function mostFrequentElementInArray(
+  array: any[],
+): MostFrequentElement | null {
+  const result = [
+    ...array.reduce(
+      (
+        r,
+        n, // create a map of occurrences
+      ) => r.set(n.id, (r.get(n.id) || 0) + 1),
+      new Map(),
+    ),
+  ].reduce((r, v) => (v[1] > r[1] ? v : r)); // get the the item that appear less times
+
+  return { mostFrequent: result[0], quantity: result[1] };
 }
