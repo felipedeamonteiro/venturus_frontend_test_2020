@@ -8,6 +8,17 @@ import {
   mostFrequentElementInArray,
 } from '../utils/helpingAlgorithmsFunctions';
 
+/**
+ * Here we have the most complex hook containing the global state of teams created
+ * by a user.
+ * The methods here are:
+ * saveTeamInformation, handleUpdateTeamData, handleDeleteTeam, handleShowMostAndLessPickedPlayers,
+ * handleHighestAndLowestAvgAgePlayers
+ *
+ * The many global state constants here are used to help the methods but 'teams'
+ *  is the one who stores data from the teams created by the user.
+ */
+
 export interface Team {
   id: string;
   teamName: string;

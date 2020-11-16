@@ -5,6 +5,11 @@ import Input from '../Input';
 import { Container } from './styles';
 import { usePlayer, TeamPlayersPosition } from '../../hooks/players';
 
+/**
+ * Component used in 'Create Team' and 'Update Team' pages to show team formation
+ * and containing the components to drag and drop players
+ */
+
 interface FieldProps {
   selectEditDefaultValue?: string;
   fieldEditDefaultValue?: TeamPlayersPosition[];

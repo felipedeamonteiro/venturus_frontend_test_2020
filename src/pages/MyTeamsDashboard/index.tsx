@@ -40,6 +40,7 @@ const MyTeamsDashboard: React.FC = () => {
     history.push('/create_team');
   }, [history]);
 
+  // This is a mandatory format of columns to use the lib react-table
   const columns = useMemo(
     () => [
       {
@@ -54,6 +55,8 @@ const MyTeamsDashboard: React.FC = () => {
     [],
   );
 
+  // Here I send the id of the created team because it'll be used to remove or to
+  // update the team.
   const treatedDataToTable = teams.map(team => ({
     id: team.id,
     name: team.teamName,

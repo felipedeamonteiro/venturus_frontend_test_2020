@@ -6,6 +6,16 @@ import React, {
   useEffect,
 } from 'react';
 
+/**
+ * Here we have a hook containing the global state of players choosen by a user to create teams.
+ * The methods here are:
+ *  handleDragStart, handleDragOver and handleDrop (to drag and drop players on the field)
+ *  and handleClearFieldInfo to clear the field.
+ *
+ * The many global state constants here are used to help the methods but 'playerInfoState'
+ *  is the one who stores data from the players chose by the user.
+ */
+
 export interface Player {
   id: number;
   name: string;

@@ -3,6 +3,10 @@ import React, { useEffect } from 'react';
 import { Container } from './styles';
 import { useTeams } from '../../hooks/teams';
 
+/**
+ * Simple component used in '/dashboard' to show most and less picked players
+ */
+
 const SoccerField1: React.FC = () => {
   const {
     lessPickedNameInitials,

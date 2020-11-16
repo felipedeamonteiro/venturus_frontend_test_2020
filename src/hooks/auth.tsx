@@ -1,5 +1,12 @@
 import React, { createContext, useCallback, useState, useContext } from 'react';
 
+/**
+ * Here we have a hook containing the global state of auth from a user. The methods
+ * SignIn and SignOut are here.
+ *
+ * In the global state constant 'data' is stored the data from the user.
+ */
+
 interface SignInCredentials {
   rawName: string;
 }

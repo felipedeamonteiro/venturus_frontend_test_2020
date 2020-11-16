@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+/**
+ * Here I let my x-rapidapi-key so anyone can use without creating an account,
+ * But I know that the best to do is to store this kind of value in an Enviroment
+ * Variable
+ */
+
 const api = axios.create({
   baseURL: 'https://v3.football.api-sports.io/',
   headers: {

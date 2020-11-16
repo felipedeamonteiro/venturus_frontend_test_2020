@@ -24,6 +24,11 @@ import PlayersContainer from '../../components/PlayersContainer';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
+/**
+ * One of the main pages of the project, containing a form, some components created
+ * for it, and the drag and drop of players searched.
+ */
+
 interface PlayersData {
   id: number;
   name: string;
