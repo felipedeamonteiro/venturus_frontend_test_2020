@@ -19,8 +19,6 @@ After that:
 yarn start
 ```
 
-Enjoy the application!
-
 ## The application
 
 It's a Soccer squad manager (looks like a little `Cartola` from Brazil) and you can create teams with lots of descriptions and 10 different field formations. You can choose any player in the world saying its original team and country. These information are real and is acquired from the demo API [https://www.api-football.com/](https://www.api-football.com/).
