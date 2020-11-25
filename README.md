@@ -38,5 +38,7 @@ To run coverage report:
 ```
 yarn test --coverage --watchAll false
 ```
+## - Accessing the project in production
+This project is hosted in an account in [Vercel](https://vercel.com/), and can be accessed here in this [link](https://venturus-frontend-test-2020.vercel.app/).
 
 Enjoy!
