@@ -68,26 +68,27 @@ const SignIn: React.FC = () => {
       </Content>
 
       <Instructions>
-        <h1>About the application</h1>
-        <p>
-          This is a Soccer squad manager (looks like <b>Cartola FC</b> from
-          Brazil).
-        </p>
-        <p>
-          Here you will be able to create, delete and edit teams, adding some
-          description, tags and 10 different field formations!
-        </p>
-        <p>
-          You can choose any player in the world informing its original team and
-          country.
-        </p>
-        <p>
-          These information are real and is acquired from the demo API
-          https://www.api-football.com/.
-        </p>
-        <h2>Watch out!</h2>
-        <p>Always you logout the application, all information is lost.</p>
-        <h4>Enjoy!</h4>
+        <div>
+          <h1>Soccer Squad Manager</h1>
+          <h2>About the application</h2>
+          <p>
+            This is a <b>Soccer squad manager</b> (looks like <b>Cartola FC</b>{' '}
+            from Brazil). <br />
+            Here you will be able to <b>create</b>, <b>delete</b> and{' '}
+            <b>edit</b> teams, adding some description, tags and 10 different
+            field formations!
+            <br />
+            You can choose any player in the world just by informing its
+            original team and country.
+          </p>
+          <p>
+            These information are real and acquired from the demo API
+            https://www.api-football.com/.
+          </p>
+          <h2>Watch out!</h2>
+          <p>Always you logout the application, all information is lost.</p>
+          <h3>Enjoy!</h3>
+        </div>
       </Instructions>
     </Container>
   );
