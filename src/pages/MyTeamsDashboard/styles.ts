@@ -93,7 +93,7 @@ export const MiddleContainer = styled.div`
             height: 90%;
 
             .team-info {
-              width: 220px;
+              width: 96%;
               height: 40px;
               padding: 8px;
               margin: 6px 0 0 4px;

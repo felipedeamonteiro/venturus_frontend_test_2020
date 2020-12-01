@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useCallback, useRef } from 'react';
 import * as Yup from 'yup';
 import { Form } from '@unform/web';
@@ -6,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { useAuth } from '../../hooks/auth';
 
-import { Container } from './styles';
+import { Container, AnimationContainer, Content, Instructions } from './styles';
 import LogoColorido from '../../assets/logo_colorido.png';
 
 import Input from '../../components/Input';
@@ -52,15 +53,43 @@ const SignIn: React.FC = () => {
 
   return (
     <Container>
-      <img src={LogoColorido} alt="Logo Venturus" />
-      <h3>Venturus FrontEnd Developer Test</h3>
-      <Form ref={formRef} onSubmit={handleSubmit} id="signin-form">
-        <Input
-          placeholder="Type your first and last names to sign in"
-          name="signin"
-        />
-        <Button type="submit">Sign In</Button>
-      </Form>
+      <Content>
+        <AnimationContainer>
+          <img src={LogoColorido} alt="Logo Venturus" />
+          <h3>Venturus FrontEnd Developer Test</h3>
+          <Form ref={formRef} onSubmit={handleSubmit} id="signin-form">
+            <Input
+              placeholder="Type your first and last names to sign in"
+              name="signin"
+            />
+            <Button type="submit">Sign In</Button>
+          </Form>
+        </AnimationContainer>
+      </Content>
+
+      <Instructions>
+        <div>
+          <h1>Soccer Squad Manager</h1>
+          <h2>About the application</h2>
+          <p>
+            This is a <b>Soccer squad manager</b> (looks like <b>Cartola FC</b>{' '}
+            from Brazil). <br />
+            Here you will be able to <b>create</b>, <b>delete</b> and{' '}
+            <b>edit</b> teams, adding some description, tags and 10 different
+            field formations!
+            <br />
+            You can choose any player in the world just by informing its
+            original team and country.
+          </p>
+          <p>
+            These information are real and acquired from the demo API
+            https://www.api-football.com/.
+          </p>
+          <h2>Watch out!</h2>
+          <p>Always you logout the application, all information is lost.</p>
+          <h3>Enjoy!</h3>
+        </div>
+      </Instructions>
     </Container>
   );
 };
