@@ -92,8 +92,8 @@ const MyTeamsDashboard: React.FC = () => {
                   {sortedHighestAvgAge &&
                     sortedHighestAvgAge.map((sortedArray, index) => (
                       <div className="team-info" key={index}>
-                        <h5>{sortedArray.team}</h5>
-                        <h5>{sortedArray.avgAge}</h5>
+                        <h5>{sortedArray ? sortedArray.team : ''}</h5>
+                        <h5>{sortedArray ? sortedArray.avgAge : ''}</h5>
                       </div>
                     ))}
                 </div>
@@ -104,8 +104,8 @@ const MyTeamsDashboard: React.FC = () => {
                   {sortedLowestAvgAge &&
                     sortedLowestAvgAge.map((sortedArray, index) => (
                       <div className="team-info" key={index}>
-                        <h5>{sortedArray.team}</h5>
-                        <h5>{sortedArray.avgAge}</h5>
+                        <h5>{sortedArray ? sortedArray.team : ''}</h5>
+                        <h5>{sortedArray ? sortedArray.avgAge : ''}</h5>
                       </div>
                     ))}
                 </div>
