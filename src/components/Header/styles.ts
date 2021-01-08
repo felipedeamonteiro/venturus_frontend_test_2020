@@ -69,12 +69,12 @@ export const Container = styled.header`
   }
 
   @media only screen and (max-width: 375px) {
-    padding: 5px 10px !important;
-
     .left-div {
-      visibility: hidden;
-      width: 0;
-      padding: 0;
+      h2 {
+        visibility: hidden;
+        width: 0;
+        padding: 0;
+      }
     }
 
     .right-div {
@@ -86,9 +86,11 @@ export const Container = styled.header`
 
   @media only screen and (min-width: 380px) and (max-width: 415px) {
     .left-div {
-      visibility: hidden;
-      width: 0;
-      padding: 0;
+      h2 {
+        visibility: hidden;
+        width: 0;
+        padding: 0;
+      }
     }
 
     .right-div {
