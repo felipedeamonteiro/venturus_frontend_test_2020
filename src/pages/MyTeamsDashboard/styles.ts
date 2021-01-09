@@ -160,4 +160,65 @@ export const MiddleContainer = styled.div`
       }
     }
   }
+
+  @media only screen and (max-width: 415px) {
+    display: flex;
+    justify-items: center;
+    flex-direction: column;
+
+    .left-container {
+      width: 90%;
+      height: 450px;
+      margin: 30px 40px 20px;
+      padding: 24px;
+    }
+
+    .right-container {
+      width: 100%;
+      padding: 15px;
+
+      .top-container {
+        width: 100%;
+        margin: 0 !important;
+
+        h3 {
+          max-width: 130px;
+          text-align: center;
+        }
+
+        .team-info {
+          h5 {
+            max-width: 60px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 770px) {
+    display: flex;
+    justify-items: center;
+    flex-direction: column;
+
+    .left-container {
+      width: 90%;
+      height: 450px;
+      margin: 30px 40px 20px;
+      padding: 24px;
+    }
+
+    .right-container {
+      width: 100%;
+      padding: 40px;
+
+      .top-container {
+        margin: 30px 40px 20px;
+        width: 100%;
+        margin: 0 !important;
+      }
+    }
+  }
 `;

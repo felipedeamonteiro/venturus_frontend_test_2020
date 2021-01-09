@@ -120,12 +120,33 @@ export const Container = styled.div`
     }
   }
 
-  /* @keyframes loading {
-    from {
-      opacity: 1;
+  @media only screen and (max-width: 375px) {
+    thead {
+      tr {
+        th:first-child {
+          width: 100px;
+        }
+      }
     }
-    to {
-      opacity: 0.3;
+
+    tbody {
+      tr {
+        &:hover {
+          td {
+            div {
+              p {
+                max-width: 90px;
+              }
+            }
+          }
+        }
+      }
     }
-  } */
+  }
+
+  @media only screen and (min-width: 380px) and (max-width: 415px) {
+  }
+
+  @media only screen and (max-width: 770px) {
+  }
 `;

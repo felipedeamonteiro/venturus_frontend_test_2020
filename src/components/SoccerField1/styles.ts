@@ -225,4 +225,20 @@ export const Container = styled.div`
       transition: opacity 0.4s;
     }
   }
+
+  @media only screen and (max-width: 415px) {
+    height: 600px;
+    margin: 25px 0;
+
+    .central-line,
+    .central-circle {
+      transform: rotate(90deg);
+    }
+
+    .players-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
 `;
