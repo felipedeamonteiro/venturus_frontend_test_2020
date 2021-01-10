@@ -229,4 +229,68 @@ export const MiddleContainer = styled.div`
       }
     }
   }
+
+  @media only screen and (max-width: 415px) {
+    .main-container {
+      height: 2750px !important;
+
+      form {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+
+        .team-information-form {
+          .upper-info {
+            display: flex;
+            flex-direction: column !important;
+            align-items: center;
+
+            input,
+            textarea {
+              width: 320px;
+            }
+
+            .right-div {
+              margin-top: 20px;
+            }
+          }
+        }
+
+        .configure-squad-container {
+          margin-top: 300px;
+          display: flex;
+          flex-direction: column !important;
+          align-items: center;
+
+          .bottom-info {
+            display: flex;
+            flex-direction: column-reverse !important;
+            align-items: center;
+
+            .bottom-right-div {
+              .search-team-div {
+                margin: 600px 0 0 25px;
+                display: flex;
+                flex-direction: column !important;
+
+                input {
+                  width: 320px;
+                }
+
+                .search-players-div {
+                  .search-players-input {
+                    max-width: 320px !important;
+                  }
+                }
+              }
+            }
+
+            .bottom-left-div {
+              margin-top: 300px;
+            }
+          }
+        }
+      }
+    }
+  }
 `;

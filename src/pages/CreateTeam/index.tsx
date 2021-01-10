@@ -416,8 +416,9 @@ const CreateTeam: React.FC = () => {
                     </div>
                   </div>
 
-                  <div>
+                  <div className="search-players-div">
                     <Input
+                      className="search-players-input"
                       name="search-players"
                       placeholder="Search player"
                       label="Search players"
